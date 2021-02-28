@@ -1,0 +1,133 @@
+{
+    /**
+     * Vim confiiguration
+     **/
+    "vim.autoindent": true,
+    "vim.easymotion": true,
+    "vim.surround": true,
+    
+    "vim.leader": ",",
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // Unbind bad habbits
+        {"before": ["<Up>"], "after": ["<Nop>"]},
+        {"before": ["<Down>"], "after": ["<Nop>"]},
+        {"before": ["<Left>"], "after": ["<Nop>"]},
+        {"before": ["<Right>"], "after": ["<Nop>"]},
+        
+        // Easier navigation
+        {"before": ["K"], "after": ["{"]}, 
+        {"before": ["J"], "after": ["}"]}, 
+        {"before": ["H"], "after": ["^"]}, 
+        {"before": ["L"], "after": ["$"]}, 
+
+        // Make Y consistent with C and D 
+        {"before": ["Y"], "after": ["y$"]},
+
+        // Use qq to record, q to stop Q to play macro
+        {"before": ["Q"], "after": ["@q"]}, 
+
+        // Show command palette
+        {"before": [";"], "commands": ["workbench.action.showCommands"]},
+
+        // Toggle sidebars, h to hide
+        {"before": ["<leader>", "e"], "commands": ["workbench.view.explorer"]},
+        {"before": ["<leader>", "f"], "commands": ["workbench.view.search"]},
+        {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
+        {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
+        {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
+        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]},
+    ],
+    
+    "vim.insertModeKeyBindingsNonRecursive": [
+        // Better escape sequence
+        { "before": ["j", "j"], "after": ["<ESC>"] },
+
+        // Easier navigation
+        {"before": ["<C-k>"], "after": ["<Up>"]},
+        {"before": ["<C-j>"], "after": ["<Down>"]},
+        {"before": ["<C-h>"], "after": ["<Left>"]},
+        {"before": ["<C-l>"], "after": ["<Right>"]}
+    ],
+
+    "vim.visualModeKeyBindingsNonRecursive": [
+        // Unbind bad habbits
+        {"before": ["<Up>"], "after": ["<Nop>"]},
+        {"before": ["<Down>"], "after": ["<Nop>"]},
+        {"before": ["<Left>"], "after": ["<Nop>"]},
+        {"before": ["<Right>"], "after": ["<Nop>"]},
+
+        // Easier navigation
+        {"before": ["K"], "after": ["{"]}, 
+        {"before": ["J"], "after": ["}"]}, 
+        {"before": ["H"], "after": ["^"]}, 
+        {"before": ["L"], "after": ["$"]}, 
+       
+        // Easier tabbing
+        {"before": [">"], "commands": ["editor.action.indentLines"]},
+        {"before": ["<"], "commands": ["editor.action.outdentLines"]},
+
+        // Toggle sidebars, h to hide
+        {"before": ["<leader>", "e"], "commands": ["workbench.view.explorer"]},
+        {"before": ["<leader>", "f"], "commands": ["workbench.view.search"]},
+        {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
+        {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
+        {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
+        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]},
+    ],
+ 
+    "vim.operatorPendingModeKeyBindingsNonRecursive": [
+        // Unbind bad habbits
+        {"before": ["<Up>"], "after": ["<Nop>"]},
+        {"before": ["<Down>"], "after": ["<Nop>"]},
+        {"before": ["<Left>"], "after": ["<Nop>"]},
+        {"before": ["<Right>"], "after": ["<Nop>"]},
+
+        // Easier navigation
+        {"before": ["K"], "after": ["{"]}, 
+        {"before": ["J"], "after": ["}"]}, 
+        {"before": ["H"], "after": ["^"]},
+        {"before": ["L"], "after": ["$"]}
+    ],
+
+
+    /**
+     * VS Code aesthetics 
+     **/
+    "breadcrumbs.enabled": false,
+    "editor.lineNumbers": "relative",
+    "editor.minimap.enabled": false,
+    "editor.rulers": [80],
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "explorer.openEditors.visible": 0,
+    "window.zoomLevel": 0.8,
+    "workbench.activityBar.visible": false,
+    "workbench.colorTheme": "Monokai Dimmed",
+    "workbench.editor.showTabs": true,
+
+
+    /**
+     * Other VS Code Settings
+     **/
+    "debug.onTaskErrors": "abort",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+
+    /**
+     * Git Settings
+     **/
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+
+
+    /**
+     * Spell checker
+     **/
+    "cSpell.enabled": false,
+    "cSpell.userWords": [
+        "verilog"
+    ]
+}
