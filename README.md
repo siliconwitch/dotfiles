@@ -7,18 +7,24 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 
 1. Ensure these tools are installed
 
+- [git](https://github.com/git-guides/install-git)
 - [oh-my-zsh](https://ohmyz.sh/#install)
 - [Dracula Theme](https://draculatheme.com/zsh)
-- [brew](https://brew.sh)
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-- git
-- fzf
+- [brew](https://brew.sh)
+- [fzf](https://github.com/junegunn/fzf)
 
 2. Ensure these plugins are installed for VS Code
 
+- **Beautify** by HookyQR
 - **C/C++** by Microsoft
+- **Clock in status bar** by Compulim
 - **Code Spell Checker** by Street Side Software
 - **Cortex Debug** by Marus25
+- **Git History** by DonJayamanne
+- **Hex Editor** by Microsoft
+- **JSON Tools** by Erik Lynd
+- **Verilog-HDL** by mshr-h
 - **Vim** by vscodevim
 
 
