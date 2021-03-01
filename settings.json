@@ -5,28 +5,11 @@
     "vim.autoindent": true,
     "vim.easymotion": true,
     "vim.surround": true,
-    
+    "vim.vimrc.enable": true,
     "vim.leader": ",",
+    "vim.vimrc.path": "~/tools/dev-config/keybindings.vim",
 
     "vim.normalModeKeyBindingsNonRecursive": [
-        // Unbind bad habbits
-        {"before": ["<Up>"], "after": ["<Nop>"]},
-        {"before": ["<Down>"], "after": ["<Nop>"]},
-        {"before": ["<Left>"], "after": ["<Nop>"]},
-        {"before": ["<Right>"], "after": ["<Nop>"]},
-        
-        // Easier navigation
-        {"before": ["K"], "after": ["{"]}, 
-        {"before": ["J"], "after": ["}"]}, 
-        {"before": ["H"], "after": ["^"]}, 
-        {"before": ["L"], "after": ["$"]}, 
-
-        // Make Y consistent with C and D 
-        {"before": ["Y"], "after": ["y$"]},
-
-        // Use qq to record, q to stop Q to play macro
-        {"before": ["Q"], "after": ["@q"]}, 
-
         // Show command palette
         {"before": [";"], "commands": ["workbench.action.showCommands"]},
 
@@ -36,33 +19,10 @@
         {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
         {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
         {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
-        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]},
-    ],
-    
-    "vim.insertModeKeyBindingsNonRecursive": [
-        // Better escape sequence
-        { "before": ["j", "j"], "after": ["<ESC>"] },
-
-        // Easier navigation
-        {"before": ["<C-k>"], "after": ["<Up>"]},
-        {"before": ["<C-j>"], "after": ["<Down>"]},
-        {"before": ["<C-h>"], "after": ["<Left>"]},
-        {"before": ["<C-l>"], "after": ["<Right>"]}
+        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]}
     ],
 
     "vim.visualModeKeyBindingsNonRecursive": [
-        // Unbind bad habbits
-        {"before": ["<Up>"], "after": ["<Nop>"]},
-        {"before": ["<Down>"], "after": ["<Nop>"]},
-        {"before": ["<Left>"], "after": ["<Nop>"]},
-        {"before": ["<Right>"], "after": ["<Nop>"]},
-
-        // Easier navigation
-        {"before": ["K"], "after": ["{"]}, 
-        {"before": ["J"], "after": ["}"]}, 
-        {"before": ["H"], "after": ["^"]}, 
-        {"before": ["L"], "after": ["$"]}, 
-       
         // Easier tabbing
         {"before": [">"], "commands": ["editor.action.indentLines"]},
         {"before": ["<"], "commands": ["editor.action.outdentLines"]},
@@ -73,24 +33,10 @@
         {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
         {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
         {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
-        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]},
+        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]}
     ],
+    
  
-    "vim.operatorPendingModeKeyBindingsNonRecursive": [
-        // Unbind bad habbits
-        {"before": ["<Up>"], "after": ["<Nop>"]},
-        {"before": ["<Down>"], "after": ["<Nop>"]},
-        {"before": ["<Left>"], "after": ["<Nop>"]},
-        {"before": ["<Right>"], "after": ["<Nop>"]},
-
-        // Easier navigation
-        {"before": ["K"], "after": ["{"]}, 
-        {"before": ["J"], "after": ["}"]}, 
-        {"before": ["H"], "after": ["^"]},
-        {"before": ["L"], "after": ["$"]}
-    ],
-
-
     /**
      * VS Code aesthetics 
      **/
