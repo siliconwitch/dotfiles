@@ -2,7 +2,6 @@
 
 Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 
-
 ## Installing
 
 1. Ensure these tools are installed
@@ -21,12 +20,12 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 - **Clock in status bar** by Compulim
 - **Code Spell Checker** by Street Side Software
 - **Cortex Debug** by Marus25
-- **Git History** by DonJayamanne
+- **Git History** by Don Jayamanne
 - **Hex Editor** by Microsoft
 - **JSON Tools** by Erik Lynd
 - **Verilog-HDL** by mshr-h
 - **Vim** by vscodevim
-
+- **Visual Studio Intellicode** by Microsoft
 
 3. Remove old `.zshrc`, `settings.json` and `keybindings.json`
 
