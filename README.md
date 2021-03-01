@@ -15,6 +15,7 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 
 2. Ensure these plugins are installed for VS Code
 
+- **ARM** by dan-c-underwood
 - **Beautify** by HookyQR
 - **C/C++** by Microsoft
 - **Clock in status bar** by Compulim
@@ -23,6 +24,7 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 - **Git History** by Don Jayamanne
 - **Hex Editor** by Microsoft
 - **JSON Tools** by Erik Lynd
+- **Liver Server** by Ritwick Dey
 - **Verilog-HDL** by mshr-h
 - **Vim** by vscodevim
 - **Visual Studio Intellicode** by Microsoft
