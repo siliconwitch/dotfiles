@@ -112,7 +112,6 @@
     "debug.onTaskErrors": "abort",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 
 
     /**
