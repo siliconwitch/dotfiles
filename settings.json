@@ -95,13 +95,13 @@
      * VS Code aesthetics 
      **/
     "breadcrumbs.enabled": false,
-    "editor.lineNumbers": "relative",
+    "editor.lineNumbers": "on",
     "editor.minimap.enabled": false,
     "editor.rulers": [80],
     "editor.suggestSelection": "recentlyUsedByPrefix",
     "explorer.openEditors.visible": 0,
     "window.zoomLevel": 0.8,
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.colorTheme": "Monokai Dimmed",
     "workbench.editor.showTabs": true,
 

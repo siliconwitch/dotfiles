@@ -1,6 +1,6 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/Library/Python/3.7/bin:/usr/local/opt/qt/bin:$PATH
-export PATH=$HOME/.gem/ruby/2.6.0/bin:/Users/raj/Library/Python/3.8/bin:$PATH
+# Path variable
+export PATH=$HOME/Library/Python/3.8/bin:$PATH
+export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/raj/.oh-my-zsh"

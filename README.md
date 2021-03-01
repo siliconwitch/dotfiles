@@ -1,36 +1,39 @@
-# My personal dev setup.
+# My Personal Dev Setup
 
-Configuration for **VS Code** and **oh-my-zsh**
+Configuration for **VS Code** and **oh-my-zsh** running on MacOS
+
 
 ## Installing
 
-1. Remove old `.zshrc` and `settings.json`
-
-```bash
-rm ~/.zshrc
-rm ~/Library/Application\ Support/Code/User/settings.json
-```
-
-2. Create symlinks
-
-```bash
-ln -s /<full-path>/tools/dev-config/zshrc ~/.zshrc
-ln -s /<full-path>/vscode-config/settings.json ~/Library/Application\ Support/Code/User/settings.json
-```
-
-3. Ensure these tools are installed
+1. Ensure these tools are installed
 
 - [oh-my-zsh](https://ohmyz.sh/#install)
-- [Dracula](https://draculatheme.com/zsh)
+- [Dracula Theme](https://draculatheme.com/zsh)
 - [brew](https://brew.sh)
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - git
+- fzf
 
-4. Ensure these plugins are installed for VS Code
+2. Ensure these plugins are installed for VS Code
 
-- **ARM** by dan-c-underwood
-- **Better C++ Syntax** by Jeff Hykin
 - **C/C++** by Microsoft
 - **Code Spell Checker** by Street Side Software
 - **Cortex Debug** by Marus25
 - **Vim** by vscodevim
+
+
+3. Remove old `.zshrc`, `settings.json` and `keybindings.json`
+
+```bash
+rm ~/.zshrc
+rm ~/Library/Application\ Support/Code/User/settings.json
+rm ~/Library/Application\ Support/Code/User/keybindings.json
+```
+
+4. Create symlinks
+
+```bash
+ln -s /<full-path>/dev-config/zshrc ~/.zshrc
+ln -s /<full-path>/dev-config/settings.json ~/Library/Application\ Support/Code/User/settings.json
+ln -s /<full-path>/dev-config/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+```
