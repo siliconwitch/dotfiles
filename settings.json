@@ -73,6 +73,12 @@
      **/
     "cSpell.enabled": false,
     "cSpell.userWords": [
+        "LEDs",
+        "Nakarja",
+        "OLED",
+        "Rajesh",
+        "debouncing",
+        "gpio",
         "verilog"
     ]
 }
