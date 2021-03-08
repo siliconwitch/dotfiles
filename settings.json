@@ -18,6 +18,7 @@
     "debug.onTaskErrors": "abort",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
+    "tabnine.experimentalAutoImports": true,
 
 
     /**
