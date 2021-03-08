@@ -19,7 +19,7 @@
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "tabnine.experimentalAutoImports": true,
-
+    "terminal.integrated.enablePersistentSessions": false,
 
     /**
      * Git Settings
