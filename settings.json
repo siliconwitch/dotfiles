@@ -1,43 +1,5 @@
 {
     /**
-     * Vim confiiguration
-     **/
-    "vim.autoindent": true,
-    "vim.easymotion": true,
-    "vim.surround": true,
-    "vim.vimrc.enable": true,
-    "vim.leader": ",",
-    "vim.vimrc.path": "~/tools/dev-config/keybindings.vim",
-
-    "vim.normalModeKeyBindingsNonRecursive": [
-        // Show command palette
-        {"before": [";"], "commands": ["workbench.action.showCommands"]},
-
-        // Toggle sidebars, h to hide
-        {"before": ["<leader>", "e"], "commands": ["workbench.view.explorer"]},
-        {"before": ["<leader>", "f"], "commands": ["workbench.view.search"]},
-        {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
-        {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
-        {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
-        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]}
-    ],
-
-    "vim.visualModeKeyBindingsNonRecursive": [
-        // Easier tabbing
-        {"before": [">"], "commands": ["editor.action.indentLines"]},
-        {"before": ["<"], "commands": ["editor.action.outdentLines"]},
-
-        // Toggle sidebars, h to hide
-        {"before": ["<leader>", "e"], "commands": ["workbench.view.explorer"]},
-        {"before": ["<leader>", "f"], "commands": ["workbench.view.search"]},
-        {"before": ["<leader>", "g"], "commands": ["workbench.view.scm"]},
-        {"before": ["<leader>", "d"], "commands": ["workbench.view.debug"]}, 
-        {"before": ["<leader>", "p"], "commands": ["workbench.view.extensions"]},
-        {"before": ["<leader>", "h"], "commands": ["workbench.action.toggleSidebarVisibility"]}
-    ],
-    
- 
-    /**
      * VS Code aesthetics 
      **/
     "breadcrumbs.enabled": false,
@@ -47,9 +9,7 @@
     "editor.suggestSelection": "recentlyUsedByPrefix",
     "explorer.openEditors.visible": 0,
     "window.zoomLevel": 0.8,
-    "workbench.activityBar.visible": true,
     "workbench.colorTheme": "Monokai Dimmed",
-    "workbench.editor.showTabs": true,
 
 
     /**
@@ -58,7 +18,8 @@
     "debug.onTaskErrors": "abort",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-
+    "tabnine.experimentalAutoImports": true,
+    "terminal.integrated.enablePersistentSessions": false,
 
     /**
      * Git Settings

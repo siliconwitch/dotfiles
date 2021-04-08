@@ -24,10 +24,9 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 - **Git History** by Don Jayamanne
 - **Hex Editor** by Microsoft
 - **JSON Tools** by Erik Lynd
-- **Liver Server** by Ritwick Dey
+- **Live Server** by Ritwick Dey
+- **Tabnine** by Tabnine
 - **Verilog-HDL** by mshr-h
-- **Vim** by vscodevim
-- **Visual Studio Intellicode** by Microsoft
 
 3. Remove old `.zshrc`, `settings.json` and `keybindings.json`
 
