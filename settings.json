@@ -1,6 +1,6 @@
 {
     /**
-     * VS Code aesthetics 
+     * VS Code Aesthetics 
      **/
     "breadcrumbs.enabled": false,
     "editor.lineNumbers": "on",
@@ -30,7 +30,7 @@
 
 
     /**
-     * Spell checker
+     * Spell Checker
      **/
     "cSpell.enabled": false,
     "cSpell.userWords": [
@@ -41,5 +41,16 @@
         "debouncing",
         "gpio",
         "verilog"
-    ]
+    ],
+
+    /**
+    * Python Related
+    **/
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "python.pythonPath": "/usr/bin/python"
 }
