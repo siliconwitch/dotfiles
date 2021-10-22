@@ -1,7 +1,5 @@
-# Path variable
-export PATH=$HOME/Library/Python/3.8/bin:$PATH
-export PATH=/Applications/ARM/bin:$PATH
-export PATH=/Applications/gtkwave.app/Contents/Resources/bin/:$PATH
+# Path variables
+# export PATH=$HOME/Something/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/raj/.oh-my-zsh"

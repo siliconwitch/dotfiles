@@ -1,25 +1,21 @@
 {
     /**
-     * VS Code Aesthetics 
+     * General Settings
      **/
-    "breadcrumbs.enabled": false,
+    "debug.onTaskErrors": "abort",
+    "editor.formatOnSave": true,
     "editor.lineNumbers": "on",
     "editor.minimap.enabled": false,
     "editor.rulers": [80],
     "editor.suggestSelection": "recentlyUsedByPrefix",
-    "explorer.openEditors.visible": 0,
-    "window.zoomLevel": 0.8,
-    "workbench.colorTheme": "Monokai Dimmed",
-
-
-    /**
-     * Other VS Code Settings
-     **/
-    "debug.onTaskErrors": "abort",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
+    "explorer.openEditors.visible": 0,
+    "security.workspace.trust.enabled": false,
     "tabnine.experimentalAutoImports": true,
     "terminal.integrated.enablePersistentSessions": false,
+    "window.zoomLevel": 1,
+    "workbench.colorTheme": "Monokai Dimmed",
 
     /**
      * Git Settings
@@ -28,29 +24,36 @@
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
 
-
     /**
      * Spell Checker
      **/
     "cSpell.enabled": false,
     "cSpell.userWords": [
+        "debouncing",
+        "gpio",
+        "inferencing",
         "LEDs",
         "Nakarja",
         "OLED",
         "Rajesh",
-        "debouncing",
-        "gpio",
+        "randomizer",
         "verilog"
     ],
 
     /**
-    * Python Related
-    **/
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
-    "python.pythonPath": "/usr/bin/python"
+     * Python Related
+     **/
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+    "python.pythonPath": "/usr/bin/python",
+
+    /**
+     * Other Plugin Settings
+     **/
+    "clock.dateFormat": "mmmm dS yyyy, hh:MM TT",
+    "extensions.ignoreRecommendations": true,
+    "go.toolsManagement.autoUpdate": true,
+    "liveServer.settings.donotShowInfoMsg": true
 }
