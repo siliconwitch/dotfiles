@@ -1,5 +1,6 @@
 # Path variables
 # export PATH=$HOME/Something/bin:$PATH
+export PATH=/Applications/gtkwave.app/Contents/Resources/bin/:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/raj/.oh-my-zsh"
