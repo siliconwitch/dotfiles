@@ -18,6 +18,13 @@
     "workbench.colorTheme": "Monokai Dimmed",
 
     /**
+    * HDL linter settings
+    **/
+    "verilog.ctags.path": "/opt/homebrew/bin/ctags",
+    "verilog.languageServer": "svls",
+    "verilog.linting.linter": "iverilog",
+
+    /**
      * Git Settings
      **/
     "git.autofetch": true,

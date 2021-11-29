@@ -12,6 +12,7 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [brew](https://brew.sh)
 - [fzf](https://github.com/junegunn/fzf)
+- [FPGA toolchains](https://github.com/siliconwitchery/homebrew-oss-fpga)
 
 2. Ensure these plugins are installed for VS Code
 
@@ -42,4 +43,11 @@ rm ~/Library/Application\ Support/Code/User/keybindings.json
 ln -s /<full-path>/dev-config/zshrc ~/.zshrc
 ln -s /<full-path>/dev-config/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -s /<full-path>/dev-config/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+```
+
+5. Install a couple dependencies for Verilog-HDL and configure paths in settings if needed
+
+``` bash
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+cargo install svls
 ```
