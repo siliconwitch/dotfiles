@@ -19,10 +19,12 @@ Configuration for **VS Code** and **oh-my-zsh** running on MacOS
 - **ARM** by dan-c-underwood
 - **Beautify** by HookyQR
 - **C/C++** by Microsoft
+- **CircuitPython** by joedevio
 - **Clock in status bar** by Compulim
 - **Code Spell Checker** by Street Side Software
 - **Cortex Debug** by Marus25
 - **Git History** by Don Jayamanne
+- **Go** by Go Team at Google
 - **Hex Editor** by Microsoft
 - **JSON Tools** by Erik Lynd
 - **Live Server** by Ritwick Dey

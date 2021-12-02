@@ -34,7 +34,7 @@
     /**
      * Spell Checker
      **/
-    "cSpell.enabled": false,
+    "cSpell.enabled": true,
     "cSpell.userWords": [
         "debouncing",
         "gpio",
