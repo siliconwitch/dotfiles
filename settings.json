@@ -36,12 +36,15 @@
      **/
     "cSpell.enabled": true,
     "cSpell.userWords": [
+        "datasheets",
         "debouncing",
         "gpio",
         "inferencing",
         "LEDs",
+        "microcontroller",
         "Nakarja",
         "OLED",
+        "PMIC",
         "Rajesh",
         "randomizer",
         "verilog"

@@ -2,6 +2,7 @@
 # export PATH=$HOME/Something/bin:$PATH
 export PATH=/Applications/gtkwave.app/Contents/Resources/bin/:$PATH
 export PATH=/Users/raj/.cargo/bin:$PATH
+export PATH=/Users/raj/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/raj/.oh-my-zsh"
