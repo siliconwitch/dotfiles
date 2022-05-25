@@ -6,7 +6,9 @@
     "editor.formatOnSave": true,
     "editor.lineNumbers": "on",
     "editor.minimap.enabled": false,
-    "editor.rulers": [80],
+    "editor.rulers": [
+        80
+    ],
     "editor.suggestSelection": "recentlyUsedByPrefix",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
@@ -15,22 +17,19 @@
     "tabnine.experimentalAutoImports": true,
     "terminal.integrated.enablePersistentSessions": false,
     "window.zoomLevel": 1,
-    "workbench.colorTheme": "Monokai Dimmed",
-
+    "workbench.colorTheme": "Dracula",
     /**
     * HDL linter settings
     **/
     "verilog.ctags.path": "/opt/homebrew/bin/ctags",
     "verilog.languageServer": "svls",
     "verilog.linting.linter": "iverilog",
-
     /**
      * Git Settings
      **/
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
-
     /**
      * Spell Checker
      **/
@@ -43,13 +42,13 @@
         "LEDs",
         "microcontroller",
         "Nakarja",
+        "Noden",
         "OLED",
         "PMIC",
         "Rajesh",
         "randomizer",
         "verilog"
     ],
-
     /**
      * Python Related
      **/
@@ -58,7 +57,15 @@
     },
     "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
     "python.pythonPath": "/usr/bin/python",
-
+    /**
+     * ESP-IDF Settings
+     **/
+    "idf.espIdfPath": "/Users/raj/tools/esp-idf",
+    "idf.pythonBinPath": "/Users/raj/tools/esp-idf-tools/python_env/idf4.4_py3.9_env/bin/python",
+    "idf.toolsPath": "/Users/raj/tools/esp-idf-tools",
+    "idf.customExtraPaths": "/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin:/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32s2-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s2-elf/bin:/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32s3-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s3-elf/bin:/Users/raj/tools/esp-idf-tools/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin:/Users/raj/tools/esp-idf-tools/tools/esp32ulp-elf/2.28.51-esp-20191205/esp32ulp-elf-binutils/bin:/Users/raj/tools/esp-idf-tools/tools/esp32s2ulp-elf/2.28.51-esp-20191205/esp32s2ulp-elf-binutils/bin:/Users/raj/tools/esp-idf-tools/tools/cmake/3.20.3/CMake.app/Contents/bin:/Users/raj/tools/esp-idf-tools/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/bin:/Users/raj/tools/esp-idf-tools/tools/ninja/1.10.2",
+    "idf.customExtraVars": "{\"OPENOCD_SCRIPTS\":\"/Users/raj/tools/esp-idf-tools/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/share/openocd/scripts\"}",
+    "idf.gitPath": "git",
     /**
      * Other Plugin Settings
      **/
