@@ -1,38 +1,54 @@
 {
-    /**
-     * General Settings
-     **/
+    //
+    // Visual settings
+    //
+    "breadcrumbs.enabled": false,
+    "editor.guides.indentation": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.lineNumbers": "off",
+    "editor.matchBrackets": "never",
+    "editor.minimap.enabled": false,
+    "editor.occurrencesHighlight": false,
+    "editor.overviewRulerBorder": false,
+    "editor.renderLineHighlight": "none",
+    "editor.scrollbar.horizontal": "hidden",
+    "explorer.decorations.badges": false,
+    "explorer.openEditors.visible": 0,
+    "problems.decorations.enabled": false,
+    "indenticator.color.dark": "rgba(255,255,255,.1)",
+    "workbench.activityBar.visible": false,
+    "workbench.colorTheme": "Dracula",
+    "workbench.editor.decorations.badges": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.showIcons": false,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.layoutControl.enabled": false,
+    "workbench.statusBar.visible": false,
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#ffc400"
+    },
+    //
+    // Editor general functionality settings
+    //
     "debug.onTaskErrors": "abort",
     "editor.formatOnSave": true,
-    "editor.lineNumbers": "on",
-    "editor.minimap.enabled": false,
-    "editor.rulers": [
-        80
-    ],
     "editor.suggestSelection": "recentlyUsedByPrefix",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "explorer.openEditors.visible": 0,
+    "extensions.ignoreRecommendations": true,
     "security.workspace.trust.enabled": false,
-    "tabnine.experimentalAutoImports": true,
     "terminal.integrated.enablePersistentSessions": false,
-    "window.zoomLevel": 1,
-    "workbench.colorTheme": "Dracula",
-    /**
-    * HDL linter settings
-    **/
-    "verilog.ctags.path": "/opt/homebrew/bin/ctags",
-    "verilog.languageServer": "svls",
-    "verilog.linting.linter": "iverilog",
-    /**
-     * Git Settings
-     **/
+    //
+    // Git settings
+    //
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
-    /**
-     * Spell Checker
-     **/
+    //
+    // Other plugin settings
+    //
+    "clock.dateFormat": "mmmm dS yyyy, hh:MM TT",
     "cSpell.enabled": true,
     "cSpell.userWords": [
         "datasheets",
@@ -49,28 +65,8 @@
         "randomizer",
         "verilog"
     ],
-    /**
-     * Python Related
-     **/
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
-    "python.pythonPath": "/usr/bin/python",
-    /**
-     * ESP-IDF Settings
-     **/
-    "idf.espIdfPath": "/Users/raj/tools/esp-idf",
-    "idf.pythonBinPath": "/Users/raj/tools/esp-idf-tools/python_env/idf4.4_py3.9_env/bin/python",
-    "idf.toolsPath": "/Users/raj/tools/esp-idf-tools",
-    "idf.customExtraPaths": "/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin:/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32s2-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s2-elf/bin:/Users/raj/tools/esp-idf-tools/tools/xtensa-esp32s3-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s3-elf/bin:/Users/raj/tools/esp-idf-tools/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin:/Users/raj/tools/esp-idf-tools/tools/esp32ulp-elf/2.28.51-esp-20191205/esp32ulp-elf-binutils/bin:/Users/raj/tools/esp-idf-tools/tools/esp32s2ulp-elf/2.28.51-esp-20191205/esp32s2ulp-elf-binutils/bin:/Users/raj/tools/esp-idf-tools/tools/cmake/3.20.3/CMake.app/Contents/bin:/Users/raj/tools/esp-idf-tools/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/bin:/Users/raj/tools/esp-idf-tools/tools/ninja/1.10.2",
-    "idf.customExtraVars": "{\"OPENOCD_SCRIPTS\":\"/Users/raj/tools/esp-idf-tools/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/share/openocd/scripts\"}",
-    "idf.gitPath": "git",
-    /**
-     * Other Plugin Settings
-     **/
-    "clock.dateFormat": "mmmm dS yyyy, hh:MM TT",
-    "extensions.ignoreRecommendations": true,
     "go.toolsManagement.autoUpdate": true,
-    "liveServer.settings.donotShowInfoMsg": true
+    "verilog.ctags.path": "/opt/homebrew/bin/ctags",
+    "verilog.languageServer": "svls",
+    "verilog.linting.linter": "iverilog",
 }

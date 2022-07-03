@@ -9,10 +9,6 @@
         "command": "workbench.action.tasks.build"
     },
     {
-        "key": "shift+cmd+b",
-        "command": "-workbench.action.tasks.build"
-    },
-    {
         "key": "f5",
         "command": "workbench.action.debug.stop",
         "when": "inDebugMode"
@@ -31,5 +27,29 @@
         "key": "f5",
         "command": "-workbench.action.debug.continue",
         "when": "inDebugMode"
+    },
+    {
+        "key": "shift+cmd+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "-workbench.action.terminal.findPrevious",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "-editor.action.previousMatchFindAction",
+        "when": "editorFocus"
     }
 ]
