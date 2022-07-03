@@ -68,16 +68,15 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 
 1. Activate the Dracula theme in iTerm2
 
-    1. iTerm2 > Preferences > Profiles > Colors Tab
-    1. Open the Color Presets... drop-down in the bottom right corner
-    1. Select Import... from the list
-    1. Select the Dracula.itermcolors file
-    1. Select the Dracula from Color Presets
+    1. iTerm2 > Preferences > Profiles
+    1. Click on Other Actions > Import JSON Profiles
+    1. Select ~/tools/dev-config/iTerm-config.json
 
-1. Install dependencies for Verilog-HDL and configure paths in settings
+1. Install dependencies for Verilog-HDL and GTKWave
 
     ``` bash
     cargo install svls
+    sudo perl -MCPAN -e 'install Switch'
     ```
 
 1. Cleanup

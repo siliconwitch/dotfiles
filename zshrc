@@ -1,6 +1,6 @@
 # Path variables
 export PATH=/opt/homebrew/bin:$PATH
-export PATH=/Applications/gtkwave.app/Contents/Resources/bin/:$PATH
+export PATH=/Applications/gtkwave.app/Contents/Resources/bin:$PATH
 export PATH=/Users/raj/.cargo/bin:$PATH
 export PATH=/Users/raj/.local/bin:$PATH
 
