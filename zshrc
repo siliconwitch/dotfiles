@@ -14,6 +14,6 @@ ZSH_THEME="dracula"
 DISABLE_UPDATE_PROMPT="true"
 
 # Load plugins
-plugins=(brew git history zsh-interactive-cd zsh-autosuggestions)
+plugins=(brew fzf git history zsh-interactive-cd zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh

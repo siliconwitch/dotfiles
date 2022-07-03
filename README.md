@@ -6,9 +6,9 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 
 1. Ensure these tools are installed
 
+    - [iTerm2](https://iterm2.com/downloads.html)
     - [git](https://github.com/git-guides/install-git)
     - [oh-my-zsh](https://ohmyz.sh/#install)
-    - [iTerm2](https://iterm2.com/downloads.html)
     - [brew](https://brew.sh)
     - [VSCode](https://code.visualstudio.com/download)
 
@@ -70,7 +70,7 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 
     1. iTerm2 > Preferences > Profiles
     1. Click on Other Actions > Import JSON Profiles
-    1. Select ~/tools/dev-config/iTerm-config.json
+    1. Select ~/tools/dev-config/iterm-config.json
 
 1. Install dependencies for Verilog-HDL and GTKWave
 
