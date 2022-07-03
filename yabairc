@@ -18,6 +18,7 @@
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Things$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Calculator$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Spotify$" sticky=on layer=above manage=off
 
 # global settings
 yabai -m config mouse_follows_focus          off
