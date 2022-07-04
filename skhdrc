@@ -1,2 +1,29 @@
-# To find keycodes, run skhd --observe in a terminal
+## Hyper - Arrow keys switch focus
+hyper - up : yabai -m window --focus north
+hyper - right : yabai -m window --focus east
+hyper - down : yabai -m window --focus south
+hyper - left : yabai -m window --focus west
 
+## Fn - Arrow keys swap windows
+pageup : yabai -m window --warp north
+end : yabai -m window --warp east
+pagedown : yabai -m window --warp south
+home : yabai -m window --warp west
+
+## Hyper - W closes the active application
+hyper - w : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+
+## Hyper - F toggles app to full screen
+hyper - f : yabai -m window --toggle zoom-fullscreen
+
+## Hyper - R rotates everything 90 degrees
+hyper - r : yabai -m space --rotate 90
+
+## Hyper - E flips the tree vertically
+hyper - e : yabai -m space --mirror y-axis
+
+## Hyper - Space opens a new terminal
+hyper - space : open -na /Applications/iTerm.app
+
+## Hyper - Enter opens a new VSCode instance
+hyper - return : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n

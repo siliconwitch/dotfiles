@@ -6,7 +6,7 @@
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
     "editor.lineNumbers": "off",
-    "editor.matchBrackets": "never",
+    "editor.matchBrackets": false,
     "editor.minimap.enabled": false,
     "editor.occurrencesHighlight": false,
     "editor.overviewRulerBorder": false,

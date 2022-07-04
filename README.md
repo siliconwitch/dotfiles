@@ -43,6 +43,7 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 
     ```bash
     brew install fzf
+    brew install karabiner-elements
     brew install koekeishiya/formulae/yabai
     brew install koekeishiya/formulae/skhd
     brew install go
@@ -59,6 +60,8 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
     brew install rust
     ```
     
+1. You will need to [enable the Hyper key](https://holmberg.io/hyper-key/) using karabiner-elements
+
 1. Enable Yabai and SKHD with the command
 
     ```brew
