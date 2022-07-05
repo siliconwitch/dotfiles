@@ -3,6 +3,7 @@
     // Visual settings
     //
     "breadcrumbs.enabled": false,
+    "customizeUI.activityBar": "bottom",
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
     "editor.lineNumbers": "off",
@@ -16,7 +17,6 @@
     "explorer.openEditors.visible": 0,
     "problems.decorations.enabled": false,
     "indenticator.color.dark": "rgba(255,255,255,.1)",
-    "workbench.activityBar.visible": false,
     "workbench.colorTheme": "Dracula",
     "workbench.editor.decorations.badges": false,
     "workbench.editor.highlightModifiedTabs": true,
