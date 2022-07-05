@@ -46,6 +46,7 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
     brew install karabiner-elements
     brew install koekeishiya/formulae/yabai
     brew install koekeishiya/formulae/skhd
+    brew install jq
     brew install go
     brew install gtkwave
     brew install icarus-verilog

@@ -22,6 +22,12 @@ hyper - r : yabai -m space --rotate 90
 ## Hyper - E flips the tree vertically
 hyper - e : yabai -m space --mirror y-axis
 
+# Hyper - B re-balances all the windows
+hyper - b : yabai -m space --balance
+
+# Function - esc toggles yabai to manage or not
+fn - escape : ~/tools/dev-config/toggle-mode.sh
+
 ## Hyper - Space opens a new terminal
 hyper - space : open -na /Applications/iTerm.app
 
