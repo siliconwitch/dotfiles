@@ -8,7 +8,6 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 
     - [iTerm2](https://iterm2.com/downloads.html)
     - [git](https://github.com/git-guides/install-git)
-    - [oh-my-zsh](https://ohmyz.sh/#install)
     - [brew](https://brew.sh)
     - [VSCode](https://code.visualstudio.com/download)
 
@@ -23,8 +22,6 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
     ```bash
     rm ~/.zshrc
     ln -s ~/tools/dev-config/zshrc ~/.zshrc
-    ln -s ~/tools/dev-config/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-    ln -s ~/tools/dev-config/zsh-dracula-theme/dracula.zsh-theme ~/.oh-my-zsh/custom/themes/dracula.zsh-theme
     mkdir ~/.config/yabai ~/.config/skhd
     ln -s ~/tools/dev-config/yabairc ~/.config/yabai
     ln -s ~/tools/dev-config/skhdrc ~/.config/skhd

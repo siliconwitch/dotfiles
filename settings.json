@@ -1,8 +1,4 @@
 {
-    //
-    // Visual settings
-    //
-    "breadcrumbs.enabled": false,
     "customizeUI.activityBar": "bottom",
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
@@ -17,7 +13,7 @@
     "explorer.openEditors.visible": 0,
     "problems.decorations.enabled": false,
     "indenticator.color.dark": "rgba(255,255,255,.1)",
-    "workbench.colorTheme": "Dracula",
+    "workbench.colorTheme": "Gruvbox Dark Medium",
     "workbench.editor.decorations.badges": false,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.showIcons": false,

@@ -4,16 +4,18 @@ export PATH=/Applications/gtkwave.app/Contents/Resources/bin:$PATH
 export PATH=/Users/raj/.cargo/bin:$PATH
 export PATH=/Users/raj/.local/bin:$PATH
 
-# Path to your oh-my-zsh installation
-export ZSH="/Users/raj/.oh-my-zsh"
+# How many commands zsh will load to memory.
+export HISTSIZE=10000
 
-# Theme. More info here https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="dracula"
+# How maney commands history will save on file.
+export SAVEHIST=10000
 
-# Automatically update without prompting
-DISABLE_UPDATE_PROMPT="true"
+# History won't save duplicates.
+setopt HIST_IGNORE_ALL_DUPS
 
-# Load plugins
-plugins=(brew fzf git history zsh-interactive-cd zsh-autosuggestions)
+# History won't show duplicates on search.
+setopt HIST_FIND_NO_DUPS
 
-source $ZSH/oh-my-zsh.sh
+source ~/tools/dev-config/zsh-dracula-theme/dracula.zsh-theme
+source ~/tools/dev-config/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/tools/dev-config/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
