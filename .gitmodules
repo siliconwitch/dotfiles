@@ -7,3 +7,6 @@
 [submodule "iterm-dracula-theme"]
 	path = iterm-dracula-theme
 	url = https://github.com/dracula/iterm.git
+[submodule "zsh-interactive-cd"]
+	path = zsh-interactive-cd
+	url = https://github.com/changyuheng/zsh-interactive-cd.git
