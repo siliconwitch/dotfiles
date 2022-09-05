@@ -1,5 +1,4 @@
 {
-    "customizeUI.activityBar": "bottom",
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
     "editor.lineNumbers": "off",
@@ -53,6 +52,7 @@
         "inferencing",
         "LEDs",
         "microcontroller",
+        "micropython",
         "Nakarja",
         "Noden",
         "OLED",
