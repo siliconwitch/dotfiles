@@ -1,9 +1,6 @@
 [submodule "zsh-autosuggestions"]
 	path = zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "zsh-dracula-theme"]
-	path = zsh-dracula-theme
-	url = https://github.com/dracula/zsh.git
 [submodule "iterm-dracula-theme"]
 	path = iterm-dracula-theme
 	url = https://github.com/dracula/iterm.git
