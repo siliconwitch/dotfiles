@@ -13,3 +13,6 @@
 [submodule "zsh-history-substring-search"]
 	path = zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zsh-dracula-theme"]
+	path = zsh-dracula-theme
+	url = https://github.com/dracula/zsh.git
