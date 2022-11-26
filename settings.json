@@ -8,6 +8,7 @@
     "editor.overviewRulerBorder": false,
     "editor.renderLineHighlight": "none",
     "editor.scrollbar.horizontal": "hidden",
+    "editor.unicodeHighlight.invisibleCharacters": false,
     "explorer.decorations.badges": false,
     "explorer.openEditors.visible": 0,
     "problems.decorations.enabled": false,
@@ -65,4 +66,5 @@
     "verilog.ctags.path": "/opt/homebrew/bin/ctags",
     "verilog.languageServer": "svls",
     "verilog.linting.linter": "iverilog",
+    "liveServer.settings.donotShowInfoMsg": true
 }
