@@ -47,6 +47,7 @@
     "clock.dateFormat": "mmmm dS yyyy, hh:MM TT",
     "cSpell.enabled": true,
     "cSpell.userWords": [
+        "Datasheet",
         "datasheets",
         "debouncing",
         "gpio",

@@ -1,6 +1,6 @@
 # My Personal Dev Setup
 
-Configuration for **oh-my-zsh** and **yabai** running on MacOS
+Configuration for **zsh** and **yabai** running on MacOS
 
 ## Installing
 
@@ -39,6 +39,7 @@ Configuration for **oh-my-zsh** and **yabai** running on MacOS
 1. Install dev tools using brew
 
     ```bash
+    brew install gh
     brew install fzf
     brew install karabiner-elements
     brew install koekeishiya/formulae/yabai
