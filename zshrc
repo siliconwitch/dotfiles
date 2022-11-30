@@ -1,5 +1,5 @@
 # If running on lab machine
-if [ "`uname -n`" = lab ]; then
+if [ "`uname -n`" = lab ] || [ "`uname -n`" = remote-lab ]; then
  
 	# Start tmux on login
 	if [ -z "$TMUX" ]; then
