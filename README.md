@@ -122,11 +122,17 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ```
 
+1. Edit the file `/etc/tigervnc/vncserver.users` and add the line:
+
+	```bash
+	:1=lab
+	```
+
 1. Start and enable the VNC server
 
     ```bash
-    systemctl start vncserver@:1
-    systemctl enable vncserver@:1
+    sudo systemctl start vncserver@:1
+    sudo systemctl enable vncserver@:1
     ```
 
 1. Optionally, install these hardware related tools:
