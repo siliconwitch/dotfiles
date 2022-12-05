@@ -1,0 +1,30 @@
+[submodule "iterm/dracula-theme"]
+	path = iterm/dracula-theme
+	url = https://github.com/dracula/dracula-theme.git
+[submodule "zsh/zsh-autosuggestions"]
+	path = zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "zsh/zsh-syntax-highlighting-dracula"]
+	path = zsh/zsh-syntax-highlighting-dracula
+	url = https://github.com/dracula/zsh-syntax-highlighting.git
+[submodule "zsh/zsh-dracula"]
+	path = zsh/zsh-dracula
+	url = https://github.com/dracula/zsh
+[submodule "zsh/zsh-history-substring-search"]
+	path = zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zsh/zsh-interactive-cd"]
+	path = zsh/zsh-interactive-cd
+	url = https://github.com/changyuheng/zsh-interactive-cd.git
+[submodule "zsh/zsh-syntax-highlighting"]
+	path = zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/zsh-dracula-theme"]
+	path = zsh/zsh-dracula-theme
+	url = https://github.com/dracula/zsh.git
+[submodule "zsh/zsh-syntax-highlighting-dracula-theme"]
+	path = zsh/zsh-syntax-highlighting-dracula-theme
+	url = https://github.com/dracula/zsh-syntax-highlighting.git
+[submodule "iterm/iterm-dracula-theme"]
+	path = iterm/iterm-dracula-theme
+	url = https://github.com/dracula/iterm.git
