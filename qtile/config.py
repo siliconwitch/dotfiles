@@ -187,7 +187,7 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
-# Spawn picom on startup
+# Spawn the picom compositor at startup
 @hook.subscribe.startup
 def autostart():
     qtile.cmd_spawn("picom")
