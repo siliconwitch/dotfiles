@@ -3,9 +3,6 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-# Spawn picom on startup
-lazy.spawn("picom")
-
 # Modifer is the command key
 mod = "mod4"
 
@@ -189,3 +186,6 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+# Spawn picom on startup
+lazy.spawn("picom")
