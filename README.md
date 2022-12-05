@@ -101,7 +101,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Install these tools using pacman
 
     ```bash
-    sudo pacman -S tmux git github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty picom
+    sudo pacman -S tmux git base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty picom
     ```
 
 1. Clone this repository into a folder named `tools`:
@@ -127,3 +127,17 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     systemctl start vncserver@:1
     systemctl enable vncserver@:1
     ```
+
+1. Optionally, install these hardware related tools:
+
+    - [Efinix Efinity Software](https://www.efinixinc.com/support/efinity.php)
+    - [Signalhound Spike](https://signalhound.com/spike/)
+    - [Digilent Waveforms](https://digilent.com/shop/software/digilent-waveforms/download) can be installed through [AUR](https://aur.archlinux.org/packages/digilent.waveforms):
+
+        ```bash
+        ```
+    
+    - [J-Link Tools](https://www.segger.com/downloads/jlink/) can be installed through [AUR](https://aur.archlinux.org/packages/jlink):
+
+        ```bash
+        ```
