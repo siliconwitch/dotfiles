@@ -91,3 +91,31 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ```
 
 ## On Arch Linux
+
+1. Update the mirrors and system:
+
+    ```bash
+    sudo pacman -Syu
+    ```
+
+1. Install these tools using pacman
+
+    ```bash
+    sudo pacman -S tmux git github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty picom
+    ```
+
+1. Clone this repository into a folder named `tools`:
+
+    ```bash
+    git clone --recursive https://github.com/siliconwitch/dev-config.git ~/tools/dev-config
+    cd ~/tools/dev-config
+    ```
+
+1. Create symlinks to all of our configuration files:
+
+    ```bash
+    mkdir -p ~/.config/qtile ~/.vnc
+    ln -sf `pwd`/zsh/zshrc ~/.zshrc
+    ln -sf `pwd`/vnc/config ~/.vnc/config
+    ln -sf `pwd`/tmux/tmux.conf ~/.tmux.conf
+    ```
