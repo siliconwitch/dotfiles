@@ -43,11 +43,12 @@ setopt HIST_FIND_NO_DUPS
 # Add lines to history as they are entered
 setopt INC_APPEND_HISTORY
 
-source ~/tools/dev-config/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/tools/dev-config/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-source ~/tools/dev-config/zsh-history-substring-search/zsh-history-substring-search.zsh
-source ~/tools/dev-config/zsh-dracula-theme/dracula.zsh-theme
-source ~/tools/dev-config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/tools/dev-config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/tools/dev-config/zsh/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+source ~/tools/dev-config/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/tools/dev-config/zsh/zsh-dracula-theme/dracula.zsh-theme
+source ~/tools/dev-config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/tools/dev-config/zsh/zsh-syntax-highlighting-dracula-theme/zsh-syntax-highlighting.sh
 
 # Remove the dracula arrow icon
 DRACULA_ARROW_ICON=""

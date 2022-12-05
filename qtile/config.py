@@ -98,7 +98,7 @@ extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
         # Set the wallpaper
-        wallpaper = "~/tools/dev-config/assets/wallpaper.jpg",
+        wallpaper = "~/tools/dev-config/qtile/wallpaper.jpg",
         wallpaper_mode = "fill",
 
         # Configure the bar
