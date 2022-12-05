@@ -50,6 +50,9 @@ source ~/tools/dev-config/zsh/zsh-dracula-theme/dracula.zsh-theme
 source ~/tools/dev-config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/tools/dev-config/zsh/zsh-syntax-highlighting-dracula-theme/zsh-syntax-highlighting.sh
 
+# Set the syntax highlight options for the syntax highlight dracula theme
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
 # Remove the dracula arrow icon
 DRACULA_ARROW_ICON=""
 

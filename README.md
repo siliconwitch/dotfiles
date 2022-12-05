@@ -114,11 +114,12 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Create symlinks to all of our configuration files:
 
     ```bash
-    mkdir -p ~/.config/qtile ~/.vnc
+    mkdir -p ~/.config/qtile ~/.config/alacritty ~/.vnc 
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/vnc/config ~/.vnc/config
     ln -sf `pwd`/tmux/tmux.conf ~/.tmux.conf
     ln -sf `pwd`/qtile/config.py ~/.config/qtile/config.py
+    ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ```
 
 1. Start and enable the VNC server
