@@ -118,4 +118,12 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/vnc/config ~/.vnc/config
     ln -sf `pwd`/tmux/tmux.conf ~/.tmux.conf
+    ln -sf `pwd`/qtile/config.py ~/.config/qtile/config.py
+    ```
+
+1. Start and enable the VNC server
+
+    ```bash
+    systemctl start vncserver@:1
+    systemctl enable vncserver@:1
     ```
