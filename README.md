@@ -26,13 +26,16 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Create symlinks to all of our configuration files:
 
     ```bash
-    mkdir -p ~/.config/yabai ~/.config/skhd
+    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/alacritty
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/yabai/yabairc ~/.config/yabai
     ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
+    ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
+
+1. Download and install the [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono?query=Roboto+mono) font.
 
 1. Install [Homebrew](https://brew.sh).
 
@@ -40,7 +43,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
     ```bash
     brew install --cask visual-studio-code
-    brew install --cask iterm2
+    brew install --cask alacritty
     brew install --cask gcc-arm-embedded
     brew install kicad
     brew install gh
@@ -69,12 +72,6 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     brew services start yabai
     brew services start skhd
     ```
-
-1. Activate the Dracula theme in iTerm2:
-
-    1. iTerm2 > Preferences > Profiles
-    1. Click on Other Actions > Import JSON Profiles
-    1. Select ~/tools/dev-config/iterm-config.json
 
 1. Install dependencies for Verilog-HDL and GTKWave
 
