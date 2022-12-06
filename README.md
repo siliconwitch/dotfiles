@@ -89,16 +89,39 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
 ## On Arch Linux
 
+1. Update `makepkg.conf` to match the number of cores:
+
+    ```bash
+    # Check how many threads are available on the CPU
+    nproc
+
+    # Edit the line in the makepkg.conf file
+    nano /etc/makepkg.conf
+    #
+    #   # Uncomment the line, and set the number to
+    #   # your number of threads. E.g 16
+    #   MAKEFLAGS="-j16"
+    #
+    ```
+1. Install the `yay` helper for `pacman`. Be sure to install git first:
+
+    ```bash
+    sudo pacman -Sy git
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    ```
+
 1. Update the mirrors and system:
 
     ```bash
-    sudo pacman -Syu
+    yay
     ```
 
-1. Install these tools using pacman
+1. Install these tools using `yay`
 
     ```bash
-    sudo pacman -S tmux git base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty picom
+     yay -S tmux base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono picom rofi rofi-calc
     ```
 
 1. Clone this repository into a folder named `tools`:
@@ -139,9 +162,19 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     - [Digilent Waveforms](https://digilent.com/shop/software/digilent-waveforms/download) can be installed through [AUR](https://aur.archlinux.org/packages/digilent.waveforms):
 
         ```bash
+        yay -S aur/digilent.waveforms
+
+        # Okay to remove dependencies after install (press Y)
+
+        # No need to show diff if prompted (press N)
         ```
     
     - [J-Link Tools](https://www.segger.com/downloads/jlink/) can be installed through [AUR](https://aur.archlinux.org/packages/jlink):
 
         ```bash
+        yay -S aur/jlink-software-and-documentation
+
+        # Okay to remove dependencies after install (press Y)
+
+        # No need to show diff if prompted (press N)
         ```

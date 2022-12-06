@@ -17,8 +17,11 @@ keys = [
     # Cmd-Space starts the Terminal
     Key([mod], "space", lazy.spawn(terminal), desc = "Launch terminal"),
 
-    # Cmd-R runs the prompt widget - TODO change this to Rofi
-    Key([mod], "r", lazy.spawncmd(), desc = "Spawn a command using a prompt widget"),
+    # Cmd-R runs the Rofi application launcher
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc = "Run application launcher"),
+    
+    # Cmd-R runs the Rofi in calculator mode
+    Key([mod, "shift"], "c", lazy.spawn("rofi -show calc -modi calc -no-show-match -no-sort"), desc = "Run qalculate in rofi"),
     
     # Cmd-Arrow switches between windows
     Key([mod], "left", lazy.layout.left(), desc = "Move focus to left"),
