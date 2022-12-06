@@ -9,8 +9,8 @@ if [ "`uname -n`" = lab ] || [ "`uname -n`" = remote-lab ]; then
 	# Set the history file
 	export HISTFILE=~/.histfile
 	
-	# Add alias for easy updating
-	alias update='sudo pacman -Syu'
+	# Export the DESKTOP variable in order to run the Signalhound Spike software
+	export DISPLAY=:1
 fi
 
 # If running on MacOS
