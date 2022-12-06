@@ -25,6 +25,3 @@
 [submodule "zsh/zsh-syntax-highlighting-dracula-theme"]
 	path = zsh/zsh-syntax-highlighting-dracula-theme
 	url = https://github.com/dracula/zsh-syntax-highlighting.git
-[submodule "iterm/iterm-dracula-theme"]
-	path = iterm/iterm-dracula-theme
-	url = https://github.com/dracula/iterm.git
