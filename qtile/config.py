@@ -104,39 +104,8 @@ screens = [
         wallpaper = "~/tools/dev-config/qtile/wallpaper.jpg",
         wallpaper_mode = "fill",
 
-        # Configure the bar
-        bottom=bar.Bar(
-            [
-                # The screen selector
-                widget.GroupBox(
-                    foreground = "FAFAFA",
-                    active = "FAFAFA",
-                    inactive = "FAFAFA80",
-                    highlight_method = "line",
-                    highlight_color = ["000000","000000"],
-                    this_current_screen_border = "66df48",
-                ),
-
-                # Run launcher TODO change this to Rofi
-                widget.Prompt(),
-
-                # Gap
-                widget.Spacer(),
-
-                # Clock
-                widget.Clock(format="%H:%M, %d %b %Y"),
-            ],
-
-            # Bar height
-            50,
-
-            # Top margin should be 8 to match the other gaps
-            margin = [8, 0, 0, 0],
-
-            # Set the background to semi transparent
-            background="#00000055"
-        ),
-        
+        # 8 pixel gap around the whole window. We don't use a bar
+        bottom=bar.Gap(8),
         right=bar.Gap(8),
         left=bar.Gap(8),
         top=bar.Gap(8)
