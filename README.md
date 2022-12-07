@@ -121,7 +121,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Install these tools using `yay`
 
     ```bash
-     yay -S tmux base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono picom rofi rofi-calc
+     yay -S tmux base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono noto-fonts-emoji picom rofi rofi-calc
     ```
 
 1. Clone this repository into a folder named `tools`:
@@ -160,6 +160,16 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
     - [Efinix Efinity Software](https://www.efinixinc.com/support/efinity.php)
     - [Signalhound Spike](https://signalhound.com/spike/)
+    - [VNA/J Software](https://download.dl2sba.com/vnaj/3.4.8/)
+
+        ```bash
+        # Java is required
+        yay -S jre-openjdk
+
+        # Run VNA/J jar file from the terminal using
+        java -jar vnaJ.3.4.8.jar
+        ```
+
     - [Digilent Waveforms](https://digilent.com/shop/software/digilent-waveforms/download) can be installed through [AUR](https://aur.archlinux.org/packages/digilent.waveforms):
 
         ```bash
