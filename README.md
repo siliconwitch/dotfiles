@@ -91,39 +91,39 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
 ## On Arch Linux
 
-1. Install git, and the base development tools:
+1. Start with a full update:
 
     ```bash
-    sudo pacman -Sy git base-devel
-
-    # Set up the git globals
-    git config --global user.name "my name"
-    git config --global user.email "mymail@gmail.com"
+    pacman -Sy archlinux-keyring && pacman -Su
     ```
 
-1. Install the `yay` packager install helper:
-
-    ``` bash
-    # Clone the repository
-    git clone https://aur.archlinux.org/yay.git ~/tools/yay
-    
-    # go into the cloned directory
-    cd ~/tools/yay
-
-    # Make and install yay
-    makepkg -si
-    ```
-
-1. Update the mirrors and system:
+1. Install all of our required applications:
 
     ```bash
-    yay
+    pacman -Sy zsh git base-devel tmux github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono noto-fonts-emoji picom rofi rofi-calc
     ```
 
-1. Install all of our applications using `yay`:
+1. Set up a new user. **Be sure to change** `username` to your user:
 
     ```bash
-    yay -Sy tmux github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono noto-fonts-emoji picom rofi rofi-calc
+    useradd -m -G wheel -s /bin/zsh username
+    passwd username
+
+    # Edit the sudoers file
+    nano /etc/sudoers
+    #
+    #   Uncomment the line
+    #   %wheel   ALL=(ALL)   ALL
+    #
+
+    # Switch to the newly created user account
+    su username
+    ```
+
+1. Change the hostname to `lab` or `remote-lab`:
+
+    ```bash
+    hostnamectl set-hostname remote-lab
     ```
 
 1. Clone this repository:
@@ -145,17 +145,64 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ```
 
+1. Delete old bash related files:
+
+    ```bash
+    rm ~/.bash*
+    ```
+
 1. Add your username to the `vncserver.users` file. **Be sure to change** `username` to your user:
 
 	```bash
 	sudo sh -c 'echo ":1=username" >> /etc/tigervnc/vncserver.users'
 	```
 
-1. Start and enable the VNC server
+1. Set the VNC password:
+
+    ```bash
+    vncpasswd
+    ```
+
+1. Start and enable the VNC server:
 
     ```bash
     sudo systemctl start vncserver@:1
     sudo systemctl enable vncserver@:1
+    ```
+
+1. Exit and login again to see the completed environment. **Be sure to change** `username` to your user:
+
+    ```bash
+    exit
+
+    # Connect with SSH and pass the the VNC port to localhost
+    ssh -L 5901:127.0.0.1:5901 username@<IP_ADDR>
+    ```
+
+### Optional stuff
+
+1. Set up for git pushes:
+
+    ```bash
+    # Set up the git globals
+    git config --global user.name "my name"
+    git config --global user.email "mymail@gmail.com"
+
+    # Log into a github account (use the https option)
+    gh auth login
+    ```
+
+1. Optionally, install the `yay` helper for `pacman`:
+
+    ``` bash
+    # Clone the repository
+    git clone https://aur.archlinux.org/yay.git ~/tools/yay
+    
+    # go into the cloned directory
+    cd ~/tools/yay
+
+    # Make and install yay
+    makepkg -si
     ```
 
 1. Optionally, install these hardware related tools:
@@ -163,7 +210,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     - [Efinix Efinity Software](https://www.efinixinc.com/support/efinity.php)
 
         ```bash
-        # You will need to install the cryptx library
+        # You may need to install the cryptx library
         yay -S libxcrypt-compat
         ```
 
