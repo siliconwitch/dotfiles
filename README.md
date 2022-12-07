@@ -4,42 +4,23 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
 ## On MacOS
 
-1. Ensure that the MacOS command line tools are installed:
+1. Install git, and the base development tools:
 
     ```bash
     xcode-select --install
-    ```
 
-1. Set the basic git globals:
-
-    ```bash
+    # Set up the git globals
     git config --global user.name "my name"
     git config --global user.email "mymail@gmail.com"
     ```
-1. Clone this repository into a folder named `tools`:
+
+1. Install the [Homebrew](https://brew.sh) package manager.
 
     ```bash
-    git clone --recursive https://github.com/siliconwitch/dev-config.git ~/tools/dev-config
-    cd ~/tools/dev-config
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
 
-1. Create symlinks to all of our configuration files:
-
-    ```bash
-    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/alacritty
-    ln -sf `pwd`/zsh/zshrc ~/.zshrc
-    ln -sf `pwd`/yabai/yabairc ~/.config/yabai
-    ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
-    ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-    ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
-    ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
-    ```
-
-1. Download and install the [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono?query=Roboto+mono) font.
-
-1. Install [Homebrew](https://brew.sh).
-
-1. Then install these tools using the brew command:
+1. Install all of our applications using `brew`:
 
     ```bash
     brew install --cask visual-studio-code
@@ -62,8 +43,29 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-nexus
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40
     brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+    brew tap homebrew/cask-fonts
+    brew install font-roboto-mono
     ```
     
+1. Clone this repository:
+
+    ```bash
+    git clone --recursive https://github.com/siliconwitch/dev-config.git ~/tools/dev-config
+    cd ~/tools/dev-config
+    ```
+
+1. Create symlinks to all of our configuration files:
+
+    ```bash
+    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/alacritty
+    ln -sf `pwd`/zsh/zshrc ~/.zshrc
+    ln -sf `pwd`/yabai/yabairc ~/.config/yabai
+    ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
+    ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+    ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
+    ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
+    ```
+
 1. You will need to [enable the Hyper key](https://holmberg.io/hyper-key/) using karabiner-elements.
 
 1. Enable Yabai and SKHD with the commands:
@@ -89,26 +91,26 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
 ## On Arch Linux
 
-1. Update `makepkg.conf` to match the number of cores:
+1. Install git, and the base development tools:
 
     ```bash
-    # Check how many threads are available on the CPU
-    nproc
+    sudo pacman -Sy git base-devel
 
-    # Edit the line in the makepkg.conf file
-    nano /etc/makepkg.conf
-    #
-    #   # Uncomment the line, and set the number to
-    #   # your number of threads. E.g 16
-    #   MAKEFLAGS="-j16"
-    #
+    # Set up the git globals
+    git config --global user.name "my name"
+    git config --global user.email "mymail@gmail.com"
     ```
-1. Install the `yay` helper for `pacman`. Be sure to install git first:
 
-    ```bash
-    sudo pacman -Sy git
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
+1. Install the `yay` packager install helper:
+
+    ``` bash
+    # Clone the repository
+    git clone https://aur.archlinux.org/yay.git ~/tools/yay
+    
+    # go into the cloned directory
+    cd ~/tools/yay
+
+    # Make and install yay
     makepkg -si
     ```
 
@@ -118,13 +120,13 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     yay
     ```
 
-1. Install these tools using `yay`
+1. Install all of our applications using `yay`:
 
     ```bash
-     yay -S tmux base-devel github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono noto-fonts-emoji picom rofi rofi-calc
+    yay -Sy tmux github-cli fzf tigervnc micro chromium xorg-server xorg-xinit qtile alacritty ttf-roboto-mono noto-fonts-emoji picom rofi rofi-calc
     ```
 
-1. Clone this repository into a folder named `tools`:
+1. Clone this repository:
 
     ```bash
     git clone --recursive https://github.com/siliconwitch/dev-config.git ~/tools/dev-config
@@ -143,10 +145,10 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ```
 
-1. Edit the file `/etc/tigervnc/vncserver.users` and add the line:
+1. Add your username to the `vncserver.users` file. **Be sure to change** `username` to your user:
 
 	```bash
-	:1=lab
+	sudo sh -c 'echo ":1=username" >> /etc/tigervnc/vncserver.users'
 	```
 
 1. Start and enable the VNC server
@@ -159,12 +161,21 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Optionally, install these hardware related tools:
 
     - [Efinix Efinity Software](https://www.efinixinc.com/support/efinity.php)
+
+        ```bash
+        # You will need to install the cryptx library
+        yay -S libxcrypt-compat
+        ```
+
     - [Signalhound Spike](https://signalhound.com/spike/)
-    - [VNA/J Software](https://download.dl2sba.com/vnaj/3.4.8/)
+    - [VNA/J Software](https://vnaj.dl2sba.com)
 
         ```bash
         # Java is required
         yay -S jre-openjdk
+
+        # Add the user to the tty group 
+        sudo usermod -aG tty lab
 
         # Run VNA/J jar file from the terminal using
         java -jar vnaJ.3.4.8.jar
