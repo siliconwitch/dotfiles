@@ -1,35 +1,32 @@
-## Hyper - Arrow keys switch focus
-hyper - up : yabai -m window --focus north
-hyper - right : yabai -m window --focus east
-hyper - down : yabai -m window --focus south
-hyper - left : yabai -m window --focus west
-
-## Fn - Arrow keys swap windows
+# Function - Arrow keys swap windows
 pageup : yabai -m window --warp north
 end : yabai -m window --warp east
 pagedown : yabai -m window --warp south
 home : yabai -m window --warp west
 
-## Hyper - W closes the active application
-hyper - w : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+# Shift - Function - Arrow keys switch focus
+shift - pageup : yabai -m window --focus north
+shift - end : yabai -m window --focus east
+shift - pagedown : yabai -m window --focus south
+shift - home : yabai -m window --focus west
 
-## Hyper - F toggles app to full screen
-hyper - f : yabai -m window --toggle zoom-fullscreen
+# Function - F toggles app to full screen
+fn - f : yabai -m window --toggle zoom-fullscreen
 
-## Hyper - R rotates everything 90 degrees
-hyper - r : yabai -m space --rotate 90
+# Function - R rotates everything 90 degrees
+fn - r : yabai -m space --rotate 90
 
-## Hyper - E flips the tree vertically
-hyper - e : yabai -m space --mirror y-axis
+# Function - E flips the tree vertically
+fn - e : yabai -m space --mirror y-axis
 
-# Hyper - B re-balances all the windows
-hyper - b : yabai -m space --balance
+# Function - B re-balances all the windows
+fn - b : yabai -m space --balance
 
 # Function - esc toggles yabai to manage or not
 fn - escape : ~/tools/dev-config/yabai/toggle-mode.sh
 
-## Hyper - Space opens a new terminal
-hyper - space : open -na /Applications/alacritty.app
+# Function - Space opens a new terminal
+fn - space : open -na Terminal
 
-## Hyper - Enter opens a new VSCode instance
-hyper - return : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n
+# Function - Enter opens a new VSCode instance
+fn - 0x4C : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n

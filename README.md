@@ -23,28 +23,15 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Install all of our applications using `brew`:
 
     ```bash
-    brew install --cask visual-studio-code
-    brew install --cask alacritty
-    brew install --cask gcc-arm-embedded
-    brew install kicad
-    brew install gh
-    brew install fzf
-    brew install karabiner-elements
-    brew install koekeishiya/formulae/yabai
-    brew install koekeishiya/formulae/skhd
-    brew install wget
-    brew install go
-    brew install rust
-    brew install gtkwave
-    brew install icarus-verilog
-    brew install openfpgaloader
-    brew install homebrew/cask-drivers/segger-jlink
-    brew install homebrew/cask-drivers/nordic-nrf-command-line-tools
-    brew install --HEAD siliconwitchery/oss-fpga/nextpnr-nexus
+    # GUI applications
+    brew install --cask visual-studio-code gcc-arm-embedded kicad balenaetcher discord drawio figma google-chrome obs raspberry-pi-imager remarkable rekordbox sidequest slack spotify steam the-unarchiver vlc vnc-viewer
+
+    # Terminal applications
+    brew install homebrew/cask-drivers/nordic-nrf-command-line-tools homebrew/cask-drivers/segger-jlink homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai fzf gh go gtkwave icarus-verilog python rust
+
+    # Optional things
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40
     brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-    brew tap homebrew/cask-fonts
-    brew install font-roboto-mono
     ```
     
 1. Clone this repository:
@@ -57,11 +44,10 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 1. Create symlinks to all of our configuration files:
 
     ```bash
-    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/alacritty
+    mkdir -p ~/.config/yabai ~/.config/skhd
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/yabai/yabairc ~/.config/yabai
     ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
-    ln -sf `pwd`/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
@@ -80,19 +66,6 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ``` bash
     cargo install svls
     sudo perl -MCPAN -e 'install Switch'
-    ```
-
-1. Update the Alacritty icon using this script from [hmarr](https://github.com/hmarr/dotfiles):
-
-    ```bash
-    ./alacritty/update-alacritty-icon.sh
-    ```
-
-1. Cleanup:
-
-    ```bash
-    brew cleanup
-    brew autoremove
     ```
 
 ## On Arch Linux
