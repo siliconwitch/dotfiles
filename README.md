@@ -14,7 +14,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     git config --global user.email "mymail@gmail.com"
     ```
 
-1. Install the [Homebrew](https://brew.sh) package manager.
+1. Install the [Homebrew](https://brew.sh) package manager:
 
     ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -75,14 +75,20 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     brew services start skhd
     ```
 
-1. Install dependencies for Verilog-HDL and GTKWave
+1. Install dependencies for Verilog-HDL and GTKWave:
 
     ``` bash
     cargo install svls
     sudo perl -MCPAN -e 'install Switch'
     ```
 
-1. Cleanup
+1. Update the Alacritty icon using this script from [hmarr](https://github.com/hmarr/dotfiles):
+
+    ```bash
+    ./alacritty/update-alacritty-icon.sh
+    ```
+
+1. Cleanup:
 
     ```bash
     brew cleanup
