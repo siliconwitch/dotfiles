@@ -26,7 +26,10 @@ fn - b : yabai -m space --balance
 fn - escape : ~/tools/dev-config/yabai/toggle-mode.sh
 
 # Function - Space opens a new terminal
-fn - space : open -na Terminal
+fn - space : osascript -e 'tell app "Terminal" to do script ""'
 
 # Function - Enter opens a new VSCode instance
 fn - 0x4C : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n
+
+# Unbind Cmd - Q
+cmd - q : 
