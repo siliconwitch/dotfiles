@@ -7,6 +7,7 @@ yabai -m rule --add app="^System Settings$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Things$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Calculator$" sticky=on layer=above manage=off
+yabai -m rule --add app="^qalculate-gtk$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Spotify$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Slack$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Discord$" sticky=on layer=above manage=off
