@@ -26,10 +26,10 @@ hyper - e : yabai -m space --mirror y-axis
 hyper - b : yabai -m space --balance
 
 # Function - esc toggles yabai to manage or not
-fn - escape : ~/tools/dev-config/toggle-mode.sh
+fn - escape : ~/tools/dev-config/yabai/toggle-mode.sh
 
 ## Hyper - Space opens a new terminal
-hyper - space : open -na /Applications/iTerm.app
+hyper - space : open -na /Applications/alacritty.app
 
 ## Hyper - Enter opens a new VSCode instance
 hyper - return : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n
