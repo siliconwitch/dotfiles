@@ -14,7 +14,7 @@ if [ "`uname -n`" = lab ] || [ "`uname -n`" = remote-lab ]; then
 fi
 
 # If running on MacOS
-if [ "`uname -n`" = Rajs-MacBook-Air.local ]; then
+if [ "`uname -n`" = Rajs-Air ]; then
 
 	# Set path variables
 	export PATH=/opt/homebrew/bin:$PATH
