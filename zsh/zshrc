@@ -21,6 +21,8 @@ if [ "`uname`" = Darwin ]; then
 	export PATH=/Applications/gtkwave.app/Contents/Resources/bin:$PATH
 	export PATH=/Users/raj/.cargo/bin:$PATH
 	export PATH=/Users/raj/.local/bin:$PATH
+	export PATH=/Users/raj/.nrfutil/bin:$PATH
+	export PATH=/Users/raj/tools/lobster/bin:$PATH
 
 	# Add alias for easy updating                                                                         
 	alias update='brew upgrade; brew cleanup; brew autoremove'  
