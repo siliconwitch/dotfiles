@@ -60,8 +60,10 @@
     //
     // Python settings
     //
+    "python.formatting.provider": "none",
     "[python]": {
-        "editor.formatOnType": true
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
     },
     //
     // Verilog settings
@@ -91,5 +93,6 @@
         "randomizer",
         "verilog"
     ],
-    "liveServer.settings.donotShowInfoMsg": true
+    "liveServer.settings.donotShowInfoMsg": true,
+    "hediet.vscode-drawio.resizeImages": null
 }

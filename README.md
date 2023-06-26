@@ -24,10 +24,10 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
     ```bash
     # GUI applications
-    brew install --cask visual-studio-code gcc-arm-embedded kicad balenaetcher discord drawio figma google-chrome obs raspberry-pi-imager remarkable rekordbox sidequest slack spotify steam the-unarchiver vlc vnc-viewer
+    brew install --cask visual-studio-code gcc-arm-embedded kicad discord drawio figma google-chrome obs raspberry-pi-imager remarkable rekordbox spotify steam the-unarchiver vlc vnc-viewer saleae-logic
 
     # Terminal applications
-    brew install homebrew/cask-drivers/nordic-nrf-command-line-tools homebrew/cask-drivers/segger-jlink homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai esptool fzf gh go gtkwave icarus-verilog python qalculate-gtk rust
+    brew install homebrew/cask-drivers/nordic-nrf-command-line-tools homebrew/cask-drivers/segger-jlink homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai esptool fzf gh go python qalculate-gtk rust raycast
 
     # Optional things
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40

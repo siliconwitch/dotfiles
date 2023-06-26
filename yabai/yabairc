@@ -12,6 +12,7 @@ yabai -m rule --add app="^Spotify$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Slack$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Discord$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Simulator$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Raycast$" sticky=on layer=above manage=off
 
 # general space settings
 yabai -m config layout                       bsp

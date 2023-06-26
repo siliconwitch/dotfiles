@@ -1,14 +1,14 @@
-# Function - Arrow keys swap windows
-pageup : yabai -m window --warp north
-end : yabai -m window --warp east
-pagedown : yabai -m window --warp south
-home : yabai -m window --warp west
+# Function - Arrow keys switch focus
+pageup : yabai -m window --focus north
+end : yabai -m window --focus east
+pagedown : yabai -m window --focus south
+home : yabai -m window --focus west
 
-# Shift - Function - Arrow keys switch focus
-shift - pageup : yabai -m window --focus north
-shift - end : yabai -m window --focus east
-shift - pagedown : yabai -m window --focus south
-shift - home : yabai -m window --focus west
+# Shift - Function - Arrow keys swap windows
+shift - pageup : yabai -m window --warp north
+shift - end : yabai -m window --warp east
+shift - pagedown : yabai -m window --warp south
+shift - home : yabai -m window --warp west
 
 # Function - F toggles app to full screen
 fn - f : yabai -m window --toggle zoom-fullscreen
