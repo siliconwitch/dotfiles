@@ -28,10 +28,6 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
 
     # Terminal applications
     brew install homebrew/cask-drivers/nordic-nrf-command-line-tools homebrew/cask-drivers/segger-jlink homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai esptool fzf gh go python qalculate-gtk rust raycast
-
-    # Optional things
-    brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40
-    brew install --HEAD universal-ctags/universal-ctags/universal-ctags
     ```
     
 1. Clone this repository:
@@ -52,13 +48,11 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
 
-1. You will need to [enable the Hyper key](https://holmberg.io/hyper-key/) using karabiner-elements.
-
 1. Enable Yabai and SKHD with the commands:
 
     ```brew
-    brew services start yabai
-    brew services start skhd
+    yabai --start-service
+    skhd --start-service
     ```
 
 1. Install dependencies for Verilog-HDL and GTKWave:
