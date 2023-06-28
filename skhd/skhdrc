@@ -31,8 +31,5 @@ fn - space : osascript -e 'tell app "Terminal" to do script ""'
 # Function - Enter opens a new VSCode instance
 fn - 0x4C : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron -n
 
-# Function - C opens Qalculate
-fn - c : qalculate-gtk
-
 # Unbind Cmd - Q
 cmd - q : 

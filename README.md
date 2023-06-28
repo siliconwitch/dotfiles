@@ -27,7 +27,7 @@ Customized dev environments that I use on MacOS and Arch Linux. Follow these ins
     brew install --cask nordic-nrf-command-line-tools segger-jlink visual-studio-code gcc-arm-embedded kicad discord drawio figma google-chrome obs raspberry-pi-imager remarkable rekordbox spotify steam the-unarchiver vlc vnc-viewer saleae-logic
 
     # Terminal applications
-    brew install homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai esptool fzf gh go python qalculate-gtk rust raycast
+    brew install homebrew/cask-fonts/font-roboto-mono koekeishiya/formulae/skhd koekeishiya/formulae/yabai esptool fzf gh go python rust raycast
     ```
     
 1. Clone this repository:
