@@ -51,6 +51,10 @@
     "git.enableSmartCommit": true,
     "git.openRepositoryInParentFolders": "never",
     //
+    // C/C++ IntelliSense settings
+    //
+    "C_Cpp.default.compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+    //
     // Go settings
     //
     "go.toolsManagement.autoUpdate": true,
@@ -93,6 +97,5 @@
         "randomizer",
         "verilog"
     ],
-    "liveServer.settings.donotShowInfoMsg": true,
-    "hediet.vscode-drawio.resizeImages": null
+    "liveServer.settings.donotShowInfoMsg": true
 }
