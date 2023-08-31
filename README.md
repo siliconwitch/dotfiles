@@ -1,6 +1,6 @@
 # My Personal Dev Setup
 
-Customized dev environments that I use on MacOS and Arch Linux. Follow these instructions if you'd like to set up something similar.
+Customized dev environment that I use on MacOS. Follow these instructions if you'd like to set up something similar.
 
 ## On MacOS
 
