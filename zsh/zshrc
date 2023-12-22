@@ -1,5 +1,5 @@
 # If running on lab machine
-if [ "`uname -n`" = lab ] || [ "`uname -n`" = remote-lab ]; then
+if [ "`uname`" = Linux]; then
  
 	# Start tmux on login
 	if [ -z "$TMUX" ]; then
@@ -9,8 +9,12 @@ if [ "`uname -n`" = lab ] || [ "`uname -n`" = remote-lab ]; then
 	# Set the history file
 	export HISTFILE=~/.histfile
 	
-	# Export the DESKTOP variable in order to run the Signalhound Spike software
+	# Export the DESKTOP variable in order to run graphical apps on a VM
 	export DISPLAY=:1
+
+	# Settings for Radiant
+	export LIBGL_ALWAYS_SOFTWARE=1
+	export QTWEBENGINE_DISABLE_SANDBOX=1
 fi
 
 # If running on MacOS

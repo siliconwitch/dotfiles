@@ -7,7 +7,7 @@
     "editor.lineNumbers": "off",
     "editor.matchBrackets": "never",
     "editor.minimap.enabled": false,
-    "editor.occurrencesHighlight": false,
+    "editor.occurrencesHighlight": "off",
     "editor.overviewRulerBorder": false,
     "editor.renderLineHighlight": "none",
     "editor.rulers": [
@@ -22,6 +22,7 @@
     "workbench.editor.decorations.badges": false,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.showIcons": false,
+    "workbench.editor.tabActionCloseVisibility": false,
     "workbench.editor.tabCloseButton": "off",
     "workbench.editor.tabSizing": "shrink",
     "workbench.layoutControl.enabled": false,
@@ -63,6 +64,7 @@
     //
     // Python settings
     //
+    "python.createEnvironment.trigger": "off",
     "[python]": {
         "editor.formatOnType": true,
         "editor.defaultFormatter": "ms-python.black-formatter"
