@@ -1,6 +1,6 @@
 {
     //
-    // Personalization
+    // Look and feel
     //
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
@@ -35,12 +35,15 @@
     // Editor general functionality settings
     //
     "debug.onTaskErrors": "abort",
+    "diffEditor.ignoreTrimWhitespace": false,
     "editor.formatOnSave": true,
     "editor.suggestSelection": "recentlyUsedByPrefix",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
     "security.workspace.trust.enabled": false,
+    "terminal.integrated.defaultProfile.osx": "zsh",
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "terminal.integrated.enablePersistentSessions": false,
     //
@@ -65,6 +68,7 @@
     // Python settings
     //
     "python.createEnvironment.trigger": "off",
+    "python.defaultInterpreterPath": "/opt/homebrew/bin",
     "[python]": {
         "editor.formatOnType": true,
         "editor.defaultFormatter": "ms-python.black-formatter"
