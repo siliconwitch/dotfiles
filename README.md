@@ -1,10 +1,10 @@
 # My Personal Dev Setup
 
-Customized dev environment that I use on MacOS. Follow these instructions if you'd like to set up something similar.
+Customized dev environment that I use on my various machines. Follow these instructions if you'd like to set up something similar.
 
 ## On MacOS
 
-1. Install git, and the base development tools:
+1. Install git and the base development tools:
 
     ```sh
     xcode-select --install
@@ -48,26 +48,20 @@ Customized dev environment that I use on MacOS. Follow these instructions if you
 1. Clone this repository:
 
     ```sh
-    git clone --recursive https://github.com/siliconwitch/dev-config.git ~/tools/dev-config
-    cd ~/tools/dev-config
+    git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/tools/dotfiles
+    cd ~/tools/dotfiles
     ```
 
 1. Create symlinks to all of our configuration files:
 
     ```sh
-    mkdir -p ~/.config/yabai ~/.config/skhd
+    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/tmux
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/yabai/yabairc ~/.config/yabai
     ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
+    ls -sf `pwd`/tmux/tmux.conf ~/.config/tmux
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
-    ```
-
-1. Enable Yabai and SKHD with the commands:
-
-    ```sh
-    yabai --start-service
-    skhd --start-service
     ```
 
 1. Install dependencies for Verilog-HDL and GTKWave:
