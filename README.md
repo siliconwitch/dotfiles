@@ -59,7 +59,7 @@ Customized dev environment that I use on my various machines. Follow these instr
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/yabai/yabairc ~/.config/yabai
     ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
-    ls -sf `pwd`/tmux/tmux.conf ~/.config/tmux
+    ln -sf `pwd`/tmux/tmux.conf ~/.config/tmux
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
