@@ -12,6 +12,7 @@ Customized dev environment that I use on my various machines. Follow these instr
     # Set up the git globals
     git config --global user.name "my name"
     git config --global user.email "mymail@gmail.com"
+    git config --global core.excludesfile ~/.config/git/ignore
     ```
 
 1. Install the [Homebrew](https://brew.sh) package manager:
@@ -55,11 +56,12 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Create symlinks to all of our configuration files:
 
     ```sh
-    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/tmux
+    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/tmux ~/.config/git
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/yabai/yabairc ~/.config/yabai
     ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
     ln -sf `pwd`/tmux/tmux.conf ~/.config/tmux
+    ln -sf `pwd`/git/ignore ~/.config/git
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
