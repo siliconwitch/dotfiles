@@ -48,8 +48,8 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Clone this repository:
 
     ```sh
-    git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/tools/dotfiles
-    cd ~/tools/dotfiles
+    git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/.dotfiles
+    cd ~/.dotfiles
     ```
 
 1. Create symlinks to all of our configuration files:
