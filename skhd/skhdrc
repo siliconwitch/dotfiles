@@ -23,7 +23,7 @@ fn - e : yabai -m space --mirror y-axis
 fn - b : yabai -m space --balance
 
 # Function - esc toggles yabai to manage or not
-fn - escape : ~/tools/dev-config/yabai/toggle-mode.sh
+fn - escape : ~/.dotfiles/yabai/toggle-mode.sh
 
 # Function - Space opens a new terminal
 fn - space : osascript -e 'tell app "Terminal" to do script ""'
