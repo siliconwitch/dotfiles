@@ -18,6 +18,7 @@
     "explorer.decorations.badges": false,
     "explorer.openEditors.visible": 0,
     "problems.decorations.enabled": false,
+    "window.commandCenter": false,
     "workbench.colorTheme": "Gruvbox Dark Medium",
     "workbench.editor.decorations.badges": false,
     "workbench.editor.highlightModifiedTabs": true,
@@ -101,5 +102,10 @@
         "randomizer",
         "verilog"
     ],
+    "dart.flutterSdkPath": "/Users/raj/projects/flutter",
+    "hexeditor.columnWidth": 16,
+    "hexeditor.defaultEndianness": "little",
+    "hexeditor.inspectorType": "aside",
+    "hexeditor.showDecodedText": false,
     "liveServer.settings.donotShowInfoMsg": true
 }

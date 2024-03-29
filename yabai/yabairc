@@ -3,15 +3,15 @@
 # https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc
 
 # Float some windows rather than fixing them
-yabai -m rule --add app="^System Settings$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Things$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Calculator$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Spotify$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Slack$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Discord$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Simulator$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Raycast$" sticky=on layer=above manage=off
+yabai -m rule --add app="^System Settings$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Finder$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Things$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Calculator$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Spotify$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Slack$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Discord$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Simulator$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Raycast$" sticky=on sub-layer=above manage=off
 
 # general space settings
 yabai -m config layout                       bsp

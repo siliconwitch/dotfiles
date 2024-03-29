@@ -26,7 +26,7 @@ if [ "`uname`" = Darwin ]; then
 	export PATH=/Users/$USER/.cargo/bin:$PATH
 	export PATH=/Users/$USER/.local/bin:$PATH
 	export PATH=/Users/$USER/.nrfutil/bin:$PATH
-
+	export PATH=/Users/$USER/projects/flutter:$PATH
 	# Add alias for easy updating                                                                         
 	alias update='brew upgrade; brew cleanup; brew autoremove'  
 fi
