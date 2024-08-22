@@ -22,13 +22,15 @@ if [ "`uname`" = Darwin ]; then
 
 	# Set path variables
 	export PATH=/opt/homebrew/bin:$PATH
+	export PATH=/opt/homebrew/opt/openjdk@17/bin:$PATH
 	export PATH=/Applications/gtkwave.app/Contents/Resources/bin:$PATH
 	export PATH=/Users/$USER/.cargo/bin:$PATH
 	export PATH=/Users/$USER/.local/bin:$PATH
 	export PATH=/Users/$USER/.nrfutil/bin:$PATH
 	export PATH=/Users/$USER/projects/flutter:$PATH
-	# Add alias for easy updating                                                                         
-	alias update='brew upgrade; brew cleanup; brew autoremove'  
+
+	# Alias for easy updating
+	alias update='brew upgrade; brew cleanup; brew autoremove'
 fi
 
 # Remaining settings are common to all machines
@@ -68,3 +70,10 @@ bindkey '^[[B' history-substring-search-down
 # Set alias for ls
 alias ls='ls --color=auto'
 alias la='ls -la --color=auto'
+
+# Got aliases
+alias gs='git status'
+alias gl='git log'
+alias gp='git fetch -p'
+alias gd='git branch -d'
+alias gD='git branch -D'

@@ -25,12 +25,12 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Create symlinks to all of our configuration files:
 
     ```sh
-    mkdir -p ~/.config/yabai ~/.config/skhd ~/.config/tmux ~/.config/git
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
-    ln -sf `pwd`/yabai/yabairc ~/.config/yabai
-    ln -sf `pwd`/skhd/skhdrc ~/.config/skhd
-    ln -sf `pwd`/tmux/tmux.conf ~/.config/tmux
-    ln -sf `pwd`/git/ignore ~/.config/git
+    ln -sf `pwd`/nvim/ ~/.config/nvim
+    ln -sf `pwd`/yabai/ ~/.config/yabai
+    ln -sf `pwd`/skhd/ ~/.config/skhd
+    ln -sf `pwd`/tmux/ ~/.config/tmux
+    ln -sf `pwd`/git/ ~/.config/git
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
