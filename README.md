@@ -26,6 +26,7 @@ Customized dev environment that I use on my various machines. Follow these instr
 
     ```sh
     ln -sf `pwd`/zsh/zshrc ~/.zshrc
+    ln -sf `pwd`/wezterm/ ~/.config/wezterm
     ln -sf `pwd`/nvim/ ~/.config/nvim
     ln -sf `pwd`/yabai/ ~/.config/yabai
     ln -sf `pwd`/skhd/ ~/.config/skhd
@@ -44,7 +45,7 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Install all of our applications using `brew`:
 
     ```sh
-    brew install affinity-photo arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave homebrew/cask-fonts/font-roboto-mono icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox remarkable saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom micro tmux
+    brew install neovim wezterm affinity-photo arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox remarkable saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom micro tmux
 
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
     ```

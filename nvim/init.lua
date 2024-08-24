@@ -24,11 +24,21 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+    { "scottmckendry/cyberdream.nvim", lazy = false, priority = 1000 }
   },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "catppuccin" } },
-  -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
+require("cyberdream").setup({
+  -- Enable transparent background
+  transparent = true,
+
+  -- Set terminal colors used in `:terminal`
+  terminal_colors = false,
+
+  theme = {
+    variant = "default",
+  }
+})
+
+vim.cmd("colorscheme cyberdream")
