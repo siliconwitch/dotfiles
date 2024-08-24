@@ -16,9 +16,3 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "zsh/zsh-dracula-theme"]
-	path = zsh/zsh-dracula-theme
-	url = https://github.com/dracula/zsh.git
-[submodule "zsh/zsh-syntax-highlighting-dracula-theme"]
-	path = zsh/zsh-syntax-highlighting-dracula-theme
-	url = https://github.com/tabrezm/zsh-syntax-highlighting.git
