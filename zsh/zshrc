@@ -55,7 +55,7 @@ source ~/.dotfiles/zsh/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
 source ~/.dotfiles/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Set the syntax highlight options for the syntax highlight dracula theme
+# Set the syntax highlight options
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Prompt layout
