@@ -11,7 +11,7 @@ return {
     selection_bg = "#3c4048",
 
     scrollbar_thumb = "#16181a",
-    split = "#7b8496",
+    split = "rgba(0,0,0,0)", -- "#7b8496", -- TODO Enable once split can look balanced
 
     ansi = { "#16181a", "#ff6e5e", "#5eff6c", "#f1ff5e", "#5ea1ff", "#bd5eff", "#5ef1ff", "#ffffff" },
     brights = { "#3c4048", "#ff6e5e", "#5eff6c", "#f1ff5e", "#5ea1ff", "#bd5eff", "#5ef1ff", "#ffffff" },

@@ -29,10 +29,10 @@ config.window_padding = {
     left = 50,
     right = 50,
     top = 50,
-    bottom = 50,
+    bottom = 30,
 }
 
-config.underline_thickness = 1
+config.underline_thickness = 2
 config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
@@ -110,6 +110,11 @@ config.keys = {
         key = "UpArrow",
         action = wezterm.action.AdjustPaneSize { "Up", 5 }
     },
+}
+
+config.inactive_pane_hsb = {
+    saturation = 0.5,
+    brightness = 0.8,
 }
 
 return config
