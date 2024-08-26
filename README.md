@@ -25,13 +25,14 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Create symlinks to all of our configuration files:
 
     ```sh
-    ln -sf `pwd`/zsh/zshrc ~/.zshrc
-    ln -sf `pwd`/wezterm/ ~/.config/wezterm
+    ln -sf `pwd`/git/ ~/.config/git
+    ln -sf `pwd`/htop/ ~/.config/htop
     ln -sf `pwd`/nvim/ ~/.config/nvim
-    ln -sf `pwd`/yabai/ ~/.config/yabai
     ln -sf `pwd`/skhd/ ~/.config/skhd
     ln -sf `pwd`/tmux/ ~/.config/tmux
-    ln -sf `pwd`/git/ ~/.config/git
+    ln -sf `pwd`/wezterm/ ~/.config/wezterm
+    ln -sf `pwd`/yabai/ ~/.config/yabai
+    ln -sf `pwd`/zsh/zshrc ~/.zshrc
     ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
     ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
     ```
@@ -45,7 +46,7 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Install all of our applications using `brew`:
 
     ```sh
-    brew install neovim wezterm affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox remarkable saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom micro tmux
+    brew install neovim wezterm affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
 
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
     ```

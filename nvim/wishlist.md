@@ -13,3 +13,8 @@
 - [ ] Debug
 - [ ] Clean up the power-line
 - [ ] Document all the custom key-maps
+
+# Terminal wishlist
+
+- [ ] Cmd-Space style actions for calculator & conversion
+- [ ] Launch common applications from terminal
