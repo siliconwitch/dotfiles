@@ -13,6 +13,6 @@
 [submodule "zsh/zsh-you-should-use"]
 	path = zsh/zsh-you-should-use
 	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
-[submodule "tmux/tpm"]
-	path = tmux/tpm
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
