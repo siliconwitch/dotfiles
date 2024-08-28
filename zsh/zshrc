@@ -1,14 +1,6 @@
 # If running on lab machine
 if [ "`uname`" = Linux ]; then
  
-	# Start tmux on login
-	if [ -z "$TMUX" ]; then
-		tmux attach -t default || tmux new -s default
-	fi
-
-	# Set the history file
-	export HISTFILE=~/.histfile
-	
 	# Export the DESKTOP variable in order to run graphical apps on a VM
 	export DISPLAY=:1
 
@@ -33,23 +25,20 @@ if [ "`uname`" = Darwin ]; then
 	alias update='brew upgrade; brew cleanup; brew autoremove'
 fi
 
-# Remaining settings are common to all machines
+# Start tmux when opening a new terminal
+if [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi
+ 
+# History settings
+export HISTFILE=~/.histfile
+export HISTSIZE=10000 # How many commands zsh will load to memory.
+export SAVEHIST=10000 # How maney commands history will save on file.
+setopt HIST_IGNORE_ALL_DUPS # History won't save duplicates.
+setopt HIST_FIND_NO_DUPS # History won't show duplicates on search.
+setopt INC_APPEND_HISTORY # Add lines to history as they are entered
 
-# How many commands zsh will load to memory.
-export HISTSIZE=10000
-
-# How maney commands history will save on file.
-export SAVEHIST=10000
-
-# History won't save duplicates.
-setopt HIST_IGNORE_ALL_DUPS
-
-# History won't show duplicates on search.
-setopt HIST_FIND_NO_DUPS
-
-# Add lines to history as they are entered
-setopt INC_APPEND_HISTORY
-
+# Enable plugins
 source ~/.dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.dotfiles/zsh/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
 source ~/.dotfiles/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -70,7 +59,7 @@ bindkey '^[[B' history-substring-search-down
 alias ls='ls --color=auto'
 alias la='ls -la --color=auto'
 
-# Got aliases
+# Git aliases
 alias gs='git status'
 alias gl='git log'
 alias gp='git fetch -p'
