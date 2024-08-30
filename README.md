@@ -46,7 +46,7 @@ Customized dev environment that I use on my various machines. Follow these instr
 1. Install all of our applications using `brew`:
 
     ```sh
-    brew install neovim wezterm affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
+    brew install neovim wezterm ical-buddy affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
 
     brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
     ```

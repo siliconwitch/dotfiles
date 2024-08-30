@@ -65,3 +65,6 @@ alias gl='git log'
 alias gp='git fetch -p'
 alias gd='git branch -d'
 alias gD='git branch -D'
+
+# Turn off sounds
+unsetopt BEEP
