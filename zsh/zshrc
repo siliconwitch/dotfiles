@@ -26,17 +26,30 @@ if [ "`uname`" = Darwin ]; then
 fi
 
 # Start tmux when opening a new terminal
-if [ -z "$TMUX" ]; then
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
     tmux attach -t default || tmux new -s default
 fi
- 
+
+# Shortcut to clear the screen
+function clear-scrollback-and-screen {
+  zle clear-screen
+  tmux clear-history
+}
+zle -N clear-scrollback-and-screen
+bindkey ^o clear-scrollback-and-screen
+
 # History settings
-export HISTFILE=~/.histfile
-export HISTSIZE=10000 # How many commands zsh will load to memory.
-export SAVEHIST=10000 # How maney commands history will save on file.
-setopt HIST_IGNORE_ALL_DUPS # History won't save duplicates.
-setopt HIST_FIND_NO_DUPS # History won't show duplicates on search.
-setopt INC_APPEND_HISTORY # Add lines to history as they are entered
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS   # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
+setopt SHARE_HISTORY          # Share history between all sessions.
 
 # Enable plugins
 source ~/.dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -51,7 +64,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 # Prompt layout
 source ~/.dotfiles/zsh/prompt.zsh
 
-# History search keybindings
+# History search keybindings and options
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
