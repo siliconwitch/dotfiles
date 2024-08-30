@@ -1,15 +1,53 @@
-# If running on lab machine
-if [ "`uname`" = Linux ]; then
- 
-	# Export the DESKTOP variable in order to run graphical apps on a VM
-	export DISPLAY=:1
+# Set useful aliases
+alias ls='ls --color=auto'
+alias la='ls -la --color=auto'
 
-	# Settings for Radiant
-	export LIBGL_ALWAYS_SOFTWARE=1
-	export QTWEBENGINE_DISABLE_SANDBOX=1
+alias nv='nvim'
+alias vim='nvim'
+
+alias gs='git status'
+alias gl='git log'
+alias gp='git fetch -p'
+alias gd='git branch -d'
+alias gD='git branch -D'
+
+# Shortcut to clear the screen
+function clear-scrollback-and-screen { zle clear-screen; tmux clear-history }
+zle -N clear-scrollback-and-screen
+bindkey ^o clear-scrollback-and-screen
+
+# History search keybindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Auto cd
+setopt autocd
+
+# Turn off sounds
+unsetopt BEEP
+
+# History settings
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS   # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
+setopt SHARE_HISTORY          # Share history between all sessions.
+
+# Custom prompt layout
+source ~/.dotfiles/zsh/prompt.zsh
+
+# Start tmux when opening a new terminal
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    tmux attach -t default || tmux new -s default
 fi
 
-# If running on MacOS
+# MacOS specific settings
 if [ "`uname`" = Darwin ]; then
 
 	# Set path variables
@@ -25,59 +63,21 @@ if [ "`uname`" = Darwin ]; then
 	alias update='brew upgrade; brew cleanup; brew autoremove'
 fi
 
-# Start tmux when opening a new terminal
-if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-    tmux attach -t default || tmux new -s default
+# Linux specific settings
+if [ "`uname`" = Linux ]; then
+ 
+	# Export the DESKTOP variable in order to run graphical apps on a VM
+	export DISPLAY=:1
+
+	# Settings for Radiant
+	export LIBGL_ALWAYS_SOFTWARE=1
+	export QTWEBENGINE_DISABLE_SANDBOX=1
 fi
 
-# Shortcut to clear the screen
-function clear-scrollback-and-screen {
-  zle clear-screen
-  tmux clear-history
-}
-zle -N clear-scrollback-and-screen
-bindkey ^o clear-scrollback-and-screen
-
-# History settings
-export HISTFILE=~/.zsh_history
-export HISTSIZE=1000000
-export SAVEHIST=$HISTSIZE
-setopt EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
-setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
-setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
-setopt HIST_IGNORE_ALL_DUPS   # Delete an old recorded event if a new event is a duplicate.
-setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
-setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
-setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
-setopt SHARE_HISTORY          # Share history between all sessions.
-
-# Enable plugins
+# Source plugins
 source ~/.dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.dotfiles/zsh/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
 source ~/.dotfiles/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.dotfiles/zsh/zsh-you-should-use/you-should-use.plugin.zsh
 
-# Set the syntax highlight options
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-# Prompt layout
-source ~/.dotfiles/zsh/prompt.zsh
-
-# History search keybindings and options
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-# Set alias for ls
-alias ls='ls --color=auto'
-alias la='ls -la --color=auto'
-
-# Git aliases
-alias gs='git status'
-alias gl='git log'
-alias gp='git fetch -p'
-alias gd='git branch -d'
-alias gD='git branch -D'
-
-# Turn off sounds
-unsetopt BEEP
