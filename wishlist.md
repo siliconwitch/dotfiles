@@ -2,7 +2,7 @@
 
 - [x] Autocomplete & snippets
 - [ ] Dashboard to select recent projects
-- [ ] Shortcut to split view
+- [x] Shortcut to split view
 - [ ] Styled tabs
 - [ ] Git overview page
 - [ ] Spellchecking
@@ -18,3 +18,4 @@
 
 - [ ] Cmd-Space style actions for calculator & conversion
 - [ ] Launch common applications from terminal
+
