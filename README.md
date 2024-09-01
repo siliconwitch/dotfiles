@@ -75,3 +75,45 @@ Customized dev environment that I use on my various machines. Follow these instr
    cargo install svls
    sudo perl -MCPAN -e 'install Switch'
    ```
+
+## Custom keyboard shortcuts
+
+### MacOS windows
+
+- `Capslock` - `Escape` if clicked, or `Ctrl` if held
+- `Fn-Space` - Opens a new terminal
+- `Fn-Escape` - Toggles tiling window manager off and on
+- `Fn-b` - Balances titled windows
+- `Fn-r` - Rotates tiled windows clockwise
+
+### Tmux
+
+- `Ctrl-n` - New window
+- `Ctrl-u` - Previous window
+- `Ctrl-p` - Next window
+- `Ctrl-o` - Clear window / pane
+
+- `Ctrl-h` - Navigate pane left
+- `Ctrl-j` - Navigate pane down
+- `Ctrl-k` - Navigate pane up
+- `Ctrl-l` - Navigate panel right
+- `Ctrl-\` - Navigate to previous pane
+
+- `Ctrl-a` `Ctrl-h` - Split window left
+- `Ctrl-a` `Ctrl-j` - Split window down
+- `Ctrl-a` `Ctrl-k` - Split window up
+- `Ctrl-a` `Ctrl-l` - Split window right
+- `Ctrl-a` `Ctrl-x` - Kill pane
+
+- `Ctrl-a` `Shift-1` - Show US Pacific time
+- `Ctrl-a` `Shift-2` - Show US Central time
+- `Ctrl-a` `Shift-3` - Show US East Coast time
+- `Ctrl-a` `Shift-8` - Show London time
+- `Ctrl-a` `Shift-9` - Show Central European time
+- `Ctrl-a` `Shift-0` - Show China time
+- `Ctrl-a` `Shift--` - Hide calendar
+- `Ctrl-a` `Shift-=` - Show calendar
+
+### Neovim
+
+TODO
