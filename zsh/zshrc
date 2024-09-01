@@ -42,12 +42,7 @@ setopt SHARE_HISTORY          # Share history between all sessions.
 # Custom prompt layout
 source ~/.dotfiles/zsh/prompt.zsh
 
-# Start tmux when opening a new terminal
-if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-    tmux attach -t default || tmux new -s default
-fi
-
-# MacOS specific settings
+# MacOS specific paths and aliases
 if [ "`uname`" = Darwin ]; then
 
 	# Set path variables
@@ -81,3 +76,7 @@ source ~/.dotfiles/zsh/zsh-history-substring-search/zsh-history-substring-search
 source ~/.dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.dotfiles/zsh/zsh-you-should-use/you-should-use.plugin.zsh
 
+# Start tmux when opening a new terminal
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    tmux attach -t default || tmux new -s default
+fi

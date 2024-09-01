@@ -1,10 +1,12 @@
 #!/bin/bash
 
-mode=$(yabai -m query --spaces --space | jq '.type')
+PATH=/opt/homebrew/bin
+
+mode=$($PATH/yabai -m query --spaces --space | $PATH/jq '.type')
 
 if [ "$mode" == "\"bsp\"" ]
 then
-    yabai -m space --layout float &> /dev/null
+    $PATH/yabai -m space --layout float &> /dev/null
 else
-    yabai -m space --layout bsp &> /dev/null
+    $PATH/yabai -m space --layout bsp &> /dev/null
 fi

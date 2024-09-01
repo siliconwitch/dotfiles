@@ -6,71 +6,72 @@ Customized dev environment that I use on my various machines. Follow these instr
 
 1. Install git and the base development tools:
 
-    ```sh
-    xcode-select --install
+   ```sh
+   xcode-select --install
 
-    # Set up the git globals
-    git config --global user.name "my name"
-    git config --global user.email "mymail@gmail.com"
-    git config --global core.excludesfile ~/.config/git/ignore
-    ```
+   # Set up the git globals
+   git config --global user.name "my name"
+   git config --global user.email "mymail@gmail.com"
+   git config --global core.excludesfile ~/.config/git/ignore
+   ```
 
 1. Clone this repository:
 
-    ```sh
-    git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/.dotfiles
-    cd ~/.dotfiles
-    ```
+   ```sh
+   git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/.dotfiles
+   cd ~/.dotfiles
+   ```
 
 1. Create symlinks to all of our configuration files:
 
-    ```sh
-    ln -sf `pwd`/git/ ~/.config/git
-    ln -sf `pwd`/htop/ ~/.config/htop
-    ln -sf `pwd`/nvim/ ~/.config/nvim
-    ln -sf `pwd`/skhd/ ~/.config/skhd
-    ln -sf `pwd`/tmux/ ~/.config/tmux
-    ln -sf `pwd`/wezterm/ ~/.config/wezterm
-    ln -sf `pwd`/yabai/ ~/.config/yabai
-    ln -sf `pwd`/zsh/zshrc ~/.zshrc
-    ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
-    ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
-    ```
+   ```sh
+   ln -sf `pwd`/git/ ~/.config/git
+   ln -sf `pwd`/htop/ ~/.config/htop
+   ln -sf `pwd`/karabiner/ ~/.config/karabiner
+   ln -sf `pwd`/nvim/ ~/.config/nvim
+   ln -sf `pwd`/skhd/ ~/.config/skhd # TODO remove this along with skhd below
+   ln -sf `pwd`/tmux/ ~/.config/tmux
+   ln -sf `pwd`/wezterm/ ~/.config/wezterm
+   ln -sf `pwd`/yabai/ ~/.config/yabai
+   ln -sf `pwd`/zsh/zshrc ~/.zshrc
+   ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
+   ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
+   ```
 
 1. Install the [Homebrew](https://brew.sh) package manager:
 
-    ```sh
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
 
 1. Install all of our applications using `brew`:
 
-    ```sh
-    brew install neovim wezterm ical-buddy affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
+   ```sh
+   brew install neovim wezterm ical-buddy karabiner-elements affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/skhd koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
 
-    brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
-    ```
+   brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
+   ```
 
 1. Other manually installed apps:
 
-    - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
-    - [Cuprum](https://apps.apple.com/se/app/cuprum/id1088670425?l=en-GB&mt=12)
-    - [DaVinci Resolve](https://apps.apple.com/se/app/davinci-resolve/id571213070?l=en-GB&mt=12)
-    - [Final Cut Pro](https://apps.apple.com/se/app/final-cut-pro/id424389933?l=en-GB&mt=12)
-    - [GIPHY Capture](https://apps.apple.com/se/app/giphy-capture-the-gif-maker/id668208984?l=en-GB&mt=12)
-    - [Grammarly for Safari](https://apps.apple.com/se/app/grammarly-writing-app/id1462114288?l=en-GB&mt=12)
-    - [Matlab](https://www.mathworks.com)
-    - [NanoVNA-Saver](https://github.com/NanoVNA-Saver/nanovna-saver/releases)
-    - [SimNEC](http://www.ae6ty.com/smith_charts.html)
-    - [Spark](https://apps.apple.com/se/app/spark-email-app-by-readdle/id1176895641?l=en-GB&mt=12)
-    - [Things](https://apps.apple.com/se/app/things-3/id904280696?l=en-GB&mt=12)
-    - [VNA QT](https://nanorfe.com/nanovna-software.html)
-    - [Waveforms](https://digilent.com/shop/software/digilent-waveforms/)
-    - [Xcode](https://apps.apple.com/se/app/xcode/id497799835?l=en-GB&mt=12)
+   - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
+   - [Cuprum](https://apps.apple.com/se/app/cuprum/id1088670425?l=en-GB&mt=12)
+   - [DaVinci Resolve](https://apps.apple.com/se/app/davinci-resolve/id571213070?l=en-GB&mt=12)
+   - [Final Cut Pro](https://apps.apple.com/se/app/final-cut-pro/id424389933?l=en-GB&mt=12)
+   - [GIPHY Capture](https://apps.apple.com/se/app/giphy-capture-the-gif-maker/id668208984?l=en-GB&mt=12)
+   - [Grammarly for Safari](https://apps.apple.com/se/app/grammarly-writing-app/id1462114288?l=en-GB&mt=12)
+   - [Matlab](https://www.mathworks.com)
+   - [NanoVNA-Saver](https://github.com/NanoVNA-Saver/nanovna-saver/releases)
+   - [SimNEC](http://www.ae6ty.com/smith_charts.html)
+   - [Spark](https://apps.apple.com/se/app/spark-email-app-by-readdle/id1176895641?l=en-GB&mt=12)
+   - [Things](https://apps.apple.com/se/app/things-3/id904280696?l=en-GB&mt=12)
+   - [VNA QT](https://nanorfe.com/nanovna-software.html)
+   - [Waveforms](https://digilent.com/shop/software/digilent-waveforms/)
+   - [Xcode](https://apps.apple.com/se/app/xcode/id497799835?l=en-GB&mt=12)
 
 1. Install dependencies for Verilog-HDL and GTKWave:
 
-    ```sh
-    cargo install svls
-    sudo perl -MCPAN -e 'install Switch'
-    ```
+   ```sh
+   cargo install svls
+   sudo perl -MCPAN -e 'install Switch'
+   ```
