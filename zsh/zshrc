@@ -11,6 +11,8 @@ alias gp='git fetch -p'
 alias gd='git branch -d'
 alias gD='git branch -D'
 
+alias df='cd ~/.dotfiles && nvim'
+
 # Shortcut to clear the screen
 function clear-scrollback-and-screen { zle clear-screen; tmux clear-history }
 zle -N clear-scrollback-and-screen
