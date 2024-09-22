@@ -135,10 +135,18 @@ Curated development environment that I use on my machines. Follow these instruct
    chsh -s $(which fish)
 
    # Remove bash and zsh related files if you like
-   rm .bash* .zsh*
+   rm -r .bash*
+   rm -r .zsh*
    ```
 
-1. Other manually installed apps:
+1. Symlink VSCode configuration
+
+   ```sh
+   ln -sf $HOME/.config/vscode/settings.json ~/Library/Application\ Support/Code/User
+   ln -sf $HOME/.config/vscode/keybindings.json ~/Library/Application\ Support/Code/User
+   ```
+
+1. Other manually installed apps
 
    - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
    - [Cuprum](https://apps.apple.com/se/app/cuprum/id1088670425?l=en-GB&mt=12)

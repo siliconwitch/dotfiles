@@ -12,7 +12,7 @@ config.window_decorations = "RESIZE"
 config.background = {
 	{
 		source = {
-			File = os.getenv("HOME") .. "/.dotfiles/wezterm/wallpaper.jpg",
+			File = os.getenv("HOME") .. "/.config/wezterm/wallpaper.jpg",
 		},
 		vertical_align = "Middle",
 		horizontal_align = "Center",
