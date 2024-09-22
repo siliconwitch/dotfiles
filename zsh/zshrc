@@ -2,16 +2,15 @@
 alias ls='ls --color=auto'
 alias la='ls -la --color=auto'
 
-alias nv='nvim'
-alias vim='nvim'
+alias clr='clear'
 
 alias gs='git status'
 alias gl='git log'
-alias gp='git fetch -p'
-alias gd='git branch -d'
-alias gD='git branch -D'
+alias gfp='git fetch -p'
+alias gbd='git branch -d'
+alias gbD='git branch -D'
 
-alias df='cd ~/.dotfiles && nvim'
+alias df='cd ~/.dotfiles && hx .'
 
 # Shortcut to clear the screen
 function clear-scrollback-and-screen { zle clear-screen; tmux clear-history }

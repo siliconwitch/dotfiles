@@ -1,54 +1,141 @@
-# My Personal Dev Setup
+# 🌈 Welcome to my dotfiles 👨🏻‍💻
 
-Customized dev environment that I use on my various machines. Follow these instructions if you'd like to set up something similar.
+Curated development environment that I use on my machines. Follow these instructions if you'd like to set up something similar, otherwise simply explore the dotfiles for inspiration.
 
-## On MacOS
+### Contents
+1. [Initial MacOS Setup](#initial-macos-setup)
+1. [Initial Arch Linux Setup](#initial-arch-linux-setup)
+1. [The Good Stuff](#the-good-stuff)
 
-1. Install git and the base development tools:
+![Fancy Terminal Preview](terminal-preview.png)
+
+## Initial MacOS Setup
+
+1. Install Git
 
    ```sh
    xcode-select --install
+   ```
 
+1. Create a new ssh key
+
+   ```sh
+   ssh-keygen
+   ```
+
+## Initial Arch Linux Setup
+
+1. Login as root and install Git
+
+   ```sh
+   ssh root@<remote.ip.address>
+   pacman -Syu base-devel git --noconfirm
+   ```
+
+1. Edit the `/etc/sudoers` file to allow wheel users to use `sudo`
+
+1. Create a user and close the connection
+
+   ```sh
+   useradd -m -G wheel raj
+   passwd raj
+   exit
+   ```
+
+1. Copy an ssh key from the host machine
+
+   ```sh
+   # Run this on host, not remote
+   ssh-copy-id raj@<remote.ip.address>
+   ```
+
+1. SSH to the remote again as the new user
+
+## The Good Stuff
+
+1. Configure Git
+
+   ```sh
    # Set up the git globals
    git config --global user.name "my name"
    git config --global user.email "mymail@gmail.com"
    git config --global core.excludesfile ~/.config/git/ignore
    ```
 
-1. Clone this repository:
-
-   ```sh
-   git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/.dotfiles
-   cd ~/.dotfiles
-   ```
-
-1. Create symlinks to all of our configuration files:
-
-   ```sh
-   ln -sf `pwd`/git/ ~/.config/git
-   ln -sf `pwd`/htop/ ~/.config/htop
-   ln -sf `pwd`/karabiner/ ~/.config/karabiner
-   ln -sf `pwd`/nvim/ ~/.config/nvim
-   ln -sf `pwd`/tmux/ ~/.config/tmux
-   ln -sf `pwd`/wezterm/ ~/.config/wezterm
-   ln -sf `pwd`/yabai/ ~/.config/yabai
-   ln -sf `pwd`/zsh/zshrc ~/.zshrc
-   ln -sf `pwd`/vscode/settings.json ~/Library/Application\ Support/Code/User
-   ln -sf `pwd`/vscode/keybindings.json ~/Library/Application\ Support/Code/User
-   ```
-
-1. Install the [Homebrew](https://brew.sh) package manager:
+1. Install the [Homebrew](https://brew.sh) package manager
 
    ```sh
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+   # Temporarily export brew to the PATH
+   export PATH=$PATH:<whatever the above gave as the bin path>
    ```
 
-1. Install all of our applications using `brew`:
+1. Clone this repository into the `.config` folder
 
    ```sh
-   brew install neovim wezterm ical-buddy karabiner-elements affinity-photo ripgrep arc blender discord drawio dropbox figma fxfactory fzf gcc-arm-embedded gh go gtkwave font-roboto-mono-nerd-font icarus-verilog jq kicad koekeishiya/formulae/yabai nordic-nrf-command-line-tools obs openfpgaloader python raspberry-pi-imager raycast rekordbox saleae-logic segger-jlink steam the-unarchiver visual-studio-code vlc vnc-viewer xmind zoom tmux htop
+   mv ~/.config ~/old-config
+   git clone --recursive https://github.com/siliconwitch/dotfiles.git ~/.config
+   ```
 
-   brew install --HEAD siliconwitchery/oss-fpga/nextpnr-ice40 siliconwitchery/oss-fpga/nextpnr-nexus
+1. Install applications:
+
+   ```sh
+   # MacOS only
+   brew install \
+      affinity-photo \
+      arc \
+      blender \
+      discord \
+      drawio \
+      dropbox \
+      figma \
+      font-roboto-mono-nerd-font \
+      fxfactory \
+      gtkwave \
+      ical-buddy \
+      jq \
+      karabiner-elements \
+      kicad \
+      koekeishiya/formulae/yabai \
+      nordic-nrf-command-line-tools \
+      obs \
+      raspberry-pi-imager \
+      raycast \
+      saleae-logic \
+      segger-jlink \
+      steam \
+      the-unarchiver \
+      visual-studio-code \
+      vlc \
+      vnc-viewer \
+      wezterm \
+      xmind \
+      zoom \
+
+   # MacOS & Linux
+   brew install \
+      arm-none-eabi-gcc \
+      fish \
+      fzf \
+      gh \
+      go \
+      helix \
+      htop \
+      icarus-verilog \
+      openfpgaloader \
+      python \
+      tmux \
+   ```
+
+1. Set default terminal to fish
+
+   ```sh
+   echo $(which fish) | sudo tee -a /etc/shells
+   chsh -s $(which fish)
+
+   # Remove bash and zsh related files if you like
+   rm .bash* .zsh*
    ```
 
 1. Other manually installed apps:
@@ -110,6 +197,6 @@ Customized dev environment that I use on my various machines. Follow these instr
 - `Ctrl-a` `Shift--` - Hide calendar
 - `Ctrl-a` `Shift-=` - Show calendar
 
-### Neovim
+### Helix
 
 TODO

@@ -1,9 +1,32 @@
--- General settings
+-- Map leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+
+-- Tab and indent options
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.breakindent = true
+
+-- Line number and symbol margin options
+vim.wo.relativenumber = true
+vim.o.updatetime = 250
+vim.o.signcolumn = "yes"
+
+-- Seach settings
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Keep undo history
+vim.o.undofile = true
+
+-- Copy to clipboard by default
+vim.o.clipboard = "unnamedplus"
+
+-- Clean up the powerline
+vim.o.showmode = false
+vim.o.ruler = false
+vim.o.laststatus = 3
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

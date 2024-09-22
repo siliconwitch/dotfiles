@@ -10,7 +10,8 @@
 - [ ] Goto definition & go back
 - [ ] Goto header file & go back
 - [ ] Build shortcuts
-- [ ] Debug
+- [x] Debug go
+- [ ] Debug C/C++
 - [ ] Clean up the power-line
 - [ ] Document all the custom key-maps
 
@@ -18,4 +19,3 @@
 
 - [ ] Cmd-Space style actions for calculator & conversion
 - [ ] Launch common applications from terminal
-
