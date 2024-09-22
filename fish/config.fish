@@ -41,3 +41,8 @@ bind -M insert \ct fzf-cd-widget
 
 # Remove the greeting message
 set fish_greeting
+
+# Start tmux when opening a new terminal
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]
+    tmux attach -t default || tmux new -s default
+end
