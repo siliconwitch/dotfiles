@@ -61,12 +61,12 @@ function tmux_clock_cal
         end
 
         if test -z $time_zone
-            tmux set -g status-right "$appointment #(date +%%H:%%M) "(random)
+            tmux set -g status-right "$appointment #(date +%%H:%%M)"
         else
             tmux set -g status-right "$appointment #(TZ=$time_zone date +%%H:%%M) ($city)"
         end
 
-        sleep 5
+        sleep 1
 
     end
 
