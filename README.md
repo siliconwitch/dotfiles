@@ -122,7 +122,7 @@ Curated development environment that I use on my machines. Follow these instruct
       go \
       helix \
       htop \
-      icarus-verilog \
+      node \
       openfpgaloader \
       python \
       tmux \
@@ -137,6 +137,30 @@ Curated development environment that I use on my machines. Follow these instruct
    # Remove bash and zsh related files if you like
    rm -r .bash*
    rm -r .zsh*
+   ```
+
+1. Install language servers for Helix
+
+   ```sh
+   # HTML, CSS, JSON
+   npm i -g vscode-langservers-extracted
+
+   # JavaScript
+   npm i -g typescript typescript-language-server
+   brew install delve gopls
+
+   # Go
+   gopls dlv
+
+   # Verilog
+   brew install verilator icarus-verilog
+   npm install -g @imc-trading/svlangserver
+
+   # Lua
+   brew install lua-language-server
+
+   # Markdown
+   brew install marksman
    ```
 
 1. Symlink VSCode configuration
