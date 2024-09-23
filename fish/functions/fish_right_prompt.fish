@@ -6,6 +6,9 @@ function fish_right_prompt
         echo -n (set_color red)"✘ $cmd_status"
     end
 
+    # Fetch changes
+    command git fetch -p 2>/dev/null
+
     # Print the current branch status
     set -l branch (command git symbolic-ref --short HEAD 2>/dev/null)
 
