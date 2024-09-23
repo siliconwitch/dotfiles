@@ -6,6 +6,6 @@ function fish_prompt
     end
 
     # Then print current working directory
-    echo -n (set_color -o purple)(basename (prompt_pwd))' '
+    echo -n (set_color -o purple)(basename (prompt_pwd))(set_color normal)' '
 
 end
