@@ -22,6 +22,7 @@ end
 
 # Abbreviations
 abbr --add clr 'clear && tmux clear-history'
+abbr --add clear 'clear && tmux clear-history'
 
 abbr --add update 'brew upgrade; brew cleanup; brew autoremove'
 

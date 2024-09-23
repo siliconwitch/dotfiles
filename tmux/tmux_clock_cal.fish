@@ -66,7 +66,7 @@ function tmux_clock_cal
             tmux set -g status-right "$appointment #(TZ=$time_zone date +%%H:%%M) ($city)"
         end
 
-        sleep 1
+        sleep 60
 
     end
 
