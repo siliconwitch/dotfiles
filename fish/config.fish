@@ -16,7 +16,14 @@ switch (uname)
     case "Linux"
     
         set -U fish_user_paths \
-            /home/linuxbrew/.linuxbrew/bin \      
+            /home/linuxbrew/.linuxbrew/bin \
+
+        # Export the DESKTOP variable in order to run graphical apps on a VM
+        set -g DISPLAY :1
+
+        # Settings for Radiant
+        set -g LIBGL_ALWAYS_SOFTWARE 1
+        set -g QTWEBENGINE_DISABLE_SANDBOX 1
 
 end
 
@@ -43,7 +50,7 @@ bind -M insert \ct fzf-cd-widget
 # Remove the greeting message
 set fish_greeting
 
-# Start tmux when opening a new terminal
+# Start tmux when opening a new terminal TODO don't open on remote machine
 if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]
     tmux attach -t default || tmux new -s default
 end
