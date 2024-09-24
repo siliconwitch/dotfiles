@@ -91,7 +91,6 @@ Curated development environment that I use on my machines. Follow these instruct
       dropbox \
       figma \
       font-roboto-mono-nerd-font \
-      fxfactory \
       gtkwave \
       ical-buddy \
       jq \
@@ -179,11 +178,9 @@ Curated development environment that I use on my machines. Follow these instruct
    - [GIPHY Capture](https://apps.apple.com/se/app/giphy-capture-the-gif-maker/id668208984?l=en-GB&mt=12)
    - [Grammarly for Safari](https://apps.apple.com/se/app/grammarly-writing-app/id1462114288?l=en-GB&mt=12)
    - [Matlab](https://www.mathworks.com)
-   - [NanoVNA-Saver](https://github.com/NanoVNA-Saver/nanovna-saver/releases)
    - [SimNEC](http://www.ae6ty.com/smith_charts.html)
    - [Spark](https://apps.apple.com/se/app/spark-email-app-by-readdle/id1176895641?l=en-GB&mt=12)
    - [Things](https://apps.apple.com/se/app/things-3/id904280696?l=en-GB&mt=12)
-   - [VNA QT](https://nanorfe.com/nanovna-software.html)
    - [Waveforms](https://digilent.com/shop/software/digilent-waveforms/)
    - [Xcode](https://apps.apple.com/se/app/xcode/id497799835?l=en-GB&mt=12)
 
