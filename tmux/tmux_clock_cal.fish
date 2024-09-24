@@ -27,6 +27,7 @@ function tmux_clock_cal
             --dateFormat '' \
             --noRelativeDates \
             --excludeEndDates \
+            --excludeAllDayEvents \
             --noCalendarNames \
             'eventsToday+1')
 
@@ -34,30 +35,30 @@ function tmux_clock_cal
             if test -z $next_appointment
                 set appointment (printf '\uf073  Nothing Planned -')
             else
-                # TODO strip emojis, time and trailing whitespace
+                set -l next_appointment (string trim $next_appointment)
                 set appointment (printf '\uf073  %s -' $next_appointment)
             end
         end
 
         switch $argv[2]
             case 1
-                set time_zone "US/Pacific"
+                set time_zone US/Pacific
                 set city "US Pacific"
             case 2
-                set time_zone "US/Central"
+                set time_zone US/Central
                 set city "US Central"
             case 3
-                set time_zone "US/Eastern"
+                set time_zone US/Eastern
                 set city "US Eastern"
             case 4
-                set time_zone "Europe/London"
-                set city "London"
+                set time_zone Europe/London
+                set city London
             case 5
-                set time_zone "Europe/Stockholm"
+                set time_zone Europe/Stockholm
                 set city "Central Europe"
             case 6
-                set time_zone "Asia/Shanghai"
-                set city "China"
+                set time_zone Asia/Shanghai
+                set city China
         end
 
         if test -z $time_zone
