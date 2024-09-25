@@ -201,30 +201,39 @@ Curated development environment that I use on my machines. Follow these instruct
 - `Fn-b` - Balances titled windows
 - `Fn-r` - Rotates tiled windows clockwise
 
+### Fish
+
+- `Ctrl-t` - Fuzzy change directory
+- `Ctrl-r` - Fuzzy search history
+
 ### Tmux
 
 - `Ctrl-n` - New window
-- `Ctrl-u` - Previous window
-- `Ctrl-p` - Next window
-- `Ctrl-o` - Clear window / pane
-- `Ctrl-h` - Navigate pane left
-- `Ctrl-j` - Navigate pane down
-- `Ctrl-k` - Navigate pane up
-- `Ctrl-l` - Navigate panel right
-- `Ctrl-\` - Navigate to previous pane
+
+- `Ctrl-a` `H` - Navigate to previous window
+- `Ctrl-a` `L` - Navigate to next window
+
 - `Ctrl-a` `Ctrl-h` - Split window left
 - `Ctrl-a` `Ctrl-j` - Split window down
 - `Ctrl-a` `Ctrl-k` - Split window up
 - `Ctrl-a` `Ctrl-l` - Split window right
+
+- `Ctrl-a` `h` - Navigate one pane left
+- `Ctrl-a` `j` - Navigate one pane down
+- `Ctrl-a` `k` - Navigate one pane up
+- `Ctrl-a` `l` - Navigate one panel right
+
+- `Ctrl-\` - Navigate to previous pane
 - `Ctrl-a` `Ctrl-x` - Kill pane
+
 - `Ctrl-a` `Shift-1` - Show US Pacific time
 - `Ctrl-a` `Shift-2` - Show US Central time
 - `Ctrl-a` `Shift-3` - Show US East Coast time
 - `Ctrl-a` `Shift-8` - Show London time
 - `Ctrl-a` `Shift-9` - Show Central European time
 - `Ctrl-a` `Shift-0` - Show China time
-- `Ctrl-a` `Shift--` - Hide calendar
-- `Ctrl-a` `Shift-=` - Show calendar
+- `Ctrl-a` `_` - Hide calendar
+- `Ctrl-a` `+` - Show calendar and local time
 
 ### Helix
 
