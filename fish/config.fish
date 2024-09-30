@@ -2,7 +2,7 @@
 set -e fish_user_paths
 
 switch (uname)
-    case "Darwin"
+    case Darwin
 
         set -U fish_user_paths \
             /opt/homebrew/bin \
@@ -11,13 +11,11 @@ switch (uname)
             $HOME/.cargo/bin \
             $HOME/.local/bin \
             $HOME/.nrfutil/bin \
-            $HOME/projects/flutter \
+            $HOME/projects/flutter
+    case Linux
 
-    case "Linux"
-    
         set -U fish_user_paths \
-            /home/linuxbrew/.linuxbrew/bin \
-
+            /home/linuxbrew/.linuxbrew/bin
         # Export the DESKTOP variable in order to run graphical apps on a VM
         set -g DISPLAY :1
 
@@ -28,8 +26,8 @@ switch (uname)
 end
 
 # Abbreviations
-abbr --add clr 'clear && tmux clear-history'
-abbr --add clear 'clear && tmux clear-history'
+abbr --add clr 'clear && tmux clear-history 2> /dev/null'
+abbr --add clear 'clear && tmux clear-history 2> /dev/null'
 
 abbr --add update 'brew upgrade; brew cleanup; brew autoremove'
 
@@ -51,6 +49,6 @@ bind -M insert \ct fzf-cd-widget
 set fish_greeting
 
 # Start tmux when opening a new terminal TODO don't open on remote machine
-if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != vscode ] && [ -z "$LC_DISABLE_TMUX" ]
     tmux attach -t default || tmux new -s default
 end
