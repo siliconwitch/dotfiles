@@ -3,7 +3,6 @@ set -e fish_user_paths
 
 switch (uname)
     case Darwin
-
         set -U fish_user_paths \
             /opt/homebrew/bin \
             /opt/homebrew/opt/openjdk@17/bin \
@@ -12,12 +11,13 @@ switch (uname)
             $HOME/.local/bin \
             $HOME/.nrfutil/bin \
             $HOME/projects/flutter
-    case Linux
 
+    case Linux
         set -U fish_user_paths \
             /home/linuxbrew/.linuxbrew/bin
+
         # Export the DESKTOP variable in order to run graphical apps on a VM
-        set -g DISPLAY :1
+        set -g DISPLAY :2
 
         # Settings for Radiant
         set -g LIBGL_ALWAYS_SOFTWARE 1
