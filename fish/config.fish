@@ -7,6 +7,7 @@ switch (uname)
             /opt/homebrew/bin \
             /opt/homebrew/opt/openjdk@17/bin \
             /Applications/gtkwave.app/Contents/Resources/bin \
+            $HOME/go/bin \
             $HOME/.cargo/bin \
             $HOME/.local/bin \
             $HOME/.nrfutil/bin \

@@ -4,7 +4,6 @@
     //
     "editor.guides.indentation": false,
     "editor.hideCursorInOverviewRuler": true,
-    "editor.lineNumbers": "off",
     "editor.matchBrackets": "never",
     "editor.minimap.enabled": false,
     "editor.occurrencesHighlight": "off",
@@ -89,6 +88,7 @@
         "datasheets",
         "debouncing",
         "gpio",
+        "Htmx",
         "inferencing",
         "LEDs",
         "Licence",
@@ -100,6 +100,8 @@
         "PMIC",
         "Rajesh",
         "randomizer",
+        "siliconwitchery",
+        "superstack",
         "verilog"
     ],
     "dart.flutterSdkPath": "/Users/raj/projects/flutter",
