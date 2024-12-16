@@ -37,7 +37,7 @@
                         ]
                     },
                     {
-                        "description": "Launch VSCode app with 'fn-enter'",
+                        "description": "Launch Cursor app with 'fn-enter'",
                         "manipulators": [
                             {
                                 "from": {
@@ -47,7 +47,7 @@
                                         "optional": ["any"]
                                     }
                                 },
-                                "to": [{ "shell_command": "/Applications/Visual\\ Studio\\ Code.app/Contents/MacOS/Electron -n" }],
+                                "to": [{ "shell_command": "/Applications/Cursor.app/Contents/MacOS/Cursor -n" }],
                                 "type": "basic"
                             }
                         ]

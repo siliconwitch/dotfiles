@@ -86,6 +86,7 @@ Curated development environment that I use on my machines. Follow these instruct
       affinity-photo \
       arc \
       blender \
+      cursor \
       discord \
       drawio \
       dropbox \
@@ -105,7 +106,6 @@ Curated development environment that I use on my machines. Follow these instruct
       segger-jlink \
       steam \
       the-unarchiver \
-      visual-studio-code \
       vlc \
       vnc-viewer \
       wezterm \
@@ -162,13 +162,6 @@ Curated development environment that I use on my machines. Follow these instruct
    brew install marksman
    ```
 
-1. Symlink VSCode configuration
-
-   ```sh
-   ln -sf $HOME/.config/vscode/settings.json ~/Library/Application\ Support/Code/User
-   ln -sf $HOME/.config/vscode/keybindings.json ~/Library/Application\ Support/Code/User
-   ```
-
 1. Other manually installed apps
 
    - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
@@ -197,6 +190,7 @@ Curated development environment that I use on my machines. Follow these instruct
 
 - `Capslock` - `Escape` if clicked, or `Ctrl` if held
 - `Fn-Space` - Opens a new terminal
+- `Fn-Enter` - Opens a new Cursor window
 - `Fn-Escape` - Toggles tiling window manager off and on
 - `Fn-b` - Balances titled windows
 - `Fn-r` - Rotates tiled windows clockwise
