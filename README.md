@@ -162,7 +162,14 @@ Curated development environment that I use on my machines. Follow these instruct
    brew install marksman
    ```
 
-1. Other manually installed apps
+1. Symlink Cursor configuration
+
+   ```sh
+   ln -sf $HOME/.config/cursor/settings.json ~/Library/Application\ Support/Cursor/User
+   ln -sf $HOME/.config/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User
+   ```
+
+1. Other manually installed appsı
 
    - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
    - [Cuprum](https://apps.apple.com/se/app/cuprum/id1088670425?l=en-GB&mt=12)
