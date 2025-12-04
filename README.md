@@ -2,11 +2,6 @@
 
 Curated development environment that I use on my machines. Follow these instructions if you'd like to set up something similar, otherwise simply explore the dotfiles for inspiration.
 
-### Contents
-1. [Initial MacOS Setup](#initial-macos-setup)
-1. [Initial Arch Linux Setup](#initial-arch-linux-setup)
-1. [The Good Stuff](#the-good-stuff)
-
 ![Fancy Terminal Preview](terminal-preview.png)
 
 ## Initial MacOS Setup
@@ -22,36 +17,6 @@ Curated development environment that I use on my machines. Follow these instruct
    ```sh
    ssh-keygen
    ```
-
-## Initial Arch Linux Setup
-
-1. Login as root and install Git
-
-   ```sh
-   ssh root@<remote.ip.address>
-   pacman -Syu base-devel git --noconfirm
-   ```
-
-1. Edit the `/etc/sudoers` file to allow wheel users to use `sudo`
-
-1. Create a user and close the connection
-
-   ```sh
-   useradd -m -G wheel raj
-   passwd raj
-   exit
-   ```
-
-1. Copy an ssh key from the host machine
-
-   ```sh
-   # Run this on host, not remote
-   ssh-copy-id raj@<remote.ip.address>
-   ```
-
-1. SSH to the remote again as the new user
-
-## The Good Stuff
 
 1. Configure Git
 
@@ -81,50 +46,50 @@ Curated development environment that I use on my machines. Follow these instruct
 1. Install applications:
 
    ```sh
-   # MacOS only
    brew install \
       affinity-photo \
-      google-chrome@dev \
       blender \
-      cursor \
+      btop \
+      cloc \
       discord \
       drawio \
       dropbox \
+      fd \
       figma \
+      fish \
       font-roboto-mono-nerd-font \
+      fzf \
+      gcc-arm-embedded \
+      gh \
+      go \
+      google-chrome@dev \
       ical-buddy \
       jq \
       karabiner-elements \
       kicad \
       koekeishiya/formulae/yabai \
+      localsend \
+      lua \
+      mullvad-vpn \
+      neofetch \
+      node \
       nordic-nrf-command-line-tools \
       obs \
+      python \
       raspberry-pi-imager \
+      raycast \
       raycast \
       saleae-logic \
       segger-jlink \
       steam \
       the-unarchiver \
+      tmux \
       vlc \
       vnc-viewer \
       wezterm \
-      xmind
-
-   # MacOS & Linux
-   brew install \
-      arm-none-eabi-gcc \
-      btop \
-      cloc \
-      fd \
-      fish \
-      fzf \
-      gh \
-      go \
-      jq \
-      koekeishiya/formulae/yabai \
-      neofetch \
-      python \
-      tmux
+      wireshark-app \
+      xmind \
+      zed
    ```
 
 1. Set default terminal to fish
@@ -153,7 +118,7 @@ Curated development environment that I use on my machines. Follow these instruct
 
 ## Custom keyboard shortcuts
 
-### MacOS windows
+### Window management
 
 - `Capslock` - `Escape` if clicked, or `Ctrl` if held
 - `Fn-Space` - Opens a new terminal

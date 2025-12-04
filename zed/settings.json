@@ -1,30 +1,53 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "agent": {
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-opus-4-5"
+    // UI settings
+    "base_keymap": "Cursor",
+    "theme": "Gruvbox Dark",
+    "buffer_font_family": "RobotoMono Nerd Font Mono",
+    "buffer_font_size": 12,
+    "ui_font_family": ".SystemUIFont",
+    "ui_font_size": 14,
+    "icon_theme": "Catppuccin Latte",
+    "tab_size": 4,
+    "current_line_highlight": "none",
+
+    "indent_guides": {
+        "enabled": false
     },
-    "model_parameters": []
-  },
-  "icon_theme": {
-    "mode": "dark",
-    "light": "Zed (Default)",
-    "dark": "Zed (Default)"
-  },
-  "base_keymap": "VSCode",
-  "ui_font_size": 16,
-  "buffer_font_size": 15,
-  "theme": {
-    "mode": "dark",
-    "light": "Gruvbox Light",
-    "dark": "Gruvbox Dark"
-  }
+    "gutter": {
+        "min_line_number_digits": 1
+    },
+    "scrollbar": {
+        "show": "never"
+    },
+    "toolbar": {
+        "breadcrumbs": false,
+        "quick_actions": false
+    },
+    "project_panel": {
+        "hide_root": true,
+        "indent_guides": { "show": "never" },
+        "folder_icons": false
+    },
+    "status_bar": {
+        "active_language_button": false,
+        "cursor_position_button": false
+    },
+
+    // Git settings
+    "git": {
+        "inline_blame": {
+            "enabled": false
+        }
+    },
+
+    // AI settings
+    "show_edit_predictions": false,
+
+    "agent": {
+        "default_model": {
+            "provider": "zed.dev",
+            "model": "claude-opus-4-5"
+        },
+        "model_parameters": []
+    }
 }

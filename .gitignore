@@ -2,7 +2,9 @@ fish/fish_variables
 flutter/
 karabiner/automatic_backups/
 neofetch/
-tmux/plugins/
 raycast/
 stripe/
+tmux/plugins/
 wireshark/
+zed/conversations/
+zed/prompts/
