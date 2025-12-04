@@ -84,7 +84,7 @@ Curated development environment that I use on my machines. Follow these instruct
    # MacOS only
    brew install \
       affinity-photo \
-      arc \
+      google-chrome@dev \
       blender \
       cursor \
       discord \
@@ -92,7 +92,6 @@ Curated development environment that I use on my machines. Follow these instruct
       dropbox \
       figma \
       font-roboto-mono-nerd-font \
-      gtkwave \
       ical-buddy \
       jq \
       karabiner-elements \
@@ -109,22 +108,23 @@ Curated development environment that I use on my machines. Follow these instruct
       vlc \
       vnc-viewer \
       wezterm \
-      xmind \
-      zoom \
+      xmind
 
    # MacOS & Linux
    brew install \
       arm-none-eabi-gcc \
+      btop \
+      cloc \
+      fd \
       fish \
       fzf \
       gh \
       go \
-      helix \
-      htop \
-      node \
-      openfpgaloader \
+      jq \
+      koekeishiya/formulae/yabai \
+      neofetch \
       python \
-      tmux \
+      tmux
    ```
 
 1. Set default terminal to fish
@@ -138,58 +138,18 @@ Curated development environment that I use on my machines. Follow these instruct
    rm -r .zsh*
    ```
 
-1. Install language servers for Helix
-
-   ```sh
-   # HTML, CSS, JSON
-   npm i -g vscode-langservers-extracted
-
-   # JavaScript
-   npm i -g typescript typescript-language-server
-   brew install delve gopls
-
-   # Go
-   gopls dlv
-
-   # Verilog
-   brew install verilator icarus-verilog
-   npm install -g @imc-trading/svlangserver
-
-   # Lua
-   brew install lua-language-server
-
-   # Markdown
-   brew install marksman
-   ```
-
-1. Symlink Cursor configuration
-
-   ```sh
-   ln -sf $HOME/.config/cursor/settings.json ~/Library/Application\ Support/Cursor/User
-   ln -sf $HOME/.config/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User
-   ```
-
 1. Other manually installed appsı
 
    - [1Blocker](https://apps.apple.com/se/app/1blocker-ad-blocker/id1365531024?l=en-GB)
    - [Cuprum](https://apps.apple.com/se/app/cuprum/id1088670425?l=en-GB&mt=12)
    - [DaVinci Resolve](https://apps.apple.com/se/app/davinci-resolve/id571213070?l=en-GB&mt=12)
-   - [Final Cut Pro](https://apps.apple.com/se/app/final-cut-pro/id424389933?l=en-GB&mt=12)
    - [GIPHY Capture](https://apps.apple.com/se/app/giphy-capture-the-gif-maker/id668208984?l=en-GB&mt=12)
-   - [Grammarly for Safari](https://apps.apple.com/se/app/grammarly-writing-app/id1462114288?l=en-GB&mt=12)
    - [Matlab](https://www.mathworks.com)
    - [SimNEC](http://www.ae6ty.com/smith_charts.html)
    - [Spark](https://apps.apple.com/se/app/spark-email-app-by-readdle/id1176895641?l=en-GB&mt=12)
    - [Things](https://apps.apple.com/se/app/things-3/id904280696?l=en-GB&mt=12)
    - [Waveforms](https://digilent.com/shop/software/digilent-waveforms/)
-   - [Xcode](https://apps.apple.com/se/app/xcode/id497799835?l=en-GB&mt=12)
 
-1. Install dependencies for Verilog-HDL and GTKWave:
-
-   ```sh
-   cargo install svls
-   sudo perl -MCPAN -e 'install Switch'
-   ```
 
 ## Custom keyboard shortcuts
 
@@ -197,7 +157,7 @@ Curated development environment that I use on my machines. Follow these instruct
 
 - `Capslock` - `Escape` if clicked, or `Ctrl` if held
 - `Fn-Space` - Opens a new terminal
-- `Fn-Enter` - Opens a new Cursor window
+- `Fn-Enter` - Opens a new editor window
 - `Fn-Escape` - Toggles tiling window manager off and on
 - `Fn-b` - Balances titled windows
 - `Fn-r` - Rotates tiled windows clockwise
@@ -235,7 +195,3 @@ Curated development environment that I use on my machines. Follow these instruct
 - `Ctrl-a` `Shift-0` - Show China time
 - `Ctrl-a` `_` - Hide calendar
 - `Ctrl-a` `+` - Show calendar and local time
-
-### Helix
-
-TODO

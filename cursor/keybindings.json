@@ -51,5 +51,13 @@
         "key": "shift+cmd+g",
         "command": "-editor.action.previousMatchFindAction",
         "when": "editorFocus"
+    },
+    {
+        "key": "cmd+i",
+        "command": "composerMode.agent"
+    },
+    {
+        "key": "cmd+l",
+        "command": "composerMode.chat"
     }
 ]

@@ -22,7 +22,6 @@
         "superstack",
         "verilog"
     ],
-    "dart.flutterSdkPath": "/Users/raj/projects/flutter",
     "debug.onTaskErrors": "abort",
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.formatOnSave": true,
@@ -55,6 +54,7 @@
     "terminal.integrated.defaultProfile.osx": "fish",
     "terminal.integrated.enableMultiLinePasteWarning": "never",
     "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.scrollback": 100000,
     "verilog.ctags.path": "/opt/homebrew/bin/ctags",
     "verilog.languageServer.svls.enabled": true,
     "verilog.linting.linter": "iverilog",
@@ -70,4 +70,8 @@
         "editorCursor.foreground": "#ffc400",
         "editor.foldBackground": "#ff000000"
     },
+    "cSpell.blockCheckingWhenTextChunkSizeGreaterThan": 10000,
+    "nrf-connect.enableTelemetry": false,
+    "cursor.diffs.useCharacterLevelDiffs": true,
+    "liveServer.settings.donotShowInfoMsg": true,
 }

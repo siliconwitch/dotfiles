@@ -10,8 +10,7 @@ switch (uname)
             $HOME/go/bin \
             $HOME/.cargo/bin \
             $HOME/.local/bin \
-            $HOME/.nrfutil/bin \
-            $HOME/projects/flutter
+            $HOME/.nrfutil/bin
 
     case Linux
         set -U fish_user_paths \
@@ -38,7 +37,9 @@ abbr --add gfp git fetch -p
 abbr --add gbd git branch -d
 abbr --add gbD git branch -D
 
-abbr --add df hx ~/.config
+abbr --add df zed ~/.config
+
+abbr --add f find
 
 # Enable FZF and set keybindings
 fzf --fish | source
@@ -50,6 +51,6 @@ bind -M insert \ct fzf-cd-widget
 set fish_greeting
 
 # Start tmux when opening a new terminal TODO don't open on remote machine
-if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != vscode ] && [ -z "$LC_DISABLE_TMUX" ]
+if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != vscode ] && [ "$TERM_PROGRAM" != zed ] && [ -z "$LC_DISABLE_TMUX" ]
     tmux attach -t default || tmux new -s default
 end
