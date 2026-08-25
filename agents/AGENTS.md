@@ -11,6 +11,14 @@
 - A session instruction overrides this file. Treat repeated corrections or conflicts as evidence that the agent context needs maintenance.
 - When a user request conflicts with a higher-priority instruction, lead with `CONTEXT CONTRADICTION`, quote both conflicting instructions verbatim, label each instruction by source, stop only the conflicting work, and offer `/fix-context` or `$fix-context` so the user can repair the context. When the user invokes either command, read and apply `fix-context` before proceeding. Never invoke `fix-context` without one of these user triggers.
 
+# Project language
+
+- Before using project-specific language, read the relevant `GLOSSARY.md`. If
+  the repository root contains `GLOSSARY-MAP.md`, use it to locate the glossary.
+  Otherwise use `GLOSSARY.md` at the repository root when it exists.
+- If several mapped glossaries could own a term, ask the user which glossary
+  owns it before using or changing the term.
+
 # Workstation
 
 - This is a live NixOS desktop that the user works on concurrently. Before suggesting or making an environment change or installing a tool, inspect the relevant Nix configuration and determine the declarative NixOS approach. Do not use an imperative installer or package manager unless the user explicitly requests it.

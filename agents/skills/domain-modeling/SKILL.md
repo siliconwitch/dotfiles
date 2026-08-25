@@ -1,24 +1,21 @@
 ---
 name: domain-modeling
-description: User-invoked creation or revision of a project's CONTEXT.md domain glossary. Use only when the user invokes /domain-modeling or $domain-modeling.
+description: User-invoked creation or revision of a project's GLOSSARY.md domain glossary. Use only when the user invokes /domain-modeling or $domain-modeling.
 disable-model-invocation: true
 ---
 
 # Domain modeling
 
-Create or revise the project's domain glossary. Keep `CONTEXT.md` a glossary,
+Create or revise the project's domain glossary. Keep `GLOSSARY.md` a glossary,
 not a specification, design document, scratch pad, or record of implementation
 and architecture decisions.
 
-## Locate the context
+## Locate the glossary
 
-1. If the repository root contains `CONTEXT-MAP.md`, read it and use the
-   `CONTEXT.md` belonging to the relevant context.
-2. Otherwise use `CONTEXT.md` at the repository root.
-3. If several mapped contexts could own the term, ask the user which context
-   owns it before proposing or making a change.
-4. Do not create `CONTEXT-MAP.md` or split a repository into multiple contexts
-   unless the user explicitly requests that structure.
+1. Follow the project language rules in `AGENTS.md` to locate the relevant
+   `GLOSSARY.md`.
+2. Do not create `GLOSSARY-MAP.md` or split a repository into multiple
+   glossaries unless the user explicitly requests that structure.
 
 ## Resolve the language
 
@@ -38,7 +35,7 @@ and architecture decisions.
 ## Write the glossary
 
 Write only after the user asks for the file change or approves the proposed
-entries. Create `CONTEXT.md` only when there is at least one resolved term to
+entries. Create `GLOSSARY.md` only when there is at least one resolved term to
 record. When editing an existing glossary, change only the approved entries.
 
 Use this format:
