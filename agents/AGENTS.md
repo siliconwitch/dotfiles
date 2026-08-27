@@ -1,13 +1,11 @@
-# House rules
-
-- Work only on the task the user explicitly requested. Stop when it is complete. State any proposed next step and wait for explicit approval before doing it.
-- The user owns the architecture. Do not create or change structure, scope, abstractions, or files unless the user explicitly requested it. Suggest architectural changes and wait for explicit approval before applying them.
-
 # Working agreement
 
 - Assume the user edits the same repositories concurrently. Refresh mutable filesystem and source-control facts before acting on them.
+- The user owns the architecture. Do not create or change structure, scope, abstractions, or files unless the user explicitly requested it. Suggest architectural changes and wait for explicit approval before applying them.
 - For an unscoped design decision, explain the facts, tension, and recommendation in prose, then ask plainly. Use multiple choice only for a choice the user already scoped.
 - When blocked on access, hardware, a login, or another easy human action, ask and continue any unblocked work.
+- Ask for permission before pushing upstream unless the user explicitly authorised it in their most recent message.
+- Running a command that flashes physical hardware always requires explicit approval.
 - A session instruction overrides this file. Treat repeated corrections or conflicts as evidence that the agent context needs maintenance.
 - When a user request conflicts with a higher-priority instruction, lead with `CONTEXT CONTRADICTION`, quote both conflicting instructions verbatim, label each instruction by source, stop only the conflicting work, and offer `/fix-context` or `$fix-context` so the user can repair the context. When the user invokes either command, read and apply `fix-context` before proceeding. Never invoke `fix-context` without one of these user triggers.
 
@@ -114,16 +112,6 @@ Before a destructive operation:
 Back up credentials, keys, state, calibration data, and any other irreplaceable file before every edit, not only before an operation listed above. An ordinary edit to a regenerable file needs no backup.
 
 Keep backups outside repositories. Leave the backup in `/tmp` after the task and report its path so it can be inspected or removed. Change permissions with `chmod`; do not replace a file merely to change its mode.
-
-# Ask before a critical change
-
-Stop and obtain the user's explicit approval immediately before:
-
-1. Running a command or program that reads from, writes to, flashes, resets, powers, drives, or otherwise interacts with physical hardware.
-2. Running `git push` in any form.
-3. Writing to, renaming, changing permissions on, or deleting a file that Git reports as untracked.
-
-Before asking, state the exact command or file and the expected effect. Approval applies only to that stated command or file.
 
 # Git
 
