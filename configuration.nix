@@ -319,7 +319,7 @@
   # User
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "dialout" ];
     shell = pkgs.zsh;
     initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
@@ -410,6 +410,14 @@
     firefox
     freecad
     kicad           # EDA
+    nanovna-qt
+    (makeDesktopItem {
+      name = "nanovna-qt";
+      desktopName = "NanoVNA-QT";
+      exec = "${nanovna-qt}/bin/vna_qt";
+      terminal = false;
+      categories = [ "Science" ];
+    })
     prismlauncher   # Minecraft launcher
     roomeqwizard
     saleae-logic-2  # logic analyzer (unfree)
