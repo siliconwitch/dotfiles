@@ -27,10 +27,5 @@
 !/wallpaper.jpg
 !/screenshot.png
 
-# Agent memories, tracked here but not the rest of .claude/
-!/.claude/
-/.claude/*
-!/.claude/memories/
-
 # Runtime junk inside tracked dirs
 zsh/.zcompdump*

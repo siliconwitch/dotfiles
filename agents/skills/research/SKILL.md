@@ -23,7 +23,7 @@ Use different model families within each phase when the harness exposes model ch
 
 Each investigator must:
 
-1. Look locally first: project documentation, vendored references, memories, submodule headers, source, and generated help.
+1. Look locally first: project documentation, vendored references, submodule headers, source, and generated help.
 2. Follow claims to the source that owns them: official documentation, upstream source, standards, datasheets, or first-party APIs.
 3. Search for counterevidence and incompatible interpretations.
 4. Return each material claim with its source, supporting evidence, limits, counterevidence, and verification status.

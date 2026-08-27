@@ -6,6 +6,3 @@
 
 # Claude local settings
 **/.claude/settings.local.json
-
-# Agent memories, private unless a project opts in
-**/.claude/memories/

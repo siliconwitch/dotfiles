@@ -34,7 +34,9 @@ When an uncertainty blocks a concrete answer, run the smallest safe test that di
 
 If the test resolves the uncertainty, use its result and do not fan out merely to reconfirm it. If the test does not produce a concrete answer, report the test and its result, then offer `/research` or `$research` so the user can request a deeper investigation.
 
-# Response formats
+# User-facing response formats
+
+Apply this section only to commentary and final messages sent to the user. Do not apply it to messages between agents.
 
 Use free-form prose only for a greeting, acknowledgement, direct yes-or-no answer, or single factual sentence that required no investigation, reasoning, action, or options. Use one of the following formats for every other response.
 
@@ -87,29 +89,6 @@ C3. Give one consequence per item.
 
 O3. An option may have no consequence items.
 ```
-
-# Memories
-
-Store memories as Markdown journal entries under `.agents/memories/`.
-
-Create a memory when a discovery is not obvious from the current code, configuration, or documentation and rediscovering it would require investigation or repeated work. Name it `YYYYMMDD-title-of-the-memory.md`. Put the local date and time above the title:
-
-```markdown
-2026-08-20 14:30 CEST
-
-# The finding the memory records
-```
-
-Treat each memory as an immutable historical record of what was observed or believed at its recorded time. After creating a memory, never edit, rename, overwrite, or delete it. Record corrections, updates, and superseding findings in a new dated memory that references the earlier entry. Never treat a memory as current authority.
-
-Before starting a task that repeats the same operation across multiple items:
-
-1. List memory entries from newest to oldest.
-2. Read backwards through the entries until you find a prior solution or reach the oldest entry.
-3. When an entry contains a solution, compare every assumption it relies on with the current code, configuration, documentation, and environment. Run a direct check when one is available.
-4. Apply the remembered solution only after the current state confirms it remains relevant.
-
-Treat memories as private by default. Check the repository's ignore rules before recording client or non-public information. Promote a memory to project documentation only when a human collaborator needs the knowledge.
 
 # Destructive tasks
 
