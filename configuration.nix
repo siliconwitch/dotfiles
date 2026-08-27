@@ -413,6 +413,7 @@
     prismlauncher   # Minecraft launcher
     roomeqwizard
     saleae-logic-2  # logic analyzer (unfree)
+    (callPackage ./simsmith.nix { })
     vlc             # media player
   ];
 
