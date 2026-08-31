@@ -6,9 +6,10 @@ means a broken boot or lost data, so work through this before every change and
 every recommendation.
 
 Everything else in the repo is live dotfiles, read from `~/.config` directly:
-no rebuild, no Home Manager. `agents/AGENTS.md` and `agents/skills/` are
-linked into `~/.claude`, `~/.codex` and `~/.agents`, so editing the shared
-agent context is a commit here.
+no rebuild, no Home Manager. `agents/AGENTS.md` is linked into
+`~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`. `agents/skills/` is linked into
+`~/.claude/skills` and `~/.agents/skills`. Editing either shared source is a
+commit here.
 
 ## Before changing anything
 

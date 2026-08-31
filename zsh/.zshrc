@@ -27,6 +27,7 @@ alias gco='git checkout'
 alias gcb='git checkout -b'
 alias gt='eza --tree --long --git --git-ignore --no-permissions --no-user --no-time --no-filesize'
 
+alias make='make -j16'
 alias clean='make clean'
 alias debug='make debug'
 alias recover='make recover'

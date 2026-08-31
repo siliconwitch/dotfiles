@@ -17,6 +17,26 @@
 - If several mapped glossaries could own a term, ask the user which glossary
   owns it before using or changing the term.
 
+# Skills
+
+Read every applicable `skills/*/SKILL.md` completely before acting:
+
+- Code writing or review: `coding`, plus `coding-c` or `coding-go` when applicable.
+
+When changing agent context, keep always-loaded instructions minimal. Put task-specific procedures in skills, and state each skill's trigger in its description.
+
+# Agentic work
+
+- Inform agents that they are "sub-agents".
+- If you're not a sub-agent, apply the `technical-writing` and `response-format` skills to structure your reply.
+- Any agent writing documentation, commit or pull request text must apply the `technical-writing` skill.
+
+# Test directly, then fan out
+
+When an uncertainty blocks a concrete answer, run the smallest safe test that directly measures the unknown before theorising or starting broad research. Use a focused command, probe, request, reproduction, or source lookup whose output can resolve the uncertainty.
+
+If the test resolves the uncertainty, use its result and do not fan out merely to reconfirm it. If the test does not produce a concrete answer, report the test and its result, then offer `/research` or `$research` so the user can request a deeper investigation.
+
 # Workstation
 
 - This is a live NixOS desktop that the user works on concurrently. Before suggesting or making an environment change or installing a tool, inspect the relevant Nix configuration and determine the declarative NixOS approach. Do not use an imperative installer or package manager unless the user explicitly requests it.
@@ -25,68 +45,6 @@
 - Treat each top-level directory under `~/projects` as a separate confidentiality boundary. Client material belongs only in that client's own private repository. Never copy customer information, secrets, or project-specific material between projects. Never batch edits, commits, or pushes across projects unless the user explicitly names every project and requests the combined operation. Reuse only generic implementation ideas across project boundaries.
 - Secrets live in `pass` and `gpg` on this machine. Never read, print, copy, or commit an entry.
 - `~/.gnupg`, `~/.password-store`, `~/.ssh`, and every `.env` file are off limits. Never read or modify them, and exclude them from searches.
-
-# Test directly, then fan out
-
-When an uncertainty blocks a concrete answer, run the smallest safe test that directly measures the unknown before theorising or starting broad research. Use a focused command, probe, request, reproduction, or source lookup whose output can resolve the uncertainty.
-
-If the test resolves the uncertainty, use its result and do not fan out merely to reconfirm it. If the test does not produce a concrete answer, report the test and its result, then offer `/research` or `$research` so the user can request a deeper investigation.
-
-# User-facing response formats
-
-Apply this section only to commentary and final messages sent to the user. Do not apply it to messages between agents.
-
-Use free-form prose only for a greeting, acknowledgement, direct yes-or-no answer, or single factual sentence that required no investigation, reasoning, action, or options. Use one of the following formats for every other response.
-
-Use **Reporting work** when reporting actions, investigation, analysis, review, or changes. Use **Reporting options** when presenting ideas or choices. When a response both reports work and presents options, render the complete **Reporting work** contract followed by the complete **Reporting options** contract.
-
-Each contract starts its `S`, `A`, `C`, `O`, and `N` counters at 1. Within a contract, each counter increments independently so the user can refer to one item directly.
-
-## Reporting work
-
-```markdown
-**Short noun-phrase headline**
-
-S1. What you understood the user to want, in one or two lines.
-
-**Actions done**
-
-A1. What you did and what verified it. Name the test, build, probe, source, or other check. Write "unverified" when no check ran. Include failures.
-
-C1. Write each consequence directly beneath the action that caused it. Include side effects, changed behavior elsewhere, dependencies, restarts, and excluded scope. Omit consequences when none exist.
-
-A2. Continue action numbering sequentially.
-
-C2. Continue consequence numbering sequentially across all actions.
-
-C3. Give one consequence per item.
-
-**Next steps for you**
-
-N1. Give one required user action per item. Give each command its own copyable code block. Write "None" when empty.
-```
-
-## Reporting options
-
-```markdown
-**Short noun-phrase headline**
-
-S1. What decision, idea, or choice you understood the user to want.
-
-**Options**
-
-O1. State one option. Mark the recommended option.
-
-C1. Write each consequence or tradeoff directly beneath the option that causes it. Omit consequences when none exist.
-
-O2. Continue option numbering sequentially.
-
-C2. Continue consequence numbering sequentially across all options.
-
-C3. Give one consequence per item.
-
-O3. An option may have no consequence items.
-```
 
 # Destructive tasks
 
@@ -120,10 +78,3 @@ Treat every repository as public unless this session has confirmed otherwise. Co
 Never add AI attribution to a commit or pull request. Omit co-author trailers, session links, generated-by footers, and similar markers.
 
 Write a succinct title. Add a short body only when it contributes information, and limit it to what changed and why. Omit section headings and rationale essays.
-
-# Skills
-
-Read every applicable `skills/*/SKILL.md` completely before acting:
-
-- Code writing or review: `coding`, plus `coding-c` or `coding-go` when applicable.
-- Every reply and interaction, plus documentation, commit, and pull request text: read and apply `technical-writing`.

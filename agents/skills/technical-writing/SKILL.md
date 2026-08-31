@@ -1,6 +1,6 @@
 ---
 name: technical-writing
-description: Concise technical prose for chat, documentation, READMEs, comments, commit messages, pull requests, and agent instructions. Use whenever writing or reviewing prose for engineers, including instructions and descriptions of current system behavior.
+description: Concise technical prose for replies, documentation, READMEs, comments, commit messages and pull requests. Use whenever writing or reviewing prose for engineers.
 ---
 
 # Technical writing
@@ -22,5 +22,3 @@ Write for a tired engineer reading once.
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
 
 For comments, describe a contract, constraint, or reason that the code cannot express. Do not narrate the edit or justify its history.
-
-For agent instructions, keep always-loaded material minimal. Put task-triggered procedures in skills and make each skill description state its trigger conditions.
