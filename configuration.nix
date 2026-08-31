@@ -354,6 +354,7 @@
     claude-code
     cloc               # lines of code
     codex              # OpenAI Codex CLI
+    nur.repos.charmbracelet.crush # https://github.com/charmbracelet/crush
     csvlens
     delta              # git pager
     eza                # ls/tree
@@ -395,6 +396,7 @@
     lua-language-server
     markdown-oxide               # markdown LSP
     marp-cli                     # markdown slides
+    nil                          # nix LSP
     nodejs                       # node + npm
     (nrfutil.withExtensions [ "nrfutil-device" "nrfutil-91" ]) # Nordic Semi CLI
     python3

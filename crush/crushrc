@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+option global-context-path /home/raj/.config/agents/AGENTS.md
+
+lsp add nix --command nil
+lsp add go --command gopls
+lsp add c --command clangd
+lsp add cpp --command clangd
+lsp add lua --command lua-language-server
+lsp add typescript --command typescript-language-server --args --stdio
+lsp add javascript --command typescript-language-server --args --stdio
