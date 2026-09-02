@@ -39,6 +39,20 @@ alias release='make release'
 alias rebuild-my-nix='sudo nixos-rebuild switch --flake ~/.config#mist'
 alias update-my-nix='nix flake update --flake ~/.config && sudo nixos-rebuild switch --flake ~/.config#mist ; sudo fwupdmgr refresh --force ; sudo fwupdmgr update'
 
+if [[ -n ${SSH_CONNECTION:-} ]]; then
+  alias sudo='sudo '
+
+  alias reboot='echo "Blocked over SSH: reboot"'
+  alias poweroff='echo "Blocked over SSH: poweroff"'
+  alias halt='echo "Blocked over SSH: halt"'
+  alias shutdown='echo "Blocked over SSH: shutdown"'
+  alias suspend='echo "Blocked over SSH: suspend"'
+  alias hibernate='echo "Blocked over SSH: hibernate"'
+
+  alias systemctl='echo "Blocked over SSH: systemctl"'
+  alias loginctl='echo "Blocked over SSH: loginctl"'
+fi
+
 # Clear scrollback + screen
 function clear-scrollback-and-screen { printf '\033[3J'; zle clear-screen }
 zle -N clear-scrollback-and-screen
