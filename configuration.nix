@@ -323,7 +323,7 @@
     shell = pkgs.zsh;
     initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPrOnZOe0GfROlpDHe72esqJdsMXZ+XkWkdTQYKHDGOs raj@ipad"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbUyYSBFm1JuOP0dWsuy9P02o2fvzG3oUeI2rsupBmi raj@ipad"
     ];
   };
 
@@ -372,6 +372,7 @@
     jq                 # JSON processor
     libqalculate       # qalc
     netcat-openbsd     # nc (zsh prompt)
+    neovim
     pandoc             # document converter
     pass               # password manager
     poppler-utils      # PDF utils
@@ -402,6 +403,7 @@
     python3
     python3Packages.weasyprint   # HTML → PDF CLI
     ruff                         # python linter/formatter
+    tree-sitter                  # Parser CLI for nvim-treesitter
     typescript                   # tsc
     typescript-language-server
     vscode-langservers-extracted # html/css/json/eslint LSPs
