@@ -9,8 +9,6 @@ export PATH=$PATH:$HOME/go/bin
 (pass git pull &>/dev/null &)
 
 # Aliases
-alias nv='nvim .'
-
 alias l='eza -l'
 alias ll='eza -la'
 alias lt='eza --tree'

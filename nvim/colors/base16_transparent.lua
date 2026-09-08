@@ -1,7 +1,29 @@
--- Port of helix's base16_transparent theme: 16 ANSI terminal colors, no
--- painted background, so foot's palette and alpha define the look
+-- Uses Foot's palette without painting Normal, so Foot controls transparency.
 vim.cmd("highlight clear")
 vim.g.colors_name = "base16_transparent"
+
+local terminal_colors = {
+  [0] = "#1c1b19",
+  [1] = "#ef2f27",
+  [2] = "#519f50",
+  [3] = "#fbb829",
+  [4] = "#2c78bf",
+  [5] = "#e02c6d",
+  [6] = "#0aaeb3",
+  [7] = "#baa67f",
+  [8] = "#918175",
+  [9] = "#f75341",
+  [10] = "#98bc37",
+  [11] = "#fed06e",
+  [12] = "#68a8e4",
+  [13] = "#ff5c8f",
+  [14] = "#2be4d0",
+  [15] = "#fce8c3",
+}
+
+for index = 0, 15 do
+  vim.g["terminal_color_" .. index] = terminal_colors[index]
+end
 
 local groups = {
   -- Editor chrome
@@ -99,6 +121,11 @@ local groups = {
   DiagnosticUnderlineHint = { underdashed = true },
 }
 
-for group, opts in pairs(groups) do
-  vim.api.nvim_set_hl(0, group, opts)
+for group, options in pairs(groups) do
+  local resolved = vim.tbl_extend("force", {}, options, {
+    fg = terminal_colors[options.ctermfg],
+    bg = terminal_colors[options.ctermbg],
+  })
+
+  vim.api.nvim_set_hl(0, group, resolved)
 end

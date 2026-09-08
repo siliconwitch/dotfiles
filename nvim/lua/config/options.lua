@@ -1,14 +1,12 @@
 local o = vim.o
 
--- Render with the terminal's 16-color palette and no painted background,
--- so foot's colors and alpha show through
-o.termguicolors = false
+-- Use Foot's RGB palette while leaving the editor background to the terminal.
+o.termguicolors = true
 
 o.number = true
 o.signcolumn = "yes"
-o.cursorline = true
 o.scrolloff = 4
-o.wrap = false
+o.wrap = true
 o.splitright = true
 o.splitbelow = true
 

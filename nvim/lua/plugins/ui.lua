@@ -1,9 +1,46 @@
 return {
   {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      dashboard = {
+        enabled = true,
+        sections = {
+          {
+            section = "terminal",
+            cmd = "chafa "
+              .. vim.fn.shellescape(vim.fn.stdpath("config") .. "/assets/moss-boulder-garden.png")
+              .. " --format symbols --colors full --symbols block+border --size 51x14 --stretch --probe off --threads 2 --work 4",
+            height = 14,
+            padding = 1,
+          },
+          {
+            pane = 2,
+            { section = "keys", gap = 1, padding = 1 },
+            { section = "startup" },
+          },
+        },
+      },
+    },
+  },
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
     config = function()
+      local colors = {
+        blue = "#68a8e4",
+        bright_magenta = "#ff5c8f",
+        bright_red = "#f75341",
+        cyan = "#0aaeb3",
+        foreground = "#fce8c3",
+        green = "#519f50",
+        magenta = "#e02c6d",
+        muted = "#918175",
+        red = "#ef2f27",
+      }
+
       -- Branch colors follow zsh/prompt.zsh: red for unstaged or untracked,
       -- green for staged, cyan when clean, magenta ahead/behind arrows
       local function refresh_git_status(buf)
@@ -68,7 +105,7 @@ return {
               root = root,
               branch = branch,
               arrows = (ahead > 0 and "↑" or "") .. (behind > 0 and "↓" or ""),
-              color = (dirty and 1) or (staged and 2) or 6,
+              color = (dirty and colors.red) or (staged and colors.green) or colors.cyan,
             }
             require("lualine").refresh()
           end)
@@ -135,17 +172,17 @@ return {
         options = {
           theme = {
             normal = {
-              a = { fg = 12, bg = "none", gui = "bold" },
-              b = { fg = 15, bg = "none" },
-              c = { fg = 13, bg = "none" },
+              a = { fg = colors.blue, bg = "none", gui = "bold" },
+              b = { fg = colors.foreground, bg = "none" },
+              c = { fg = colors.bright_magenta, bg = "none" },
             },
-            insert = { a = { fg = 2, bg = "none", gui = "bold" } },
-            visual = { a = { fg = 5, bg = "none", gui = "bold" } },
-            replace = { a = { fg = 9, bg = "none", gui = "bold" } },
+            insert = { a = { fg = colors.green, bg = "none", gui = "bold" } },
+            visual = { a = { fg = colors.magenta, bg = "none", gui = "bold" } },
+            replace = { a = { fg = colors.bright_red, bg = "none", gui = "bold" } },
             inactive = {
-              a = { fg = 8, bg = "none" },
-              b = { fg = 8, bg = "none" },
-              c = { fg = 8, bg = "none" },
+              a = { fg = colors.muted, bg = "none" },
+              b = { fg = colors.muted, bg = "none" },
+              c = { fg = colors.muted, bg = "none" },
             },
           },
           section_separators = "",
@@ -166,11 +203,11 @@ return {
               git_branch,
               color = function()
                 local status = vim.b.git_status
-                return { fg = status and status.color or 13 }
+                return { fg = status and status.color or colors.bright_magenta }
               end,
               padding = { left = 1, right = 0 },
             },
-            { git_arrows, color = { fg = 13 }, padding = { left = 1, right = 0 } },
+            { git_arrows, color = { fg = colors.bright_magenta }, padding = { left = 1, right = 0 } },
             { file_path },
           },
           lualine_x = {},

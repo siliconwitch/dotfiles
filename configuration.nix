@@ -145,6 +145,11 @@
   # Networking
   networking.hostName = "mist";
   networking.wireless.iwd.enable = true;
+  # Private remote access (https://tailscale.com/)
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
 
   # Swap (compressed RAM, 32 GB machine, no hibernation, nothing on disk)
   zramSwap.enable = true;
@@ -351,6 +356,7 @@
     bat                # cat alias
     bluetui
     btop
+    chafa              # https://hpjansson.org/chafa/
     claude-code
     cloc               # lines of code
     codex              # OpenAI Codex CLI
