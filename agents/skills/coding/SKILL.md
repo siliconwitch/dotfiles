@@ -50,19 +50,14 @@ package in Go, a file and its header in C, a module in Lua. Several files in
 one Go package are still one module, because nothing stops one reaching into
 another. A layer split needs a boundary the compiler can refuse a call across.
 
+Deleting a module and its one line of wiring at the setup layer removes that
+feature entirely.
+
 Helpers sit outside the layers: logging, error checking, and small
 self-contained utilities, callable from anywhere.
 
 A module reaching for another module in the same layer means the callee belongs
 in L3. Move it down instead of calling sideways.
-
-# Co-location
-
-Deleting a module and its one line of wiring at the setup layer removes that
-feature entirely.
-
-Within each file of a module: callbacks and handlers at the top, initialisation
-next, working logic at the bottom.
 
 # Names and layout
 
