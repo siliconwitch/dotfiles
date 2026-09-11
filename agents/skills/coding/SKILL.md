@@ -3,6 +3,16 @@ name: coding
 description: Shared coding and review rules for C, Go, JavaScript, Lua, and similar imperative code. Use before writing or reviewing source code, tests, dependencies, module boundaries, names, layout, or comments. Apply coding-c or coding-go as an additional layer when relevant.
 ---
 
+# Scope
+
+- Make the smallest diff that does what the request asks. Do not change any
+  line the request does not need. The comment rule below is the only
+  exception.
+- Do not handle an input or state that the request did not mention. The
+  exception is when leaving it unhandled would corrupt memory or data, hang or
+  damage hardware, or open a security hole. Handle those without being asked.
+- Do not add a feature, option, or fallback that the request did not ask for.
+
 # Structure
 
 - **Functional.** Values in and values out, immutable inputs, no hidden global
@@ -10,8 +20,8 @@ description: Shared coding and review rules for C, Go, JavaScript, Lua, and simi
   that state private to the unit that owns it.
 - **Procedural.** A long function that reads top to bottom is the goal, not a
   compromise. Never shorten or split a function while it stays procedural.
-- **Guard clauses.** Handle errors and edge cases first and return early, so
-  the happy path stays unindented.
+- **Guard clauses.** Handle errors first and return early, so the happy path
+  stays unindented.
 - **Inline single use.** A constant used once is a literal at the point of
   use. Logic used once is written where it runs, never behind a function
   called from one place.
