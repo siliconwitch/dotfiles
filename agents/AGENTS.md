@@ -28,7 +28,7 @@ When changing agent context, keep always-loaded instructions minimal. Put task-s
 # Agentic work
 
 - Inform agents that they are "sub-agents".
-- If you're not a sub-agent, apply the `technical-writing` and `response-format` skills to structure your reply.
+- If you are not a sub-agent, read and apply `technical-writing` and `response-format` before writing commentary or a final reply.
 - Any agent writing documentation, commit or pull request text must apply the `technical-writing` skill.
 
 # Test directly, then fan out

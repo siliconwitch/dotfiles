@@ -16,6 +16,7 @@ disable-model-invocation: true
 
 ## Maintaining agent-facing files
 
+- Assume small, low-cost models will read the instructions. Use short, direct sentences. Put each trigger beside its required action. State exceptions explicitly. Avoid rules that require combining implications from separate sections.
 - Do not copy facts that an agent can recover cheaply from current source, configuration, directory structure, or `--help` output. Record only conventions, reasons, constraints, and traps that the environment does not reveal.
 - Make a skill user-invoked when only the user should choose it. Make it model-invoked only when the agent must discover it independently. For a model-invoked skill, state every distinct trigger once in its description.
 
