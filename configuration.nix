@@ -329,6 +329,7 @@
     initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbUyYSBFm1JuOP0dWsuy9P02o2fvzG3oUeI2rsupBmi raj@ipad"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG30AAEq/at4v6HPcINPIaYaiuF3UokvzRUZtw5Jr1TY raj@iphone"
     ];
   };
 
