@@ -1,4 +1,4 @@
-{ pkgs, lib, username, nixpkgs-master, ... }:
+{ pkgs, lib, username, nixpkgs-master, nixpkgs-stable, ... }:
 
 {
   # Nix base settings
@@ -15,7 +15,7 @@
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "i8042.dumbkbd=1" ]; # Lenovo keyboard quirk
-  boot.kernelPackages = pkgs.linuxPackages_testing; # Once 7.2 stable lands in nixpkgs: switch to linuxPackages_latest
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Hardware & firmware
   hardware.enableAllFirmware = true;
@@ -416,7 +416,6 @@
 
     # GUI apps
     chromium
-    davinci-resolve # video editor (unfree)
     firefox
     freecad
     kicad           # EDA
@@ -459,6 +458,9 @@
         inherit (prev.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
+      stable = import nixpkgs-stable {
+        inherit (prev.stdenv.hostPlatform) system;
+      };
     in
     {
       # Prevent chrome bugging us for passwords
@@ -467,6 +469,7 @@
       };
       # Always pull the latest coding agents
       inherit (master) claude-code codex;
+      inherit (stable) freecad;
     })
   ];
 
