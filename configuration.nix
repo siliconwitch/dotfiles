@@ -429,6 +429,7 @@
       terminal = false;
       categories = [ "Science" ];
     })
+    postman         # API client
     prismlauncher   # Minecraft launcher
     roomeqwizard
     saleae-logic-2  # logic analyzer (unfree)
