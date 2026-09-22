@@ -21,6 +21,7 @@
   hardware.enableAllFirmware = true;
   hardware.graphics.enable = true;
   hardware.bluetooth.enable = true;
+  hardware.i2c.enable = true; # DDC/CI for ddcutil
   services.fwupd.enable = true;
   services.hardware.bolt.enable = true;
   nixpkgs.config.segger-jlink.acceptLicense = true;
