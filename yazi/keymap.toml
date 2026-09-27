@@ -2,3 +2,8 @@
 on = [ "g", "d" ]
 run = "cd ~/downloads"
 desc = "Go ~/downloads"
+
+[[mgr.prepend_keymap]]
+on = "W"
+run = '''shell --orphan -- sh -c 'd="$0"; [ -d "$d" ] || d=$(dirname "$d"); ya emit quit; exec herdr workspace create --cwd "$d" --focus' %h'''
+desc = "Open hovered folder as a Herdr workspace"
