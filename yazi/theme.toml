@@ -1,0 +1,29 @@
+# Foot draws every cell background translucent (alpha-mode=all) but glyphs
+# opaque, so the rounded powerline caps look solid next to their bars.
+# Mark the hovered row with text attributes only, flatten the bars, and keep
+# the status line to plain text.
+[indicator]
+current = { bold = true }
+parent  = { bold = true }
+padding = { open = " ", close = " " }
+
+[status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+perm_sep   = { fg = "darkgray" }
+perm_type  = { fg = "gray" }
+perm_read  = { fg = "gray" }
+perm_write = { fg = "gray" }
+perm_exec  = { fg = "gray" }
+
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+normal_main = { fg = "blue", bold = true }
+normal_alt  = { fg = "gray" }
+select_main = { fg = "red", bold = true }
+select_alt  = { fg = "gray" }
+unset_main  = { fg = "red", bold = true }
+unset_alt   = { fg = "gray" }
