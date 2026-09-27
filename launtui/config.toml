@@ -31,7 +31,7 @@ exclude = [
 [projects]
 dirs = ["~/projects"]
 projects = ["~/.config", "~/company"]
-editor = "hx"
+editor = "nvim"
 
 [web]
 search_url = "https://www.google.com/search?q=%s"

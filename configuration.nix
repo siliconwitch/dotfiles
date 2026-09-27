@@ -381,7 +381,6 @@
     gh                 # Github CLI
     git
     gnupg              # gpg
-    helix              # hx editor
     herdr              # terminal multiplexer
     impala             # Wi-Fi TUI
     jq                 # JSON processor
