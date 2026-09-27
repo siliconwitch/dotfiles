@@ -322,6 +322,12 @@
   };
   environment.sessionVariables.ZDOTDIR = "$HOME/.config/zsh";
 
+  # Editor (sets EDITOR=nvim)
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
   # User
   users.users.${username} = {
     isNormalUser = true;
@@ -380,7 +386,6 @@
     jq                 # JSON processor
     libqalculate       # qalc
     netcat-openbsd     # nc (zsh prompt)
-    neovim
     pandoc             # document converter
     pass               # password manager
     poppler-utils      # PDF utils
