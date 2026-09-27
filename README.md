@@ -135,6 +135,22 @@ A minimal-ISO install with LUKS full-disk encryption, then a switch to this flak
     gpg --import-ownertrust /tmp/ownertrust.txt
     ```
 
+13. Install the Herdr plugins. Herdr comes from Nix, but its plugins are git checkouts that Herdr keeps under `~/.config/herdr/plugins/`, outside this repo:
+
+    ```sh
+    herdr plugin install persiyanov/herdr-reviewr --yes
+    herdr plugin install ChmaraX/herdr-nvim --yes
+    herdr plugin install senna-lang/herdr-agent-usage --yes
+    ```
+
+    The usage plugin's scripts call each other through `#!/bin/bash`, which NixOS does not provide. Patch them after every install or update:
+
+    ```sh
+    sed -i '1s|^#!/bin/bash$|#!/usr/bin/env bash|' ~/.config/herdr/plugins/github/usagebar-*/bin/*.sh
+    ```
+
+    For its meters in the Claude Code status line, point `statusLine.command` in `~/.claude/settings.json` at `bin/run-statusline.sh` inside that checkout.
+
 ## Rebuilds
 
 After setup, rebuild from raj's shell:
