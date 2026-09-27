@@ -1,0 +1,61 @@
+onboarding = false
+
+[ui.toast]
+delivery = "herdr"
+
+[ui.sound]
+enabled = false
+
+[theme]
+name = "rose-pine"
+
+# Yazi as a popup file browser. Inside yazi, W opens the hovered folder as a
+# new Herdr workspace (see yazi/keymap.toml).
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "yazi \"${HERDR_ACTIVE_PANE_CWD:-$HOME}\""
+width = "80%"
+height = "80%"
+description = "file browser"
+
+[[keys.command]]
+key = "prefix+d"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "reviewr diff pane"
+
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar"
+
+[[keys.command]]
+key = "prefix+i"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "nvim file picker"
+
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "usagebar.open-limits"
+description = "agent usage limits"
+
+[[keys.command]]
+key = "prefix+shift+u"
+type = "plugin_action"
+command = "usagebar.refresh"
+description = "refresh usage meters"
+
+# Agent rows from the usagebar plugin: $title and $provider replace the
+# built-in tab and agent tokens; $limit, $cache_* and $context are its meters.
+[ui.sidebar.agents]
+row_gap = 0
+rows = [
+  ["state_icon", "$title"],
+  ["$provider", "$limit"],
+  ["$cache_high", { token = "$cache_mid", fg = "#e0af68" }, { token = "$cache_low", fg = "#f7768e" }],
+  ["$context"],
+]

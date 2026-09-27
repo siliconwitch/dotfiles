@@ -27,6 +27,9 @@
 !/yazi/
 !/python_keyring/
 !/crush/
+!/herdr/
+/herdr/*
+!/herdr/config.toml
 !/wallpaper.jpg
 !/screenshot.png
 
