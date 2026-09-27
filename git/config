@@ -6,6 +6,11 @@
 
 [delta]
     navigate = true  # use n and N to move between diff sections
+    syntax-theme = ansi
+    minus-style = red
+    minus-emph-style = red reverse
+    plus-style = green
+    plus-emph-style = green reverse
 [merge]
     conflictStyle = zdiff3
 [user]

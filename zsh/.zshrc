@@ -8,6 +8,10 @@ export PATH=$PATH:$HOME/go/bin
 # Pull the latest passwords in the background
 (pass git pull &>/dev/null &)
 
+# Draw with the terminal's 16 ANSI colours
+export BAT_THEME=ansi
+export FZF_DEFAULT_OPTS='--color=16'
+
 # Aliases
 alias l='eza -l'
 alias ll='eza -la'

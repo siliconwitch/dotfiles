@@ -7,7 +7,7 @@ delivery = "herdr"
 enabled = false
 
 [theme]
-name = "rose-pine"
+name = "terminal"
 
 [keys]
 prefix = "ctrl+a"
