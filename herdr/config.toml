@@ -9,6 +9,9 @@ enabled = false
 [theme]
 name = "rose-pine"
 
+[keys]
+prefix = "ctrl+a"
+
 # Yazi as a popup file browser. Inside yazi, W opens the hovered folder as a
 # new Herdr workspace (see yazi/keymap.toml).
 [[keys.command]]
