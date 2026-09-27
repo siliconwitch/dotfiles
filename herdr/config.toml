@@ -36,26 +36,3 @@ key = "prefix+i"
 type = "plugin_action"
 command = "chmarax.herdr-nvim.pick-file"
 description = "nvim file picker"
-
-[[keys.command]]
-key = "prefix+u"
-type = "plugin_action"
-command = "usagebar.open-limits"
-description = "agent usage limits"
-
-[[keys.command]]
-key = "prefix+shift+u"
-type = "plugin_action"
-command = "usagebar.refresh"
-description = "refresh usage meters"
-
-# Agent rows from the usagebar plugin: $title and $provider replace the
-# built-in tab and agent tokens; $limit, $cache_* and $context are its meters.
-[ui.sidebar.agents]
-row_gap = 0
-rows = [
-  ["state_icon", "$title"],
-  ["$provider", "$limit"],
-  ["$cache_high", { token = "$cache_mid", fg = "#e0af68" }, { token = "$cache_low", fg = "#f7768e" }],
-  ["$context"],
-]
