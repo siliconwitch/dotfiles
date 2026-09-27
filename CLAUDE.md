@@ -48,4 +48,3 @@ Add a link when a new tool arrives, and remove one when a tool goes.
 - Wiki: https://wiki.nixos.org
 - Niri: https://niri-wm.github.io/niri/
 - Neovim: https://neovim.io/doc/user/
-- lazy.nvim: https://lazy.folke.io
