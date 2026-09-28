@@ -152,6 +152,9 @@
     enable = true;
     openFirewall = true;
   };
+  # Per-link DNS, so Tailscale only answers for its own domain
+  services.resolved.enable = true;
+  services.resolved.settings.Resolve.MulticastDNS = false; # Avahi owns mDNS
 
   # Swap (compressed RAM, 32 GB machine, no hibernation, nothing on disk)
   zramSwap.enable = true;
