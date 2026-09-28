@@ -34,3 +34,4 @@
 
 # Runtime junk inside tracked dirs
 zsh/.zcompdump*
+agents/skills/synced/
