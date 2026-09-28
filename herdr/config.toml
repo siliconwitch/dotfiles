@@ -1,5 +1,28 @@
 onboarding = false
 
+[ui]
+tab_bar_right_separator = " "
+
+# Battery level, hidden while plugged in at 80% or above.
+# Nerd Font glyphs:  is a battery,  is a plug.
+[[ui.tab_bar_right]]
+type = "command"
+command = """
+level=$(cat /sys/class/power_supply/BAT0/capacity)
+
+if [ "$(cat /sys/class/power_supply/BAT0/status)" = Discharging ]; then
+  echo "$level% "
+elif [ "$level" -lt 80 ]; then
+  echo "$level% "
+fi
+"""
+interval_seconds = 5
+timeout_seconds = 2
+
+[[ui.tab_bar_right]]
+type = "datetime"
+format = "%H:%M"
+
 [ui.toast]
 delivery = "herdr"
 
