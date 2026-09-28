@@ -28,8 +28,23 @@ TRAPUSR1() {
   zle && zle reset-prompt
 }
 
+_herdr_report_git_branch() {
+  [[ -n "$HERDR_WORKSPACE_ID" ]] || return
+
+  local branch changes
+  branch=$(git branch --show-current 2>/dev/null)
+  changes=$(git --no-optional-locks status --porcelain 2>/dev/null)
+
+  # Porcelain lines start with the staged column, then the unstaged column. Untracked files show "??".
+  grep -q '^[^ ?]' <<< "$changes" && branch+="+"
+  grep -q '^.[^ ]' <<< "$changes" && branch+="*"
+
+  herdr workspace report-metadata "$HERDR_WORKSPACE_ID" --source git-branch --token "git_branch=$branch" &>/dev/null
+}
+
 add-zsh-hook precmd _git_fetch_async
 add-zsh-hook precmd vcs_info
+add-zsh-hook precmd _herdr_report_git_branch
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats " %F{cyan}%c%u%b%m%f"
