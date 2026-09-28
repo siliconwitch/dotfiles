@@ -23,7 +23,27 @@ timeout_seconds = 2
 type = "datetime"
 format = "%H:%M"
 
-# zsh/prompt.zsh reports $git_branch: the branch name, then + if staged and * if unstaged or untracked.
+# Reports $git_branch for every space: the branch name, then + if staged and
+# * if unstaged or untracked. Prints nothing, so the tab bar shows no entry.
+[[ui.tab_bar_right]]
+type = "command"
+command = """
+herdr api snapshot | jq -r '.result.snapshot | .workspaces[] as $space | first(.panes[] | select(.workspace_id == $space.workspace_id)) | [$space.workspace_id, $space.tokens.git_branch // "-", .cwd] | join(" ")' |
+while read -r space reported directory; do
+  branch=$(git -C "$directory" branch --show-current 2>/dev/null)
+  changes=$(git -C "$directory" --no-optional-locks status --porcelain 2>/dev/null)
+
+  if echo "$changes" | grep -q '^[^ ?]'; then branch="$branch+"; fi
+  if echo "$changes" | grep -q '^.[^ ]'; then branch="$branch*"; fi
+
+  if [ "${branch:--}" = "$reported" ]; then continue; fi
+
+  herdr workspace report-metadata "$space" --source git-branch --token "git_branch=$branch" >/dev/null
+done
+"""
+interval_seconds = 5
+timeout_seconds = 2
+
 [ui.sidebar.spaces]
 rows = [["state_icon", "workspace"], ["$git_branch", "git_status"]]
 
