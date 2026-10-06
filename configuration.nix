@@ -428,6 +428,7 @@
     chromium
     firefox
     freecad
+    gnumeric        # spreadsheet, ssconvert
     kicad           # EDA
     nanovna-qt
     (makeDesktopItem {
