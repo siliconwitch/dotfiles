@@ -100,6 +100,9 @@ A minimal-ISO install with LUKS full-disk encryption, then a switch to this flak
     ln -s ../.config/agents/skills ~/.agents/skills
     ```
 
+    Then point `statusLine.command` in `~/.claude/settings.json` at
+    `~/.config/agents/claude/statusline.sh`.
+
 10. Create SSH key for GitHub access:
 
     ```sh
