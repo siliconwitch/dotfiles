@@ -1,7 +1,7 @@
 # NixOS configuration
 
 `flake.nix` builds the `mist` system from `configuration.nix`,
-`hardware-configuration.nix`, `apparmor.nix` and `webapps.nix`. A broken config
+`hardware-configuration.nix` and `apparmor.nix`. A broken config
 means a broken boot or lost data, so work through this before every change and
 every recommendation.
 
@@ -48,4 +48,3 @@ Add a link when a new tool arrives, and remove one when a tool goes.
 - Wiki: https://wiki.nixos.org
 - Niri: https://niri-wm.github.io/niri/
 - Neovim: https://neovim.io/doc/user/
-- Gnumeric: https://gnome.pages.gitlab.gnome.org/gnumeric/manual/

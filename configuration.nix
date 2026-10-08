@@ -25,7 +25,7 @@
   services.fwupd.enable = true;
   services.hardware.bolt.enable = true;
   nixpkgs.config.segger-jlink.acceptLicense = true;
-  nixpkgs.config.permittedInsecurePackages = [ "segger-jlink-qt4-952" ];
+  nixpkgs.config.permittedInsecurePackages = [ "segger-jlink-qt4-970" ];
   services.udev.packages = with pkgs; [ saleae-logic-2 segger-jlink ];
 
   # Remap Lenovo Copilot key, and Caps Lock to esc on tap / ctrl on hold
@@ -147,7 +147,6 @@
   # Networking
   networking.hostName = "mist";
   networking.wireless.iwd.enable = true;
-  # Private remote access (https://tailscale.com/)
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -156,16 +155,16 @@
   services.resolved.enable = true;
   services.resolved.settings.Resolve.MulticastDNS = false; # Avahi owns mDNS
 
-  # Swap (compressed RAM, 32 GB machine, no hibernation, nothing on disk)
+  # Swap
   zramSwap.enable = true;
 
-  # GPG agent (passphrase caching for pass)
+  # GPG agent
   programs.gnupg.agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry-curses;
   };
 
-  # mDNS (*.local hostname resolution)
+  # mDNS
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -175,13 +174,13 @@
     ipv6 = false;
   };
 
-  # Printers (auto-discovers via avahi)
+  # Printers
   services.printing.enable = true;
 
   # Local file sharing (opens 53317 TCP/UDP for discovery and transfer)
   programs.localsend.enable = true;
 
-  # Removable drives (udiskie automounts them to /run/media)
+  # Removable drives
   services.udisks2.enable = true;
   systemd.user.services.udiskie = {
     wantedBy = [ "graphical-session.target" ];
@@ -326,7 +325,7 @@
   };
   environment.sessionVariables.ZDOTDIR = "$HOME/.config/zsh";
 
-  # Editor (sets EDITOR=nvim)
+  # Editor
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -347,17 +346,17 @@
   # Packages
   environment.systemPackages = with pkgs; [
     # Desktop related
-    brightnessctl      # internal display brightness
-    cliphist
-    ddcutil            # external monitor brightness
-    libnotify          # notify-send
-    mako               # notifications
-    playerctl          # media keys
-    pulseaudio         # pactl (talks to pipewire-pulse)
-    swaybg             # wallpaper
-    udiskie            # drive mounting (udiskie-umount)
-    wl-clipboard
-    xwayland-satellite # X11 app support
+    brightnessctl                    # internal display brightness
+    cliphist                         # clipboard history
+    ddcutil                          # external monitor brightness
+    libnotify                        # notify-send
+    mako                             # notifications
+    playerctl                        # media keys
+    pulseaudio                       # pactl (talks to pipewire-pulse)
+    swaybg                           # wallpaper
+    udiskie                          # drive mounting (udiskie-umount)
+    wl-clipboard                     # wl-copy, wl-paste
+    xwayland-satellite               # X11 app support
 
     # Shell plugins
     zsh-completions
@@ -365,72 +364,72 @@
     zsh-you-should-use
 
     # Terminal apps & tools
-    bat                # cat alias
-    bluetui
-    btop
-    chafa              # https://hpjansson.org/chafa/
+    bat                              # cat alias
+    bluetui                          # Bluetooth TUI
+    btop                             # system monitor
     claude-code
-    cloc               # lines of code
-    codex              # OpenAI Codex CLI
-    nur.repos.charmbracelet.crush # https://github.com/charmbracelet/crush
-    csvlens
-    delta              # git pager
-    eza                # ls/tree
-    fastfetch          # system info
-    fd                 # find alternative
+    cloc                             # counts lines of code
+    csvlens                          # CSV viewer
+    delta                            # git pager
+    eza                              # ls/tree
+    fd                               # find alternative
     ffmpeg
-    foot               # terminal
-    fzf                # fuzzy finder
-    gh                 # Github CLI
+    ghostty                          # terminal
+    fzf                              # fuzzy finder
+    gh                               # Github CLI
     git
-    gnupg              # gpg
-    herdr              # terminal multiplexer
-    impala             # Wi-Fi TUI
-    jq                 # JSON processor
-    libqalculate       # qalc
-    netcat-openbsd     # nc (zsh prompt)
-    pandoc             # document converter
-    pass               # password manager
-    poppler-utils      # PDF utils
-    ripgrep            # rg
-    segger-jlink       # J-Link tools (unfree)
-    trash-cli          # rm alias
+    gnupg                            # gpg
+    herdr                            # terminal multiplexer
+    impala                           # Wi-Fi TUI
+    jq                               # JSON processor
+    libqalculate                     # qalc
+    netcat-openbsd                   # nc (zsh prompt)
+    pandoc                           # document converter
+    pass                             # password manager
+    poppler-utils                    # PDF utils
+    ripgrep                          # rg
+    segger-jlink                     # J-Link debugger software
+    trash-cli                        # rm alias
     unzip
-    vhs                # Generates terminal GIFs
-    wiremix            # PipeWire TUI mixer
-    yazi               # file manager
-    zoxide             # cd
+    vhs                              # Generates terminal GIFs
+    wiremix                          # PipeWire TUI mixer
+    yazi                             # file manager
+    zoxide                           # cd
     zip
 
     # Languages & LSPs
-    clang                        # C/C++ toolchain
-    clang-tools                  # clangd, clang-format
-    gcc-arm-embedded             # Toolchain for ARM microcontrollers
-    gnumake                      # make
+    clang                            # C/C++ toolchain
+    clang-tools                      # clangd, clang-format
+    gcc-arm-embedded                 # Toolchain for ARM microcontrollers
+    gnumake                          # make
     go
-    gopls
+    gopls                            # Go LSP
     lua
-    lua-language-server
-    markdown-oxide               # markdown LSP
-    marp-cli                     # markdown slides
-    nil                          # nix LSP
-    nodejs                       # node + npm
-    (nrfutil.withExtensions [ "nrfutil-device" "nrfutil-91" ]) # Nordic Semi CLI
+    lua-language-server              # Lua LSP
+    markdown-oxide                   # markdown LSP
+    marp-cli                         # markdown slides
+    nil                              # nix LSP
+    nodejs                           # node + npm
+    (nrfutil.withExtensions [        # Nordic nRF tools
+        "nrfutil-device" 
+        "nrfutil-91"
+    ])
     python3
-    python3Packages.weasyprint   # HTML → PDF CLI
-    ruff                         # python linter/formatter
-    tree-sitter                  # Parser CLI for nvim-treesitter
-    typescript                   # tsc
-    typescript-language-server
-    vscode-langservers-extracted # html/css/json/eslint LSPs
+    python3Packages.weasyprint       # HTML → PDF CLI
+    ruff                             # python linter/formatter
+    tree-sitter                      # Parser CLI for nvim-treesitter
+    typescript
+    typescript-language-server       # TypeScript LSP
+    vscode-langservers-extracted     # html/css/json/eslint LSPs
 
     # GUI apps
     chromium
+    drawio                           # diagrams
     firefox
-    freecad
-    gnumeric        # spreadsheet, ssconvert
-    kicad           # EDA
-    nanovna-qt
+    freecad                          # 3D CAD
+    gnumeric                         # spreadsheet, ssconvert
+    kicad                            # PCB design tools
+    nanovna-qt                       # vector network analyser
     (makeDesktopItem {
       name = "nanovna-qt";
       desktopName = "NanoVNA-QT";
@@ -438,16 +437,18 @@
       terminal = false;
       categories = [ "Science" ];
     })
-    postman         # API client
-    prismlauncher   # Minecraft launcher
-    roomeqwizard
-    saleae-logic-2  # logic analyzer (unfree)
-    (callPackage ./simsmith.nix { })
-    vlc             # media player
+    pear-desktop                     # YouTube Music client (tray, MPRIS)
+    postman                          # API client
+    prismlauncher                    # Minecraft launcher
+    roomeqwizard                     # room acoustics measurement
+    saleae-logic-2                   # logic analyzer (unfree)
+    (callPackage ./simsmith.nix { }) # Smith chart simulator
+    vesktop                          # Discord client (tray)
+    vlc                              # media player
   ];
 
   # Specific to projects & apps
-  programs.direnv.enable = true; # Enable per project dev shells
+  programs.direnv.enable = true;
   programs.nix-ld.enable = true; # Required for prebuilt linux binaries (eg. nrfutil)
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc
@@ -479,8 +480,7 @@
       chromium = prev.chromium.override {
         commandLineArgs = "--password-store=basic";
       };
-      # Always pull the latest coding agents
-      inherit (master) claude-code codex;
+      inherit (master) claude-code;
       inherit (stable) freecad;
     })
   ];

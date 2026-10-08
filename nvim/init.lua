@@ -4,14 +4,14 @@ vim.g.maplocalleader = " "
 
 local o = vim.o
 
--- Draw with the terminal's 16 ANSI colours so Foot owns the palette and the background.
+-- Draw with the terminal's 16 ANSI colours so the terminal owns the palette and the background.
 o.termguicolors = false
 
 o.number = true
 o.signcolumn = "yes"
 o.statusline = "%<%f%( %m%)%( %r%)"
 o.scrolloff = 4
-o.wrap = true
+o.wrap = false
 o.splitright = true
 o.splitbelow = true
 
@@ -28,7 +28,6 @@ o.confirm = true
 o.autoread = true
 o.updatetime = 300
 
--- Yank and paste through the Wayland clipboard (wl-clipboard)
 o.clipboard = "unnamedplus"
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>")
@@ -36,7 +35,6 @@ vim.keymap.set("n", "<leader>w", "<cmd>set wrap!<cr>", { desc = "Toggle wrap" })
 
 local group = vim.api.nvim_create_augroup("user", { clear = true })
 
--- Reload files edited outside nvim, e.g. by claude-code or codex
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   group = group,
   callback = function()
@@ -143,7 +141,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 require("which-key").setup()
 
--- Highlight groups use ANSI slots only and leave Normal unpainted, so Foot owns the palette and transparency.
+-- Highlight groups use ANSI slots only and leave Normal unpainted, so the terminal owns the palette and transparency.
 local groups = {
   -- Editor chrome
   Normal = { ctermfg = 7 },

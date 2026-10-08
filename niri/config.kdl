@@ -1,95 +1,74 @@
 spawn-sh-at-startup "mako"
-spawn-sh-at-startup "foot --server"
 spawn-sh-at-startup "swaybg -i ~/.config/wallpaper.jpg"
 spawn-sh-at-startup "~/projects/launtui/launtui --watch"
-spawn-sh-at-startup "chromium --app=https://music.youtube.com"
-spawn-sh-at-startup "chromium --app=https://discord.com/app"
-spawn-sh-at-startup "foot --app-id=scratch.yazi -o colors-dark.alpha=0.85 yazi"
-
-workspace "scratch" // Parking space for "minimised" apps such as Discord; declared first so it sits above main
-workspace "main"
-spawn-sh-at-startup "sleep 1 && niri msg action focus-workspace main" // Switch to main after boot
+spawn-sh-at-startup "ghostty --gtk-single-instance=true --initial-window=false --quit-after-last-window-closed=false"
 
 binds {
     // Launcher & shortcuts
-    Mod+Space                 hotkey-overlay-title="Launcher"                     { spawn-sh "~/.config/scripts/toggle close foot.launcher footclient --app-id=foot.launcher -o colors-dark.alpha=0.85 -e ~/projects/launtui/launtui"; }
-    Mod+T                     hotkey-overlay-title="Terminal"                     { spawn-sh "footclient -e sh -c 'fastfetch; exec $SHELL'"; }
-    Mod+B                     hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
-    Mod+Y                     hotkey-overlay-title="YouTube Music"                { spawn-sh "~/.config/scripts/toggle park chrome-music.youtube.com__-Default chromium --app=https://music.youtube.com"; }
-    Mod+D                     hotkey-overlay-title="Discord"                      { spawn-sh "~/.config/scripts/toggle park chrome-discord.com__app-Default chromium --app=https://discord.com/app"; }
-    Mod+Shift+Y               hotkey-overlay-title="Files"                        { spawn-sh "~/.config/scripts/toggle park scratch.yazi foot --app-id=scratch.yazi -o colors-dark.alpha=0.85 yazi"; }
-    Mod+Shift+M               hotkey-overlay-title="Mixer"                        { spawn-sh "~/.config/scripts/toggle close footclient.wiremix footclient --app-id=footclient.wiremix -o colors-dark.alpha=0.85 -e wiremix"; }
-    Mod+Shift+N               hotkey-overlay-title="Network"                      { spawn-sh "~/.config/scripts/toggle close footclient.impala footclient --app-id=footclient.impala -o colors-dark.alpha=0.85 -e impala"; }
-    Mod+Shift+B               hotkey-overlay-title="Bluetooth"                    { spawn-sh "~/.config/scripts/toggle close footclient.bluetui footclient --app-id=footclient.bluetui -o colors-dark.alpha=0.85 -e bluetui"; }
+    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=launcher -e ~/projects/launtui/launtui || ghostty --title=launcher -e ~/projects/launtui/launtui"; }
+    Mod+T                       hotkey-overlay-title="Terminal"                     { spawn-sh "ghostty +new-window || ghostty"; }
+    Mod+B                       hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
+    Mod+Y                       hotkey-overlay-title="YouTube Music"                { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"com.github.th-ch.youtube-music\"' >/dev/null && niri msg action close-window || pear-desktop"; }
+    Mod+D                       hotkey-overlay-title="Discord"                      { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"vesktop\"' >/dev/null && niri msg action close-window || vesktop"; }
+    Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"yazi\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=yazi -e yazi || ghostty --title=yazi -e yazi"; }
+    Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"wiremix\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=wiremix -e wiremix || ghostty --title=wiremix -e wiremix"; }
+    Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "niri msg --json focused-window | jq -e '.title == \"impala\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=impala -e impala || ghostty --title=impala -e impala"; }
+    Mod+Shift+B                 hotkey-overlay-title="Bluetooth"                    { spawn-sh "niri msg --json focused-window | jq -e '.title == \"bluetui\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=bluetui -e bluetui || ghostty --title=bluetui -e bluetui"; }
 
     // Navigation
-    Mod+H                     hotkey-overlay-title="Navigate left"                { focus-column-left; }
-    Mod+J                     hotkey-overlay-title="Navigate down"                { focus-window-or-workspace-down; }
-    Mod+K                     hotkey-overlay-title="Navigate up"                  { focus-window-or-workspace-up; }
-    Mod+L                     hotkey-overlay-title="Navigate right"               { focus-column-right; }
+    Mod+H                       hotkey-overlay-title="Navigate left"                { focus-column-left; }
+    Mod+J                       hotkey-overlay-title="Navigate down"                { focus-window-or-workspace-down; }
+    Mod+K                       hotkey-overlay-title="Navigate up"                  { focus-window-or-workspace-up; }
+    Mod+L                       hotkey-overlay-title="Navigate right"               { focus-column-right; }
 
-    Mod+Ctrl+H                hotkey-overlay-title="Navigate to left monitor"     { focus-monitor-left; }
-    Mod+Ctrl+L                hotkey-overlay-title="Navigate to right monitor"    { focus-monitor-right; }
+    Mod+Ctrl+H                  hotkey-overlay-title="Navigate to left monitor"     { focus-monitor-left; }
+    Mod+Ctrl+L                  hotkey-overlay-title="Navigate to right monitor"    { focus-monitor-right; }
 
-    Mod+1                                                                         { focus-workspace 1; }
-    Mod+2                                                                         { focus-workspace 2; }
-    Mod+3                                                                         { focus-workspace 3; }
-    Mod+4                                                                         { focus-workspace 4; }
-    Mod+5                                                                         { focus-workspace 5; }
-    Mod+6                                                                         { focus-workspace 6; }
-    Mod+7                                                                         { focus-workspace 7; }
-    Mod+8                                                                         { focus-workspace 8; }
-    Mod+9                                                                         { focus-workspace 9; }
-
-    Mod+O                     hotkey-overlay-title="Overview" repeat=false        { toggle-overview; }
+    Mod+1                                                                           { focus-workspace 1; }
+    Mod+2                                                                           { focus-workspace 2; }
+    Mod+3                                                                           { focus-workspace 3; }
 
     // Window control
-    Mod+Shift+H               hotkey-overlay-title="Move window left"             { move-column-left; }
-    Mod+Shift+J               hotkey-overlay-title="Move window down"             { move-window-down-or-to-workspace-down; }
-    Mod+Shift+K               hotkey-overlay-title="Move window up"               { move-window-up-or-to-workspace-up; }
-    Mod+Shift+L               hotkey-overlay-title="Move window right"            { move-column-right; }
+    Mod+Shift+H                 hotkey-overlay-title="Move window left"             { move-column-left; }
+    Mod+Shift+J                 hotkey-overlay-title="Move window down"             { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K                 hotkey-overlay-title="Move window up"               { move-window-up-or-to-workspace-up; }
+    Mod+Shift+L                 hotkey-overlay-title="Move window right"            { move-column-right; }
 
-    Mod+Shift+Ctrl+H          hotkey-overlay-title="Move window to left monitor"  { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+L          hotkey-overlay-title="Move window to right monitor" { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+H            hotkey-overlay-title="Move window to left monitor"  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+L            hotkey-overlay-title="Move window to right monitor" { move-column-to-monitor-right; }
 
-    Mod+Q                     hotkey-overlay-title="Close window" repeat=false    { close-window; }
+    Mod+Q                       hotkey-overlay-title="Close window" repeat=false    { close-window; }
 
-    Mod+BracketLeft           hotkey-overlay-title="Merge window left"            { consume-or-expel-window-left; }
-    Mod+BracketRight          hotkey-overlay-title="Merge window right"           { consume-or-expel-window-right; }
-    Mod+Comma                 hotkey-overlay-title="Pull in left window"          { consume-window-into-column; }
-    Mod+Period                hotkey-overlay-title="Push out window to left"      { expel-window-from-column; }
-
-    Mod+R                     hotkey-overlay-title="Toggle width"                 { switch-preset-column-width; }
-    Mod+Shift+R               hotkey-overlay-title="Toggle height"                { switch-preset-window-height; }
-    Mod+F                     hotkey-overlay-title="Maximise screen"              { maximize-column; }
-    Mod+Shift+F               hotkey-overlay-title="Full screen"                  { maximize-window-to-edges; }
-    Mod+V                     hotkey-overlay-title="Toggle floating"              { toggle-window-floating; }
-    Mod+Shift+V               hotkey-overlay-title="Focus floating/tiled"         { switch-focus-between-floating-and-tiling; }
+    Mod+R                       hotkey-overlay-title="Toggle width"                 { switch-preset-column-width; }
+    Mod+Shift+R                 hotkey-overlay-title="Toggle width reverse"         { switch-preset-column-width-back; }
+    Mod+F                       hotkey-overlay-title="Maximise screen"              { maximize-window-to-edges; }
+    Mod+V                       hotkey-overlay-title="Toggle floating"              { toggle-window-floating; }
+    Mod+Shift+V                 hotkey-overlay-title="Focus floating/tiled"         { switch-focus-between-floating-and-tiling; }
 
     // Function keys
-    Mod+XF86AudioMute         hotkey-overlay-title="Cycle audio output"           { spawn-sh "SINKS=$(pactl -f json list sinks | jq -r '.[] | .active_port as $ap | select($ap == null or ([.ports[]? | select(.name == $ap and .availability == \"not available\")] | length == 0)) | .name'); [ -n \"$SINKS\" ] || exit 0; DEFAULT=$(pactl get-default-sink); NEXT=$(printf '%s\n' \"$SINKS\" | grep -Fx -A1 \"$DEFAULT\" | tail -1); { [ -z \"$NEXT\" ] || [ \"$NEXT\" = \"$DEFAULT\" ]; } && NEXT=$(printf '%s\n' \"$SINKS\" | head -1); pactl set-default-sink \"$NEXT\"; DESC=$(pactl -f json list sinks | jq -r --arg n \"$NEXT\" '.[] | select(.name == $n) | .description'); notify-send -h string:x-canonical-private-synchronous:audio-output 'Audio Output' \"$DESC\""; }
-    XF86AudioRaiseVolume      allow-when-locked=true                              { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.025+ -l 1.0 && notify-send -h string:x-canonical-private-synchronous:volume -h int:value:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d\", $2 * 100}') 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d%%\", $2 * 100}')\""; }
-    XF86AudioLowerVolume      allow-when-locked=true                              { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.025- && notify-send -h string:x-canonical-private-synchronous:volume -h int:value:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d\", $2 * 100}') 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d%%\", $2 * 100}')\""; }
-    XF86AudioMute             allow-when-locked=true                              { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && notify-send -h string:x-canonical-private-synchronous:volume 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print ($3 == \"[MUTED]\") ? \"Muted\" : \"Unmuted\"}')\""; }
-    XF86AudioMicMute          allow-when-locked=true                              { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-    XF86AudioPlay             allow-when-locked=true                              { spawn-sh "playerctl play-pause"; }
-    XF86AudioPrev             allow-when-locked=true                              { spawn-sh "playerctl previous"; }
-    XF86AudioNext             allow-when-locked=true                              { spawn-sh "playerctl next"; }
-    XF86MonBrightnessUp       allow-when-locked=true                              { spawn-sh "brightnessctl set 10%+ && VAL=$(( $(brightnessctl get) * 100 / $(brightnessctl max-brightness) )) && notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL Brightness \"$VAL%\""; }
-    XF86MonBrightnessDown     allow-when-locked=true                              { spawn-sh "brightnessctl set 10%- && VAL=$(( $(brightnessctl get) * 100 / $(brightnessctl max-brightness) )) && notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL Brightness \"$VAL%\""; }
-    Shift+XF86MonBrightnessUp   allow-when-locked=true                            { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL + 10 )); [ $VAL -gt 100 ] && VAL=100; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
-    Shift+XF86MonBrightnessDown allow-when-locked=true                            { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL - 10 )); [ $VAL -lt 0 ] && VAL=0; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
+    Mod+XF86AudioMute           hotkey-overlay-title="Cycle audio output"           { spawn-sh "SINKS=$(pactl -f json list sinks | jq -r '.[] | .active_port as $ap | select($ap == null or ([.ports[]? | select(.name == $ap and .availability == \"not available\")] | length == 0)) | .name'); [ -n \"$SINKS\" ] || exit 0; DEFAULT=$(pactl get-default-sink); NEXT=$(printf '%s\n' \"$SINKS\" | grep -Fx -A1 \"$DEFAULT\" | tail -1); { [ -z \"$NEXT\" ] || [ \"$NEXT\" = \"$DEFAULT\" ]; } && NEXT=$(printf '%s\n' \"$SINKS\" | head -1); pactl set-default-sink \"$NEXT\"; DESC=$(pactl -f json list sinks | jq -r --arg n \"$NEXT\" '.[] | select(.name == $n) | .description'); notify-send -h string:x-canonical-private-synchronous:audio-output 'Audio Output' \"$DESC\""; }
+    XF86AudioRaiseVolume        allow-when-locked=true                              { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.025+ -l 1.0 && notify-send -h string:x-canonical-private-synchronous:volume -h int:value:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d\", $2 * 100}') 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d%%\", $2 * 100}')\""; }
+    XF86AudioLowerVolume        allow-when-locked=true                              { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.025- && notify-send -h string:x-canonical-private-synchronous:volume -h int:value:$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d\", $2 * 100}') 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d%%\", $2 * 100}')\""; }
+    XF86AudioMute               allow-when-locked=true                              { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && notify-send -h string:x-canonical-private-synchronous:volume 'Volume' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print ($3 == \"[MUTED]\") ? \"Muted\" : \"Unmuted\"}')\""; }
+    XF86AudioMicMute            allow-when-locked=true                              { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioPlay               allow-when-locked=true                              { spawn-sh "playerctl play-pause"; }
+    XF86AudioPrev               allow-when-locked=true                              { spawn-sh "playerctl previous"; }
+    XF86AudioNext               allow-when-locked=true                              { spawn-sh "playerctl next"; }
+    XF86MonBrightnessUp         allow-when-locked=true                              { spawn-sh "brightnessctl set 10%+ && VAL=$(( $(brightnessctl get) * 100 / $(brightnessctl max-brightness) )) && notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL Brightness \"$VAL%\""; }
+    XF86MonBrightnessDown       allow-when-locked=true                              { spawn-sh "brightnessctl set 10%- && VAL=$(( $(brightnessctl get) * 100 / $(brightnessctl max-brightness) )) && notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL Brightness \"$VAL%\""; }
+    Shift+XF86MonBrightnessUp   allow-when-locked=true                              { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL + 10 )); [ $VAL -gt 100 ] && VAL=100; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
+    Shift+XF86MonBrightnessDown allow-when-locked=true                              { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL - 10 )); [ $VAL -lt 0 ] && VAL=0; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
 
     // Screenshots
-    Mod+Shift+3               hotkey-overlay-title="Screenshot"                   { screenshot-screen; }
-    Mod+Shift+4               hotkey-overlay-title="Screenshot selection"         { screenshot; }
-    Mod+Shift+5               hotkey-overlay-title="Screenshot window"            { screenshot-window; }
+    Mod+Shift+3                 hotkey-overlay-title="Screenshot"                   { screenshot-screen; }
+    Mod+Shift+4                 hotkey-overlay-title="Screenshot selection"         { screenshot; }
+    Mod+Shift+5                 hotkey-overlay-title="Screenshot window"            { screenshot-window; }
 
     // Other
-    Mod+XF86ScreenSaver       hotkey-overlay-title="Lock the Screen"              { spawn-sh "loginctl lock-session && sleep 2 && niri msg action power-off-monitors"; }
-    Mod+Delete                hotkey-overlay-title="Lock the Screen"              { spawn-sh "loginctl lock-session && sleep 2 && niri msg action power-off-monitors"; }
-    Mod+Shift+Delete          allow-when-locked=true                              { spawn-sh "loginctl lock-session"; }
-    Mod+Shift+Slash           hotkey-overlay-title=null                           { show-hotkey-overlay; }
+    Mod+XF86ScreenSaver         hotkey-overlay-title="Lock the Screen"              { spawn-sh "loginctl lock-session && sleep 2 && niri msg action power-off-monitors"; }
+    Mod+Delete                  hotkey-overlay-title="Lock the Screen"              { spawn-sh "loginctl lock-session && sleep 2 && niri msg action power-off-monitors"; }
+    Mod+Shift+Delete            allow-when-locked=true                              { spawn-sh "loginctl lock-session"; }
+    Mod+Shift+Slash             hotkey-overlay-title=null                           { show-hotkey-overlay; }
 }
 
 input {
@@ -105,7 +84,7 @@ input {
 
     touchpad {
         natural-scroll
-        scroll-factor 0.5 // Slower for GUI apps, but special rule below to speed up for terminal
+        scroll-factor 0.5
     }
 }
 
@@ -121,15 +100,6 @@ layout {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
-        proportion 1.0
-    }
-
-    preset-window-heights {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-        proportion 0.8
-        proportion 1.0
     }
 
     default-column-width { proportion 0.5; }
@@ -137,36 +107,40 @@ layout {
     focus-ring {
         width 3
         active-color "#fbb829"
-        inactive-color "#5c6a72"
-        urgent-color "#ef2f27"
-    }
-
-    shadow {
-        on
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#1c1b19"
     }
 }
 
 prefer-no-csd
 
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 0
     clip-to-geometry true
     draw-border-with-background false
 }
 
-// Speed up scrolling in terminals
 window-rule {
-    match app-id=r#"^(foot|scratch\.yazi)"#
-    scroll-factor 2.0
+    match app-id=r#"^com\.mitchellh\.ghostty$"# is-floating=false
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
+    match title=r#"^(launcher|wiremix|impala|bluetui|yazi)$"#
+    focus-ring {
+        off
+    }
+    border {
+        on
+        width 3
+        active-color "#fbb829"
+        inactive-color "#fbb82950"
+    }
 }
 
 // Small floating window for launcher
 window-rule {
-    match app-id="foot.launcher"
+    match title="^launcher$"
     open-floating true
     default-column-width { fixed 700; }
     default-window-height { fixed 450; }
@@ -174,49 +148,32 @@ window-rule {
 
 // Medium floating window for bluetui, impala and wiremix
 window-rule {
-    match app-id=r#"^footclient\."#
+    match title=r#"^(wiremix|impala|bluetui)$"#
     open-floating true
     default-column-width { fixed 1000; }
     default-window-height { fixed 700; }
 }
 
-// Large floating window for apps such as Discord and Youtube Music
+// Large floating window for apps such as Discord and YouTube Music
 window-rule {
-    match app-id=r#"^(scratch\.|chrome-music\.youtube\.com|chrome-discord\.com)"#
+    match title="^yazi$"
+    match app-id=r#"^(vesktop|com\.github\.th-ch\.youtube-music)$"#
     open-floating true
     default-column-width { proportion 0.8; }
     default-window-height { proportion 0.8; }
 }
 
-// Park the large apps on the scratch workspace at startup
-window-rule {
-    match at-startup=true app-id=r#"^(scratch\.|chrome-music\.youtube\.com|chrome-discord\.com)"#
-    open-on-workspace "scratch"
-    open-focused false
-}
-
 // Floor for floating dialogs: KiCad and friends request too-small sizes on Wayland
 window-rule {
     match is-floating=true
-    exclude app-id="foot.launcher"
-    exclude title=r#"^Picture[- ]in[- ][Pp]icture$"#
+    exclude title="^launcher$"
+    exclude title="^Picture-in-Picture$"
     min-width 640
     min-height 480
 }
 
-// Fade unfocused floating windows, except media apps where dimmed video looks off
 window-rule {
-    match is-floating=true is-focused=false
-    exclude app-id=r#"^chrome-"#
-    exclude title=r#"^Picture[- ]in[- ][Pp]icture$"#
-    opacity 0.85
-}
-
-// Picture-in-picture: float bottom-right, 1/4 of the monitor height tall
-// Chromium's PiP window has an empty app-id, hence the ^$ match
-window-rule {
-    match app-id=r#"^firefox$"# title=r#"^Picture-in-Picture$"#
-    match app-id=r#"^$"# title=r#"^Picture in picture$"#
+    match app-id="^firefox$" title="^Picture-in-Picture$"
     open-floating true
     default-floating-position x=12 y=12 relative-to="bottom-right"
     default-window-height { proportion 0.25; }
@@ -230,6 +187,90 @@ hotkey-overlay {
 gestures {
     hot-corners {
         off
+    }
+}
+
+animations {
+    window-movement {
+        spring damping-ratio=1.1 stiffness=400 epsilon=0.0001
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=1.1 stiffness=400 epsilon=0.0001
+    }
+
+    // Random squares from https://github.com/liixini/shaders (MIT).
+    window-open {
+        duration-ms 500
+        curve "ease-out-cubic"
+        custom-shader r"
+            float rs_rand(vec2 co) {
+                return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+            }
+
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) return vec4(0.0);
+                float p = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                vec3 tc = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 win = texture2D(niri_tex, tc.st);
+
+                // Fixed 75 px squares in logical pixels, whatever the window shape.
+                float smoothness = 0.5;
+                float r = rs_rand(floor(uv * size_geo.xy / 75.0));
+                float reveal = smoothstep(0.0, -smoothness, r - (p * (1.0 + smoothness)));
+
+                return win * reveal;
+            }
+        "
+    }
+
+    window-close {
+        duration-ms 350
+        curve "ease-out-cubic"
+        custom-shader r"
+            float rs_rand(vec2 co) {
+                return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+            }
+
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) return vec4(0.0);
+                float p = 1.0 - niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                vec3 tc = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 win = texture2D(niri_tex, tc.st);
+
+                // Fixed 75 px squares in logical pixels, whatever the window shape.
+                float smoothness = 0.5;
+                float r = rs_rand(floor(uv * size_geo.xy / 75.0));
+                float reveal = smoothstep(0.0, -smoothness, r - (p * (1.0 + smoothness)));
+
+                return win * reveal;
+            }
+        "
+    }
+
+    window-resize {
+        duration-ms 400
+        curve "ease-out-cubic"
+        custom-shader r"
+            bool inside(vec3 c) {
+                return 0.0 <= c.x && c.x <= 1.0 && 0.0 <= c.y && c.y <= 1.0;
+            }
+
+            vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
+                if (!inside(coords_curr_geo)) return vec4(0.0);
+                vec3 next_geo = niri_curr_geo_to_next_geo * coords_curr_geo;
+                vec3 prev_geo = niri_curr_geo_to_prev_geo * coords_curr_geo;
+                bool next_ok = inside(next_geo);
+                bool prev_ok = inside(prev_geo);
+                vec4 next = next_ok ? texture2D(niri_tex_next, (niri_geo_to_tex_next * next_geo).st) : vec4(0.0);
+                vec4 prev = prev_ok ? texture2D(niri_tex_prev, (niri_geo_to_tex_prev * prev_geo).st) : vec4(0.0);
+                if (!prev_ok) return next;
+                if (!next_ok) return prev;
+                return mix(prev, next, niri_clamped_progress);
+            }
+        "
     }
 }
 

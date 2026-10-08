@@ -9,22 +9,16 @@
       url = "github:siliconwitch/battui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nixpkgs, nixpkgs-master, nixpkgs-stable, battui, nur, ... }: {
+  outputs = { nixpkgs, nixpkgs-master, nixpkgs-stable, battui, ... }: {
     nixosConfigurations.mist = nixpkgs.lib.nixosSystem {
       specialArgs = { username = "raj"; inherit nixpkgs-master nixpkgs-stable; };
       modules = [
         ./configuration.nix
         ./hardware-configuration.nix
         ./apparmor.nix
-        ./webapps.nix
         battui.nixosModules.default
-        nur.modules.nixos.default
       ];
     };
   };

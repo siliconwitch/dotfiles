@@ -1,7 +1,3 @@
-# Foot draws every cell background translucent (alpha-mode=all) but glyphs
-# opaque, so the rounded powerline caps look solid next to their bars.
-# Mark the hovered row with text attributes only, flatten the bars, and keep
-# the status line to plain text.
 [indicator]
 current = { bold = true }
 parent  = { bold = true }

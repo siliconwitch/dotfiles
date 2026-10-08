@@ -8,8 +8,6 @@ exclude = [
   "Blackmagic RAW Speed Test",
   "DaVinci Control Panels Setup",
   "Fairlight Studio Utility",
-  "Foot Client",
-  "Foot Server",
   "JFlash",
   "JFlashLite",
   "JFlashSPI",

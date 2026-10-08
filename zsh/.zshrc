@@ -60,17 +60,10 @@ function clear-scrollback-and-screen { printf '\033[3J'; zle clear-screen }
 zle -N clear-scrollback-and-screen
 bindkey '^o' clear-scrollback-and-screen
 
-# History search keybindings
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-
-# Options
 setopt autocd
 unsetopt BEEP
 
-# History (kept in the XDG state dir, out of the home root)
+# History
 mkdir -p ~/.local/state/zsh
 export HISTFILE=~/.local/state/zsh/history
 export HISTSIZE=1000000
@@ -84,8 +77,11 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# Prompt
 source ~/.config/zsh/prompt.zsh
 
 # zsh plugins are installed and loaded by NixOS (programs.zsh in

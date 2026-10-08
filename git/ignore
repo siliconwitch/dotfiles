@@ -1,8 +1,2 @@
-# Mac cache file
-.DS_Store
-
-# Environment variables
 .env
-
-# Claude local settings
 **/.claude/settings.local.json
