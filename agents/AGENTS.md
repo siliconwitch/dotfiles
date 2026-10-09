@@ -4,7 +4,9 @@
 - The user owns the architecture. Do not create or change structure, scope, abstractions, or files unless the user explicitly requested it. Suggest architectural changes and wait for explicit approval before applying them.
 - For an unscoped design decision, explain the facts, tension, and recommendation in prose, then ask plainly. Use multiple choice only for a choice the user already scoped.
 - When blocked on access, hardware, a login, or another easy human action, ask and continue any unblocked work.
-- Ask for permission before pushing upstream unless the user explicitly authorised it in their most recent message.
+- Leave changes uncommitted for the user to review. Commit only when the user's most recent message asks for a commit.
+- A request to commit means commit and push.
+- Open a pull request only when the user's most recent message asks for one.
 - Running a command that flashes physical hardware requires explicit approval unless an applicable, more specific instruction explicitly permits that command without approval.
 - A session instruction overrides this file and every skill. Treat repeated corrections or conflicts as evidence that the agent context needs maintenance.
 - When a user request conflicts with a higher-priority instruction, lead with `CONTEXT CONTRADICTION`, quote both conflicting instructions verbatim, label each instruction by source, stop only the conflicting work, and offer `/fix-context` or `$fix-context` so the user can repair the context. When the user invokes either command, read and apply `fix-context` before proceeding. Never invoke `fix-context` without one of these user triggers.
