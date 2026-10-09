@@ -1,19 +1,19 @@
 spawn-sh-at-startup "mako"
 spawn-sh-at-startup "swaybg -i ~/.config/wallpaper.jpg"
 spawn-sh-at-startup "~/projects/launtui/launtui --watch"
-spawn-sh-at-startup "ghostty --gtk-single-instance=true --initial-window=false --quit-after-last-window-closed=false"
+spawn-sh-at-startup "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-command=herdr"
 
 binds {
     // Launcher & shortcuts
-    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=launcher -e ~/projects/launtui/launtui || ghostty --title=launcher -e ~/projects/launtui/launtui"; }
+    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=launcher -e ~/projects/launtui/launtui"; }
     Mod+T                       hotkey-overlay-title="Terminal"                     { spawn-sh "ghostty +new-window || ghostty"; }
     Mod+B                       hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
     Mod+Y                       hotkey-overlay-title="YouTube Music"                { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"com.github.th-ch.youtube-music\"' >/dev/null && niri msg action close-window || pear-desktop"; }
     Mod+D                       hotkey-overlay-title="Discord"                      { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"vesktop\"' >/dev/null && niri msg action close-window || vesktop"; }
-    Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"yazi\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=yazi -e yazi || ghostty --title=yazi -e yazi"; }
-    Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"wiremix\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=wiremix -e wiremix || ghostty --title=wiremix -e wiremix"; }
-    Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "niri msg --json focused-window | jq -e '.title == \"impala\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=impala -e impala || ghostty --title=impala -e impala"; }
-    Mod+Shift+B                 hotkey-overlay-title="Bluetooth"                    { spawn-sh "niri msg --json focused-window | jq -e '.title == \"bluetui\"' >/dev/null && niri msg action close-window || ghostty +new-window --title=bluetui -e bluetui || ghostty --title=bluetui -e bluetui"; }
+    Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"yazi\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=yazi -e yazi"; }
+    Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"wiremix\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=wiremix -e wiremix"; }
+    Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "niri msg --json focused-window | jq -e '.title == \"impala\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=impala -e impala"; }
+    Mod+Shift+B                 hotkey-overlay-title="Bluetooth"                    { spawn-sh "niri msg --json focused-window | jq -e '.title == \"bluetui\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=bluetui -e bluetui"; }
 
     // Navigation
     Mod+H                       hotkey-overlay-title="Navigate left"                { focus-column-left; }
@@ -110,6 +110,10 @@ layout {
     }
 }
 
+blur {
+    passes 2
+}
+
 prefer-no-csd
 
 window-rule {
@@ -123,6 +127,12 @@ window-rule {
     background-effect {
         blur true
     }
+}
+
+// Maximise the herdr terminal opened at login
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"# at-startup=true
+    open-maximized-to-edges true
 }
 
 window-rule {
