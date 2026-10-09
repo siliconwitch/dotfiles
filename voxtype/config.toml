@@ -1,0 +1,98 @@
+# Voxtype settings. Every other option uses its default; see
+# share/voxtype/default-config.toml in the package or `voxtype config schema`.
+
+engine = "parakeet"
+
+[parakeet]
+model = "parakeet-tdt-0.6b-v2"
+
+[output]
+# See configuration.nix for why ydotool and not wtype
+driver_order = ["ydotool", "clipboard"]
+
+[output.notification]
+on_transcription = false
+
+# The nixpkgs build lacks the GTK overlay and the Quickshell files, so the
+# overlay can only fail
+[osd]
+enabled = false
+
+# Matches whole words, ignoring case. Keys must not overlap, because the
+# order replacements run in is not fixed.
+[text.replacements]
+# Desktop
+"nix os" = "NixOS"
+"nixos" = "NixOS"
+"nix pkgs" = "nixpkgs"
+"nix packages" = "nixpkgs"
+"nixpackages" = "nixpkgs"
+"neo vim" = "Neovim"
+"neovim" = "Neovim"
+"pipe wire" = "PipeWire"
+"wire plumber" = "WirePlumber"
+"system d" = "systemd"
+"systemd" = "systemd"
+"way land" = "Wayland"
+"tail scale" = "Tailscale"
+"ghostie" = "Ghostty"
+"ghosty" = "Ghostty"
+"vox type" = "voxtype"
+"panterak" = "Panther Lake"
+"pantherlake" = "Panther Lake"
+"open vino" = "OpenVINO"
+"opelvino" = "OpenVINO"
+"openveno" = "OpenVINO"
+"claude code" = "Claude Code"
+# Languages and tools
+"git hub" = "GitHub"
+"github" = "GitHub"
+"type script" = "TypeScript"
+"java script" = "JavaScript"
+"system verilog" = "SystemVerilog"
+"sequel lite" = "SQLite"
+"sqlite" = "SQLite"
+"sequalite" = "SQLite"
+"json" = "JSON"
+"yaml" = "YAML"
+"toml" = "TOML"
+"tommel" = "TOML"
+"bubble tea" = "Bubble Tea"
+"bubblet" = "Bubble Tea"
+"lip gloss" = "Lip Gloss"
+"lipgloss" = "Lip Gloss"
+# Embedded and hardware
+"ki cad" = "KiCad"
+"key cad" = "KiCad"
+"kai cad" = "KiCad"
+"keycad" = "KiCad"
+"icad" = "KiCad"
+"kicad" = "KiCad"
+"zephyr" = "Zephyr"
+"free rtos" = "FreeRTOS"
+"soft device" = "SoftDevice"
+"softdevice" = "SoftDevice"
+"little fs" = "LittleFS"
+"littlefs" = "LittleFS"
+"mcu boot" = "MCUboot"
+"mcboot" = "MCUboot"
+"j link" = "J-Link"
+"segger" = "SEGGER"
+"sega" = "SEGGER"
+"nrf" = "nRF"
+"ice 40" = "iCE40"
+"ice forty" = "iCE40"
+"ice fort" = "iCE40"
+"icefort" = "iCE40"
+"iceforty" = "iCE40"
+"i two c" = "I2C"
+"i squared c" = "I2C"
+"i two s" = "I2S"
+"uart" = "UART"
+"qspi" = "QSPI"
+"qspy" = "QSPI"
+"spi" = "SPI"
+"spy" = "SPI"
+"usb" = "USB"
+"ble" = "BLE"
+"dfu" = "DFU"

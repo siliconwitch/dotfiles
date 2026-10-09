@@ -1,4 +1,4 @@
-{ pkgs, lib, username, nixpkgs-master, nixpkgs-stable, ... }:
+{ config, pkgs, lib, username, nixpkgs-master, nixpkgs-stable, ... }:
 
 {
   # Nix base settings
@@ -32,11 +32,14 @@
   services.keyd = {
     enable = true;
     keyboards.default = {
-      ids = [ "*" ];
+      ids = [ "*" "-2333:6666" ]; # ydotoold, so dictated text is not remapped
       settings = {
         global.chord_timeout = 10;
         main."leftmeta+leftshift+f23" = "leftmeta";
         main.capslock = "overload(control, esc)";
+        # Space held for 300 ms turns on the dictate layer (see voxtype-space)
+        main.space = "overloadt(dictate, space, 300)";
+        dictate = { };
       };
     };
   };
@@ -131,6 +134,9 @@
         # only the HiFiBerry. Blocks stray AirPlay receivers (e.g. a MacBook) from stealing playback
         matches = [{ "raop.hostname" = "~hifiberry"; }];
         actions."create-stream"."stream.props"."sess.latency.msec" = 2000;
+        # Pin to the dummy driver. Otherwise any mic opening moves the sink onto
+        # the mic's clock, and the timestamp jump makes the receiver drop out
+        actions."create-stream"."stream.props"."node.group" = "pipewire.dummy";
       }];
     }];
   };
@@ -142,6 +148,41 @@
       Type = "oneshot";
       ExecStart = "${pkgs.systemd}/bin/systemctl --user --machine=${username}@.host restart pipewire.service";
     };
+  };
+
+  # Dictation. keyd reports the dictate layer on and off, and voxtype-space
+  # turns that into voxtype record start and stop. Only the keyd socket
+  # reader runs as root; voxtype runs as the user.
+  systemd.user.services.voxtype = {
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    # ydotool, because wtype numbers keys by first appearance and capitals that
+    # land on modifier keycodes get dropped
+    path = [ pkgs.ydotool ];
+    environment.YDOTOOL_SOCKET = config.environment.variables.YDOTOOL_SOCKET;
+    serviceConfig.ExecStart = "${pkgs.voxtype}/bin/voxtype --no-hotkey daemon";
+  };
+  programs.ydotool.enable = true;
+  systemd.services.voxtype-space = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "keyd.service" ];
+    partOf = [ "keyd.service" ];
+    path = with pkgs; [ keyd util-linux coreutils voxtype ];
+    # keyd creates its socket after systemd reports it started, and listen
+    # exits whenever keyd restarts, so reconnect until it is there
+    serviceConfig.Restart = "always";
+    serviceConfig.RestartSec = 1;
+    script = ''
+      keyd listen | while read -r event; do
+        case $event in
+          +dictate) action=start ;;
+          -dictate) action=stop ;;
+          *) continue ;;
+        esac
+        runuser -u ${username} -- env XDG_RUNTIME_DIR=/run/user/$(id -u ${username}) voxtype record $action
+      done
+    '';
   };
 
   # Networking
@@ -334,7 +375,7 @@
   # User
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "dialout" ];
+    extraGroups = [ "wheel" "dialout" "ydotool" ];
     shell = pkgs.zsh;
     initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
@@ -355,6 +396,7 @@
     pulseaudio                       # pactl (talks to pipewire-pulse)
     swaybg                           # wallpaper
     udiskie                          # drive mounting (udiskie-umount)
+    voxtype                          # dictation
     wl-clipboard                     # wl-copy, wl-paste
     xwayland-satellite               # X11 app support
 
@@ -482,6 +524,8 @@
       };
       inherit (master) claude-code;
       inherit (stable) freecad;
+      # Adds the Parakeet engine
+      voxtype = prev.voxtype.override { onnxSupport = true; };
     })
   ];
 

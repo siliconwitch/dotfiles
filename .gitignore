@@ -25,6 +25,9 @@
 !/herdr/
 /herdr/*
 !/herdr/config.toml
+!/voxtype/
+/voxtype/*
+!/voxtype/config.toml
 !/wallpaper.jpg
 !/screenshot.png
 
