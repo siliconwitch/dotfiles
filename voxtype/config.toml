@@ -9,6 +9,8 @@ model = "parakeet-tdt-0.6b-v2"
 [output]
 # See configuration.nix for why ydotool and not wtype
 driver_order = ["ydotool", "clipboard"]
+# At 0 ms, ydotool bursts keys faster than the window takes them and drops text
+type_delay_ms = 5
 
 [output.notification]
 on_transcription = false

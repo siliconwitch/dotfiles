@@ -425,6 +425,7 @@
     impala                           # Wi-Fi TUI
     jq                               # JSON processor
     libqalculate                     # qalc
+    llama-cpp-vulkan                 # local LLMs on the iGPU
     netcat-openbsd                   # nc (zsh prompt)
     pandoc                           # document converter
     pass                             # password manager
