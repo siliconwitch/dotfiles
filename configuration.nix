@@ -412,7 +412,6 @@
     claude-code
     cloc                             # counts lines of code
     csvlens                          # CSV viewer
-    delta                            # git pager
     eza                              # ls/tree
     fd                               # find alternative
     ffmpeg
