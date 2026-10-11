@@ -162,6 +162,11 @@
     path = [ pkgs.ydotool ];
     environment.YDOTOOL_SOCKET = config.environment.variables.YDOTOOL_SOCKET;
     serviceConfig.ExecStart = "${pkgs.voxtype}/bin/voxtype --no-hotkey daemon";
+    # The log holds every transcript, so keep it out of the journal and on
+    # tmpfs, cleared on each start. stderr follows stdout by default.
+    serviceConfig.StandardOutput = "truncate:%t/voxtype.log";
+    # Voxtype colours its log even when writing to a file
+    environment.NO_COLOR = "1";
   };
   programs.ydotool.enable = true;
   systemd.services.voxtype-space = {
