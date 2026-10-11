@@ -20,7 +20,7 @@ alias cat='bat'
 alias rm='trash-put'
 
 alias gs='git status -u'
-alias gd='herdr-reviewr .'
+alias gd='herdr-reviewr'
 alias gl='git log'
 alias gc='git add . && git commit -m'
 alias gp='git pull'
