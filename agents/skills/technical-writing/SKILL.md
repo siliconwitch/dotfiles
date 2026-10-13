@@ -19,6 +19,8 @@ Write for a tired engineer reading once.
 - State what the system does now. When documentation and code disagree, treat the documentation as wrong.
 - Do not explain what the code or another document already makes clear.
 
+For plans, designs, and specifications, write only what the user asked for and what the next agent needs to act. Add no feature, option, edge case, or background the user did not ask for.
+
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
 
 For comments, describe a contract, constraint, or reason that the code cannot express. Do not narrate the edit or justify its history.

@@ -15,6 +15,9 @@ description: Shared coding and review rules for C, Go, JavaScript, Lua, and simi
 
 # Structure
 
+- **One mechanism.** Route every case of a behaviour through one shared code
+  path. Never add a per-case exception, special rule, or workaround. When a
+  case does not fit, fix the shared mechanism or raise it with the user.
 - **Functional.** Values in and values out, immutable inputs, no hidden global
   state. Where hardware or a library demands state, follow its style and keep
   that state private to the unit that owns it.

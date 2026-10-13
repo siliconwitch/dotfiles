@@ -75,5 +75,5 @@ output rather than asserting on intermediate bytes. A printed label proves more
 than the PDF bytes behind it.
 
 The build, flash and debug recipe is a project fact, and so is the SoC. Read
-the project's own AGENTS.md and Makefile. Never carry a trap across from
+the project's own AGENTS.md or CLAUDE.md and its Makefile. Never carry a trap across from
 another project: RRAM, SoftDevice programming and RTT capture all differ.

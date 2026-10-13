@@ -461,7 +461,9 @@
         "nrfutil-device" 
         "nrfutil-91"
     ])
-    python3
+    (python3.withPackages (p: [
+        p.logic2-automation          # Saleae Logic 2 automation client
+    ]))
     python3Packages.weasyprint       # HTML → PDF CLI
     ruff                             # python linter/formatter
     tree-sitter                      # Parser CLI for nvim-treesitter

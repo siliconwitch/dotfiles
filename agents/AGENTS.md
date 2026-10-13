@@ -32,6 +32,7 @@ When changing agent context, keep always-loaded instructions minimal. Put task-s
 - Inform agents that they are "sub-agents".
 - If you are not a sub-agent, read and apply `technical-writing` and `response-format` before writing commentary or a final reply.
 - Any agent writing documentation, commit or pull request text must apply the `technical-writing` skill.
+- Treat another agent's report, pull request description, or claim that work is done or tested as unverified. Check the code, branches, and results yourself before relying on it.
 
 # Test directly, then fan out
 
