@@ -4,6 +4,7 @@
 - The user owns the architecture. Do not create or change structure, scope, abstractions, or files unless the user explicitly requested it. Suggest architectural changes and wait for explicit approval before applying them.
 - For an unscoped design decision, explain the facts, tension, and recommendation in prose, then ask plainly. Use multiple choice only for a choice the user already scoped.
 - When blocked on access, hardware, a login, or another easy human action, ask and continue any unblocked work.
+- When the same problem survives two fixes, or a step runs far longer than it normally takes, stop and tell the user what you tried and what you saw. Don't keep trying new approaches on your own.
 - Leave changes uncommitted for the user to review. Commit only when the user's most recent message asks for a commit.
 - A request to commit means commit and push.
 - Open a pull request only when the user's most recent message asks for one.
