@@ -429,6 +429,7 @@
     jq                               # JSON processor
     libqalculate                     # qalc
     llama-cpp-vulkan                 # local LLMs on the iGPU
+    stable-diffusion-cpp-vulkan      # image generation on the iGPU
     netcat-openbsd                   # nc (zsh prompt)
     pandoc                           # document converter
     pass                             # password manager
@@ -539,6 +540,17 @@
       inherit (stable) freecad;
       # Adds the Parakeet engine
       voxtype = prev.voxtype.override { onnxSupport = true; };
+      # Qwen Image 2.1 needs a newer release than nixpkgs has
+      stable-diffusion-cpp-vulkan = prev.stable-diffusion-cpp-vulkan.overrideAttrs (finalAttrs: _: {
+        version = "master-955-b7a74e6";
+        src = prev.fetchFromGitHub {
+          owner = "leejet";
+          repo = "stable-diffusion.cpp";
+          tag = finalAttrs.version;
+          hash = "sha256-dOuG0JOEVRL20zTbuMO/668KeKxAEJR5ldGAmW1zHkM=";
+          fetchSubmodules = true;
+        };
+      });
     })
   ];
 
