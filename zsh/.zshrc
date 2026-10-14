@@ -9,14 +9,13 @@ export PATH=$PATH:$HOME/go/bin
 (pass git pull &>/dev/null &)
 
 # Draw with the terminal's 16 ANSI colours
-export BAT_THEME=ansi
 export FZF_DEFAULT_OPTS='--color=16'
 
 # Aliases
 alias l='eza -l'
 alias ll='eza -la'
 alias lt='eza --tree'
-alias cat='bat'
+alias v="nvim -R -c 'nnoremap q <cmd>qa!<cr>' --"
 alias rm='trash-put'
 
 alias gs='git status -u'

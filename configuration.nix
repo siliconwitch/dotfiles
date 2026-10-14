@@ -411,7 +411,6 @@
     zsh-you-should-use
 
     # Terminal apps & tools
-    bat                              # cat alias
     bluetui                          # Bluetooth TUI
     btop                             # system monitor
     claude-code
