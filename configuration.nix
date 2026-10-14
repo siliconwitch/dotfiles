@@ -456,10 +456,17 @@
     marp-cli                         # markdown slides
     nil                              # nix LSP
     nodejs                           # node + npm
-    (nrfutil.withExtensions [        # Nordic nRF tools
-        "nrfutil-device" 
+    # Nordic nRF tools. NRF_PROBE_PATH moves from the nrfutil wrapper onto nrfutil-device, so an NCS
+    # toolchain's bundled nrfutil-device no longer inherits it and starts this mismatched probe worker
+    ((nrfutil.withExtensions [
+        "nrfutil-device"
         "nrfutil-91"
-    ])
+    ]).overrideAttrs (old: {
+      buildCommand = old.buildCommand + ''
+        sed -i '/NRF_PROBE_PATH/d' "$out/bin/nrfutil"
+        wrapProgram "$out/bin/nrfutil-device" --set NRF_PROBE_PATH "$out/lib/nrfutil-device"
+      '';
+    }))
     (python3.withPackages (p: [
         p.logic2-automation          # Saleae Logic 2 automation client
     ]))
