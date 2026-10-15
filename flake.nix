@@ -9,9 +9,13 @@
       url = "github:siliconwitch/battui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    launtui = {
+      url = "github:siliconwitch/launtui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-master, nixpkgs-stable, battui, ... }: {
+  outputs = { nixpkgs, nixpkgs-master, nixpkgs-stable, battui, launtui, ... }: {
     nixosConfigurations.mist = nixpkgs.lib.nixosSystem {
       specialArgs = { username = "raj"; inherit nixpkgs-master nixpkgs-stable; };
       modules = [
@@ -19,6 +23,7 @@
         ./hardware-configuration.nix
         ./apparmor.nix
         battui.nixosModules.default
+        launtui.nixosModules.default
       ];
     };
   };

@@ -121,6 +121,7 @@
   };
 
   services.battui.enable = true;
+  services.launtui.enable = true;
 
   # Audio
   security.rtkit.enable = true;

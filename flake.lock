@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "launtui": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792097937,
+        "narHash": "sha256-AB2WWjIebiowelMUxqc8XaR2ccVdl4ngqdnFTuEDaxE=",
+        "owner": "siliconwitch",
+        "repo": "launtui",
+        "rev": "ce8093ae4538f39d2d0525abe20e971095ae3663",
+        "type": "github"
+      },
+      "original": {
+        "owner": "siliconwitch",
+        "repo": "launtui",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1791594108,
@@ -71,6 +91,7 @@
     "root": {
       "inputs": {
         "battui": "battui",
+        "launtui": "launtui",
         "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable"

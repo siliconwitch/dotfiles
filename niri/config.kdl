@@ -1,11 +1,10 @@
 spawn-sh-at-startup "mako"
 spawn-sh-at-startup "swaybg -i ~/.config/wallpaper.jpg"
-spawn-sh-at-startup "~/projects/launtui/launtui --watch"
 spawn-sh-at-startup "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-command=herdr"
 
 binds {
     // Launcher & shortcuts
-    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=launcher -e ~/projects/launtui/launtui"; }
+    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=launcher -e launtui"; }
     Mod+T                       hotkey-overlay-title="Terminal"                     { spawn-sh "ghostty +new-window || ghostty"; }
     Mod+B                       hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
     Mod+Y                       hotkey-overlay-title="YouTube Music"                { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"com.github.th-ch.youtube-music\"' >/dev/null && niri msg action close-window || pear-desktop"; }
