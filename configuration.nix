@@ -546,9 +546,11 @@
           gst_all_1.gstreamer gst_all_1.gst-plugins-base gst_all_1.gst-plugins-good gst_all_1.gst-plugins-bad
         ];
         # The app looks for the CA bundle at a Fedora path and asks on every start otherwise.
+        # GLib only loads the glib-networking TLS module from a listed directory.
         # WebKit's GPU buffer handoff to the web views blanks and flickers on Wayland
         profile = ''
           export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+          export GIO_EXTRA_MODULES=/usr/lib64/gio/modules
           export WEBKIT_DISABLE_COMPOSITING_MODE=1
           export WEBKIT_DISABLE_DMABUF_RENDERER=1
         '';
