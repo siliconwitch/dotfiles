@@ -6,8 +6,8 @@ description: Shared coding and review rules for C, Go, JavaScript, Lua, and simi
 # Scope
 
 - Make the smallest diff that does what the request asks. Do not change any
-  line the request does not need. The comment rule below is the only
-  exception.
+  line the request does not need. The comment rule in `technical-writing` is
+  the only exception.
 - Do not handle an input or state that the request did not mention. The
   exception is when leaving it unhandled would corrupt memory or data, hang or
   damage hardware, or open a security hole. Handle those without being asked.
@@ -83,21 +83,8 @@ in L3. Move it down instead of calling sideways.
 
 # Comments
 
-Write one only in these cases:
-
-- A short single line heading breaking a long procedural function into
-  sections. Says what the section is for, never how it works.
-- A short inline note on a magic number:
-  `i2c_write(0x12, 0x50); // LED_CFG0: 1A drive, active discharge enabled`
-- One sentence on behaviour required by hardware or an external contract that
-  cannot be seen in the code: a settling time, an erratum, a protocol ordering
-  constraint.
-- A block explaining unreadable or highly optimised code, prefixed
-  `// IMPORTANT:`. Never write one unless asked, and never remove or reword
-  one unless asked.
-
-In code you are already editing, delete every other comment and replace it
-with self describing code. Leave vendored code and untouched files alone.
+Before writing or deleting a comment, apply the comment rule in
+`technical-writing`.
 
 # Tests
 

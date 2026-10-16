@@ -32,4 +32,17 @@ For plans, designs, and specifications, write only what the user asked for. Add 
 
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
 
-For comments, describe a contract, constraint, or reason that the code cannot express. Do not narrate the edit or justify its history.
+For comments, write one only in these cases:
+
+- A heading over a section. It says what the section is for, never how it works.
+- A short note beside a value or name whose purpose the code does not show, such as
+  `i2c_write(0x12, 0x50); // LED_CFG0: 1A drive, active discharge enabled` or
+  `herdr # terminal multiplexer`.
+- One sentence on a constraint the code cannot express: a settling time, an ordering
+  requirement, or another program's quirk.
+- A block explaining unreadable or highly optimised code, prefixed `IMPORTANT:`. Never
+  write one unless asked, and never remove or reword one unless asked.
+
+Never say what the code does, narrate the edit, or justify its history. In a file you are
+already editing, delete every other comment and replace it with self describing code.
+Leave vendored code and untouched files alone.

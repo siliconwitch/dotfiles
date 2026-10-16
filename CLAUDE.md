@@ -40,7 +40,9 @@ commit here.
 
 ## Documentation
 
-Add a link when a new tool arrives, and remove one when a tool goes.
+Add a link when a tool gains its own config directory or module in this repo,
+such as `niri/` or `nvim/`, and remove it when that config goes. An installed
+package gets no link.
 
 - NixOS manual: https://nixos.org/manual/nixos/stable/
 - Options: https://search.nixos.org/options
