@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, nixpkgs-master, nixpkgs-stable, ... }:
+{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, ... }:
 
 {
   # Nix base settings
@@ -37,7 +37,6 @@
         global.chord_timeout = 10;
         main."leftmeta+leftshift+f23" = "leftmeta";
         main.capslock = "overload(control, esc)";
-        # Space held for 300 ms turns on the dictate layer (see voxtype-space)
         main.space = "overloadt(dictate, space, 300)";
         dictate = { };
       };
@@ -151,9 +150,7 @@
     };
   };
 
-  # Dictation. keyd reports the dictate layer on and off, and voxtype-space
-  # turns that into voxtype record start and stop. Only the keyd socket
-  # reader runs as root; voxtype runs as the user.
+  # Dictation. keyd listen needs root, so voxtype-space relays the dictate layer to voxtype running as the user
   systemd.user.services.voxtype = {
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
@@ -163,8 +160,7 @@
     path = [ pkgs.ydotool ];
     environment.YDOTOOL_SOCKET = config.environment.variables.YDOTOOL_SOCKET;
     serviceConfig.ExecStart = "${pkgs.voxtype}/bin/voxtype --no-hotkey daemon";
-    # The log holds every transcript, so keep it out of the journal and on
-    # tmpfs, cleared on each start. stderr follows stdout by default.
+    # The log holds every transcript, so keep it out of the journal and on tmpfs, cleared on each start
     serviceConfig.StandardOutput = "truncate:%t/voxtype.log";
     # Voxtype colours its log even when writing to a file
     environment.NO_COLOR = "1";
@@ -175,8 +171,7 @@
     after = [ "keyd.service" ];
     partOf = [ "keyd.service" ];
     path = with pkgs; [ keyd util-linux coreutils voxtype ];
-    # keyd creates its socket after systemd reports it started, and listen
-    # exits whenever keyd restarts, so reconnect until it is there
+    # keyd listen exits whenever keyd restarts and the socket appears late, so reconnect until it is there
     serviceConfig.Restart = "always";
     serviceConfig.RestartSec = 1;
     script = ''
@@ -223,6 +218,7 @@
 
   # Printers
   services.printing.enable = true;
+  networking.firewall.allowedUDPPorts = [ 2021 ]; # Bambu printer LAN discovery
 
   # Local file sharing (opens 53317 TCP/UDP for discovery and transfer)
   programs.localsend.enable = true;
@@ -324,13 +320,8 @@
     "image/avif" = "firefox.desktop";
   };
 
-  # The LG UltraFine 5K sometimes wakes announcing both of its internal
-  # DisplayPort tiles. niri can't combine tiled displays (niri#1921); it strips
-  # the duplicate tile's identity and enables it as a phantom monitor that the
-  # mouse can wander into. Identity-less outputs only match by connector name
-  # in niri's config, and connector names shift between hotplugs, so instead
-  # watch the event stream and turn off any identity-less output while the LG
-  # is connected.
+  # The LG UltraFine 5K sometimes wakes announcing both DisplayPort tiles and niri enables the duplicate
+  # as a nameless phantom output (niri#1921), so turn off any nameless output while the LG is connected
   systemd.user.services.ultrafine-tile-off = {
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
@@ -480,6 +471,8 @@
     vscode-langservers-extracted     # html/css/json/eslint LSPs
 
     # GUI apps
+    bambu-studio                     # 3D printer slicer
+    blender                          # 3D modelling
     chromium
     drawio                           # diagrams
     firefox
@@ -487,6 +480,7 @@
     gnumeric                         # spreadsheet, ssconvert
     kicad                            # PCB design tools
     nanovna-qt                       # vector network analyser
+    openscad-unstable                # code-based 3D CAD
     (makeDesktopItem {
       name = "nanovna-qt";
       desktopName = "NanoVNA-QT";
@@ -522,14 +516,13 @@
   nixpkgs.overlays = [
     (final: prev:
     let
-      # Imported once and shared by the agents below, so nixpkgs master is
-      # only evaluated a single time.
       master = import nixpkgs-master {
         inherit (prev.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
-      stable = import nixpkgs-stable {
+      apps = import nixpkgs-apps {
         inherit (prev.stdenv.hostPlatform) system;
+        config.allowUnfree = true;
       };
     in
     {
@@ -538,7 +531,35 @@
         commandLineArgs = "--password-store=basic";
       };
       inherit (master) claude-code;
-      inherit (stable) freecad;
+      inherit (apps) blender freecad kicad;
+      # Upstream AppImage: the nixpkgs build takes hours and crashes once the
+      # Bambu network plugin loads, while the AppImage ships the libraries the plugin expects
+      bambu-studio = prev.appimageTools.wrapType2 rec {
+        pname = "bambu-studio";
+        version = "02.08.02.61";
+        src = prev.fetchurl {
+          url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/BambuStudio_ubuntu24.04-v${version}-20260820225108.AppImage";
+          hash = "sha256-1QGxA/rFQkUT7A6Na8FF+zBxneLH2U1zINcjdAyBp/0=";
+        };
+        extraPkgs = pkgs: with pkgs; [
+          webkitgtk_4_1 libsoup_3 glib-networking libsecret
+          gst_all_1.gstreamer gst_all_1.gst-plugins-base gst_all_1.gst-plugins-good gst_all_1.gst-plugins-bad
+        ];
+        # The app looks for the CA bundle at a Fedora path and asks on every start otherwise.
+        # WebKit's GPU buffer handoff to the web views blanks and flickers on Wayland
+        profile = ''
+          export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+          export WEBKIT_DISABLE_COMPOSITING_MODE=1
+          export WEBKIT_DISABLE_DMABUF_RENDERER=1
+        '';
+        extraInstallCommands =
+          let contents = prev.appimageTools.extract { inherit pname version src; };
+          in ''
+            install -Dm644 ${contents}/BambuStudio.desktop $out/share/applications/bambu-studio.desktop
+            install -Dm644 ${contents}/BambuStudio.png $out/share/icons/hicolor/128x128/apps/BambuStudio.png
+            substituteInPlace $out/share/applications/bambu-studio.desktop --replace-fail 'Exec=AppRun' 'Exec=bambu-studio'
+          '';
+      };
       # Adds the Parakeet engine
       voxtype = prev.voxtype.override { onnxSupport = true; };
       # Qwen Image 2.1 needs a newer release than nixpkgs has
