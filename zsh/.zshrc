@@ -37,8 +37,10 @@ alias recover='make recover'
 alias rtt='make rtt'
 alias release='make release'
 
-alias rebuild-my-nix='sudo nixos-rebuild switch --flake ~/.config#mist'
-alias update-my-nix='nix flake update --flake ~/.config && sudo nixos-rebuild switch --flake ~/.config#mist ; sudo fwupdmgr refresh --force ; sudo fwupdmgr update'
+alias rebuild='sudo nixos-rebuild switch --flake ~/.config#mist'
+alias update='nix flake update --flake ~/.config && sudo nixos-rebuild switch --flake ~/.config#mist ; sudo fwupdmgr refresh --force ; sudo fwupdmgr update'
+alias update-nix='nix flake update nixpkgs nixpkgs-master battui launtui --flake ~/.config && sudo nixos-rebuild switch --flake ~/.config#mist'
+alias update-apps='nix flake update nixpkgs-apps --flake ~/.config && sudo nixos-rebuild switch --flake ~/.config#mist'
 
 if [[ -n ${SSH_CONNECTION:-} ]]; then
   alias sudo='sudo '
