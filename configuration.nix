@@ -189,6 +189,7 @@
   # Networking
   networking.hostName = "mist";
   networking.wireless.iwd.enable = true;
+  networking.firewall.allowedTCPPorts = [ 4000 ]; # Jekyll dev server, for phone testing
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -417,6 +418,7 @@
     git
     gnupg                            # gpg
     herdr                            # terminal multiplexer
+    hledger                          # plain text accounting
     impala                           # Wi-Fi TUI
     jq                               # JSON processor
     libqalculate                     # qalc
@@ -461,6 +463,9 @@
       '';
     }))
     (python3.withPackages (p: [
+        p.beancount                  # plain text accounting (bean-check, bean-report)
+        p.beangulp                   # beancount importer framework
+        p.beanquery                  # beancount SQL queries (bean-query)
         p.logic2-automation          # Saleae Logic 2 automation client
     ]))
     python3Packages.weasyprint       # HTML → PDF CLI
