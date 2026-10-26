@@ -28,7 +28,7 @@
   nixpkgs.config.permittedInsecurePackages = [ "segger-jlink-qt4-970" ];
   services.udev.packages = with pkgs; [ saleae-logic-2 segger-jlink ];
 
-  # Remap Lenovo Copilot key, and Caps Lock to esc on tap / ctrl on hold
+  # Remap Lenovo Copilot key, Caps Lock to esc on tap / ctrl on hold, and Cmd+arrows to Home/End/PgUp/PgDn
   services.keyd = {
     enable = true;
     keyboards.default = {
@@ -38,6 +38,7 @@
         main."leftmeta+leftshift+f23" = "leftmeta";
         main.capslock = "overload(control, esc)";
         main.space = "overloadt(dictate, space, 300)";
+        meta = { left = "home"; right = "end"; up = "pageup"; down = "pagedown"; };
         dictate = { };
       };
     };
