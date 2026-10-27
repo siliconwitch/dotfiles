@@ -425,6 +425,7 @@
     libqalculate                     # qalc
     llama-cpp-vulkan                 # local LLMs on the iGPU
     stable-diffusion-cpp-vulkan      # image generation on the iGPU
+    monolith                         # bundles a web page into one HTML file
     netcat-openbsd                   # nc (zsh prompt)
     pandoc                           # document converter
     pass                             # password manager
