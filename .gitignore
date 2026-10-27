@@ -28,6 +28,7 @@
 !/voxtype/
 /voxtype/*
 !/voxtype/config.toml
+!/voxtype/sounds/
 !/wallpaper.jpg
 !/screenshot.png
 

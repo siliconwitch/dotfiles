@@ -38,7 +38,7 @@
         global.chord_timeout = 10;
         main."leftmeta+leftshift+f23" = "leftmeta";
         main.capslock = "overload(control, esc)";
-        main.space = "overloadt(dictate, space, 300)";
+        main.space = "overloadt(dictate, space, 200)";
         meta = { left = "home"; right = "end"; up = "pageup"; down = "pagedown"; backspace = "macro(S-home backspace)"; };
         dictate = { };
       };

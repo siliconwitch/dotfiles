@@ -6,6 +6,11 @@ engine = "parakeet"
 [parakeet]
 model = "parakeet-tdt-0.6b-v2"
 
+[audio.feedback]
+enabled = true
+# Every sound but start.wav is silent, as voxtype cannot turn cues off one by one
+theme = "/home/raj/.config/voxtype/sounds"
+
 [output]
 # See configuration.nix for why ydotool and not wtype
 driver_order = ["ydotool", "clipboard"]
