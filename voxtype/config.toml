@@ -48,6 +48,8 @@ enabled = false
 "opelvino" = "OpenVINO"
 "openveno" = "OpenVINO"
 "claude code" = "Claude Code"
+"docks" = "docs"
+"dox" = "docs"
 # Languages and tools
 "git hub" = "GitHub"
 "github" = "GitHub"
@@ -100,3 +102,5 @@ enabled = false
 "usb" = "USB"
 "ble" = "BLE"
 "dfu" = "DFU"
+"s one" = "S1"
+"s two" = "S2"
