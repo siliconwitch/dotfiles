@@ -84,6 +84,7 @@ bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
+bindkey '^[[1;2H' backward-kill-line
 
 source ~/.config/zsh/prompt.zsh
 
