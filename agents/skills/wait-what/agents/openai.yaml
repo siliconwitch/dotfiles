@@ -1,6 +1,0 @@
-interface:
-  display_name: "Wait, What?"
-  short_description: "Re-pitch an explanation with clearer context"
-  default_prompt: "Use $wait-what to re-pitch the previous explanation with more context and simpler language."
-policy:
-  allow_implicit_invocation: false

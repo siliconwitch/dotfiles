@@ -1,6 +1,0 @@
-interface:
-  display_name: "Research"
-  short_description: "Run multi-model verified research"
-  default_prompt: "Use $research to investigate this question through independent research, verification, and arbitration."
-policy:
-  allow_implicit_invocation: false

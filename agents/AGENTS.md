@@ -39,7 +39,7 @@ When changing agent context, keep always-loaded instructions minimal. Put task-s
 
 When an uncertainty blocks a concrete answer, run the smallest safe test that directly measures the unknown before theorising or starting broad research. Use a focused command, probe, request, reproduction, or source lookup whose output can resolve the uncertainty.
 
-If the test resolves the uncertainty, use its result and do not fan out merely to reconfirm it. If the test does not produce a concrete answer, report the test and its result, then offer `/research` or `$research` so the user can request a deeper investigation.
+If the test resolves the uncertainty, use its result and do not fan out merely to reconfirm it. If the test does not produce a concrete answer, report the test and its result.
 
 # Workstation
 
