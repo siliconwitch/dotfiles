@@ -26,7 +26,7 @@
   services.hardware.bolt.enable = true;
   nixpkgs.config.segger-jlink.acceptLicense = true;
   nixpkgs.config.permittedInsecurePackages = [ "segger-jlink-qt4-970" ];
-  services.udev.packages = with pkgs; [ saleae-logic-2 segger-jlink ];
+  services.udev.packages = with pkgs; [ saleae-logic-2 segger-jlink nrf-udev ];
 
   # Remap Lenovo Copilot key, Caps Lock to esc on tap / ctrl on hold, Cmd+arrows to Home/End/PgUp/PgDn,
   # and Cmd+Backspace to delete to line start
@@ -428,6 +428,7 @@
     stable-diffusion-cpp-vulkan      # image generation on the iGPU
     monolith                         # bundles a web page into one HTML file
     netcat-openbsd                   # nc (zsh prompt)
+    nrfconnect                       # nRF Connect for Desktop (Power Profiler app)
     pandoc                           # document converter
     pass                             # password manager
     poppler-utils                    # PDF utils
@@ -470,6 +471,7 @@
         p.beangulp                   # beancount importer framework
         p.beanquery                  # beancount SQL queries (bean-query)
         p.logic2-automation          # Saleae Logic 2 automation client
+        p.ppk2-api                   # Nordic PPK2 power profiler client
     ]))
     python3Packages.weasyprint       # HTML → PDF CLI
     ruff                             # python linter/formatter
