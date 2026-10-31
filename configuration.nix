@@ -155,8 +155,10 @@
   # Dictation. keyd listen needs root, so voxtype-space relays the dictate layer to voxtype running as the user
   systemd.user.services.voxtype = {
     wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    # Temporary fix: voxtype keeps one feedback sound stream, and the PipeWire restart on resume kills it.
+    # Drop pipewire.service from these once a release includes https://github.com/peteonrails/voxtype/pull/870
+    partOf = [ "graphical-session.target" "pipewire.service" ];
+    after = [ "graphical-session.target" "pipewire.service" ];
     # ydotool, because wtype numbers keys by first appearance and capitals that
     # land on modifier keycodes get dropped
     path = [ pkgs.ydotool ];
