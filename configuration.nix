@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, ... }:
+{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, ... }:
 
 {
   # Nix base settings
@@ -536,6 +536,10 @@
         inherit (prev.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
+      jlink = import nixpkgs-jlink {
+        inherit (prev.stdenv.hostPlatform) system;
+        inherit (prev) config;
+      };
     in
     {
       # Prevent chrome bugging us for passwords
@@ -544,6 +548,7 @@
       };
       inherit (master) claude-code;
       inherit (apps) blender freecad kicad;
+      inherit (jlink) segger-jlink;
       # Upstream AppImage: the nixpkgs build takes hours and crashes once the
       # Bambu network plugin loads, while the AppImage ships the libraries the plugin expects
       bambu-studio = prev.appimageTools.wrapType2 rec {
