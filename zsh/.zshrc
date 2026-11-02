@@ -78,6 +78,20 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
+
+# Keep plain navigation and viewing commands out of the history file
+zshaddhistory() {
+  emulate -L zsh
+  local line=${1%%$'\n'}
+  local -a words=(${(z)line})
+  [[ $line == *[\|\;\&\<\>\$\`\(]* ]] && return 0
+  case $words[1] in
+    ls|l|ll|la|lt|cd|which|man|less|clear|pwd|exit) return 2 ;;
+    cat|rm|mkdir) (( $#words == 2 )) && return 2 ;;
+  esac
+  return 0
+}
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey "$terminfo[kcuu1]" history-substring-search-up
