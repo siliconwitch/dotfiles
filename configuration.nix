@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, ... }:
+{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, superstack-cli, ... }:
 
 {
   # Nix base settings
@@ -436,6 +436,7 @@
     poppler-utils                    # PDF utils
     ripgrep                          # rg
     segger-jlink                     # J-Link debugger software
+    superstack-cli.packages.${pkgs.stdenv.hostPlatform.system}.superstack
     trash-cli                        # rm alias
     unzip
     vhs                              # Generates terminal GIFs

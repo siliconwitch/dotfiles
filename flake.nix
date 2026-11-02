@@ -17,11 +17,15 @@
       url = "github:siliconwitch/launtui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    superstack-cli = {
+      url = "github:siliconwitchery/superstack-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, battui, launtui, ... }: {
+  outputs = { nixpkgs, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, battui, launtui, superstack-cli, ... }: {
     nixosConfigurations.mist = nixpkgs.lib.nixosSystem {
-      specialArgs = { username = "raj"; inherit nixpkgs-apps nixpkgs-master nixpkgs-jlink; };
+      specialArgs = { username = "raj"; inherit nixpkgs-apps nixpkgs-master nixpkgs-jlink superstack-cli; };
       modules = [
         ./configuration.nix
         ./hardware-configuration.nix

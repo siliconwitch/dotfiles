@@ -111,7 +111,28 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-apps": "nixpkgs-apps",
         "nixpkgs-jlink": "nixpkgs-jlink",
-        "nixpkgs-master": "nixpkgs-master"
+        "nixpkgs-master": "nixpkgs-master",
+        "superstack-cli": "superstack-cli"
+      }
+    },
+    "superstack-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793627066,
+        "narHash": "sha256-qYQ31U8CedDZu6cVkD8z7SOlHovh6+keXKYwwfgaQBk=",
+        "owner": "siliconwitchery",
+        "repo": "superstack-cli",
+        "rev": "87f956be045897807ffe570504468194a6b215a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "siliconwitchery",
+        "repo": "superstack-cli",
+        "type": "github"
       }
     }
   },
