@@ -20,6 +20,10 @@
   # Hardware & firmware
   hardware.enableAllFirmware = true;
   hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver               # VA-API video encoding and decoding
+    vpl-gpu-rt                       # Quick Sync runtime, for OBS hardware encoding
+  ];
   hardware.bluetooth.enable = true;
   hardware.i2c.enable = true; # DDC/CI for ddcutil
   services.fwupd.enable = true;
@@ -431,6 +435,7 @@
     monolith                         # bundles a web page into one HTML file
     netcat-openbsd                   # nc (zsh prompt)
     nrfconnect                       # nRF Connect for Desktop (Power Profiler app)
+    obs-cmd                          # controls OBS from the niri recording keybind
     pandoc                           # document converter
     pass                             # password manager
     poppler-utils                    # PDF utils
@@ -510,6 +515,9 @@
     vesktop                          # Discord client (tray)
     vlc                              # media player
   ];
+
+  # Screen and webcam recording for social media videos
+  programs.obs-studio.enable = true;
 
   # Specific to projects & apps
   programs.direnv.enable = true;

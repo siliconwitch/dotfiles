@@ -50,3 +50,4 @@ package gets no link.
 - Wiki: https://wiki.nixos.org
 - Niri: https://niri-wm.github.io/niri/
 - Neovim: https://neovim.io/doc/user/
+- OBS: https://obsproject.com/kb

@@ -29,6 +29,11 @@
 /voxtype/*
 !/voxtype/config.toml
 !/voxtype/sounds/
+# OBS's scene and WebSocket files hold a screen-share token and a password, so only the profile is tracked
+!/obs-studio/
+/obs-studio/**
+!/obs-studio/**/
+!/obs-studio/basic/profiles/Untitled/basic.ini
 !/wallpaper.jpg
 !/screenshot.png
 

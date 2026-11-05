@@ -58,10 +58,11 @@ binds {
     Shift+XF86MonBrightnessUp   allow-when-locked=true                              { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL + 10 )); [ $VAL -gt 100 ] && VAL=100; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
     Shift+XF86MonBrightnessDown allow-when-locked=true                              { spawn-sh "exec 9>/tmp/ext-brightness.lock; flock -n 9 || exit 0; for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do [ \"$(cat $c/status 2>/dev/null)\" = connected ] && BUS=$(basename $(readlink $c/ddc) | cut -d- -f2) && break; done; [ -n \"$BUS\" ] || exit 0; VAL=$(ddcutil --bus $BUS getvcp 10 --brief 2>/dev/null | awk '{print $4}'); VAL=$(( VAL - 10 )); [ $VAL -lt 0 ] && VAL=0; notify-send -h string:x-canonical-private-synchronous:brightness -h int:value:$VAL 'External Brightness' \"$VAL%\"; ddcutil --bus $BUS --noverify setvcp 10 $VAL"; }
 
-    // Screenshots
+    // Screenshots and recording
     Mod+Shift+3                 hotkey-overlay-title="Screenshot"                   { screenshot-screen; }
     Mod+Shift+4                 hotkey-overlay-title="Screenshot selection"         { screenshot; }
     Mod+Shift+5                 hotkey-overlay-title="Screenshot window"            { screenshot-window; }
+    Mod+Shift+6                 hotkey-overlay-title="Record screen" repeat=false   { spawn-sh "notify-send Recording \"$(obs-cmd -w obsws://localhost:4455 recording toggle 2>&1)\""; }
 
     // Other
     Mod+XF86ScreenSaver         hotkey-overlay-title="Lock the Screen"              { spawn-sh "loginctl lock-session && sleep 2 && niri msg action power-off-monitors"; }
