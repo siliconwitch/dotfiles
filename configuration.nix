@@ -265,6 +265,7 @@
     nerd-fonts.anonymice
     nerd-fonts.roboto-mono
     noto-fonts-color-emoji
+    geist-font # video-edit titles, captions and animations
   ];
 
   # Desktop & lockscreen

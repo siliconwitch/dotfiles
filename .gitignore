@@ -34,6 +34,7 @@
 /obs-studio/**
 !/obs-studio/**/
 !/obs-studio/basic/profiles/Untitled/basic.ini
+!/obs-studio/basic/profiles/Untitled/recordEncoder.json
 !/wallpaper.jpg
 !/screenshot.png
 
