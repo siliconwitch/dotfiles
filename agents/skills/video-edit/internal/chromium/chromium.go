@@ -37,8 +37,8 @@ type message struct {
 	} `json:"error"`
 }
 
-// Open loads url in a viewport of width by height CSS pixels, each scale device pixels across. It sets
-// each of properties as a CSS custom property on the root element once the page and its fonts load.
+// Open loads url in a viewport of width by height CSS pixels, each scale device pixels across, with each
+// of properties as a CSS custom property on the root element, and waits for its fonts.
 func Open(url string, width, height int, scale float64, properties map[string]string) (*Page, error) {
 	profile, err := os.MkdirTemp("", "video-edit-chromium-")
 	if err != nil {
@@ -88,6 +88,18 @@ func Open(url string, width, height int, scale float64, properties map[string]st
 	}
 	page.session = attached.SessionID
 
+	// The properties apply before the page's styles do. An animation that starts running without its cue
+	// leaves a faint trace in the frames before the cue, even once paused and seeked.
+	var declarations strings.Builder
+	for name, value := range properties {
+		fmt.Fprintf(&declarations, "%s: %s; ", name, value)
+	}
+	encodedRule, err := json.Marshal(":root { " + declarations.String() + "}")
+	if err != nil {
+		page.Close()
+		return nil, err
+	}
+
 	steps := []struct {
 		method string
 		params map[string]any
@@ -95,6 +107,7 @@ func Open(url string, width, height int, scale float64, properties map[string]st
 		{"Page.enable", nil},
 		{"Runtime.enable", nil},
 		{"Emulation.setDeviceMetricsOverride", map[string]any{"width": width, "height": height, "deviceScaleFactor": scale, "mobile": false}},
+		{"Page.addScriptToEvaluateOnNewDocument", map[string]any{"source": fmt.Sprintf("const sheet = new CSSStyleSheet(); sheet.replaceSync(%s); document.adoptedStyleSheets = [sheet];", encodedRule)}},
 		{"Page.navigate", map[string]any{"url": url}},
 	}
 
@@ -118,15 +131,7 @@ func Open(url string, width, height int, scale float64, properties map[string]st
 		}
 	}
 
-	encodedProperties, err := json.Marshal(properties)
-	if err != nil {
-		page.Close()
-		return nil, err
-	}
-
-	err = page.evaluate(fmt.Sprintf(`document.fonts.ready.then(() => {
-		for (const [name, value] of Object.entries(%s ?? {})) document.documentElement.style.setProperty(name, value);
-	})`, encodedProperties))
+	err = page.evaluate("document.fonts.ready.then(() => {})")
 	if err != nil {
 		page.Close()
 		return nil, err

@@ -56,7 +56,7 @@ func Run(folder, id string) error {
 			used = true
 
 			// At one device pixel per CSS pixel, which shows the layout at half the landscape size
-			panel, _ := output.Panels(cutaway.Layout == "inset")
+			panel := output.CutawayPanel(cutaway.Layout)
 			browser, err := chromium.Open("file://"+page, int(float64(panel.Width)/output.Scale), int(float64(panel.Height)/output.Scale), 1, cutaway.Properties())
 			if err != nil {
 				return err

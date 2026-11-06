@@ -1,6 +1,6 @@
 ---
 name: video-edit
-description: Edits OBS webcam and screen recordings, with b-roll and photos, into a 1440p landscape video and a separate portrait cut for Shorts and Reels, with framing, titles, portrait captions and, on request, technical animations. Transcribes with ElevenLabs Scribe, describes frames with Claude, and renders with ffmpeg. Use when Raj asks to edit, cut or caption a recording, to add b-roll, photos, titles or an animation, to change an edit, or to set up OBS for recording.
+description: Edits OBS webcam and screen recordings, with b-roll and photos, into a 1440p landscape video and a separate portrait cut for Shorts and Reels, with framing, titles, portrait captions and technical animations. Transcribes with ElevenLabs Scribe, describes frames with Claude, and renders with ffmpeg. Use when Raj asks to edit, cut or caption a recording, to add b-roll, photos, titles or an animation, to change an edit, or to set up OBS for recording.
 ---
 
 # Video edit
@@ -58,7 +58,7 @@ needed to archive it once posted:
 | `sources/` | `ingest` | `recording-<n>.mkv`, `broll/`, `photos/` |
 | `analysis/` | `analyse` | per source, `transcript.txt`, `transcript.json`, `frames/` and `frames.json`. `descriptions.txt` lists every source's details and frames |
 | `edit/` | you | `landscape.json`, `portrait.json` |
-| `animations/<id>/` | you, animator | `spec.md`, `index.html`, `notes.md` |
+| `animations/<id>/` | you, animator | `spec.md`, `index.html`, `animation.css`, `notes.md` |
 | `build/` | `render`, `animate`, `sheet` | intermediate files, all regenerable. `build/cache/` holds rendered clips and segments for reuse |
 | `out/` | `render` | `landscape.mp4` at 2560x1440, `portrait.mp4` at 1080x1920 |
 
@@ -96,9 +96,9 @@ description cost money. It processes only new sources after a later ingest.
    CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . check ~/videos/<folder> <format>
    ```
 
-4. Only when Raj asks for an animation, write its spec and cutaway as
-   `edit-list.md` describes, then spawn an animator. Render the other format
-   while it works.
+4. Write a spec and cutaway for each animation `edit-list.md` calls for, then
+   spawn one animator per animation, all at once. Render a format that uses
+   no animation while they work.
 
    ```text
    You are a sub-agent. Read ~/.config/agents/skills/video-edit/agents/animator.md and follow it.
@@ -124,9 +124,9 @@ description cost money. It processes only new sources after a later ingest.
    ```
 
    Fix and render again only for a clear fault: a subject cut off by the
-   framing, a title or caption over a face, a title with a wrong fact, a
-   cutaway that does not match the words under it, or a black or frozen
-   frame. In portrait, also anything that matters in the bottom fifth or at
+   framing, a title, caption or corner cutaway over a face, a title with a
+   wrong fact, a cutaway that does not match the words under it, a screen
+   crop that cuts off what Raj points at, or a black or frozen frame. In portrait, also anything that matters in the bottom fifth or at
    the right edge, where Shorts and Reels lay their buttons.
 7. Give Raj the paths of the videos.
 

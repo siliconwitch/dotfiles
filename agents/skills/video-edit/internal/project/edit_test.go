@@ -29,7 +29,7 @@ func TestLoad(t *testing.T) {
 				{"source": "recording-2.mkv", "start": 0, "end": 5, "layout": "screen"}],
 			"cutaways": [
 				{"source": "photos/board.jpg", "over": "recording-1.mkv", "from": 2, "to": 5, "layout": "inset"},
-				{"source": "animations/flow", "over": "recording-1.mkv", "from": 25, "to": 35, "cues": {"device": 26, "server": 30}},
+				{"source": "animations/flow", "over": "recording-1.mkv", "from": 25, "to": 35, "layout": "corner", "cues": {"device": 26, "server": 30}},
 				{"source": "broll/demo.mov", "start": 4, "over": "recording-2.mkv", "from": 1, "to": 4}]}`,
 		},
 		{

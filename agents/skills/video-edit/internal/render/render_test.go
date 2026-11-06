@@ -70,7 +70,7 @@ func TestRun(t *testing.T) {
 		{"source": "recording-1.mkv", "start": 6, "end": 8, "layout": "screen+webcam"}],
 	"cutaways": [
 		{"source": "photos/board.png", "over": "recording-1.mkv", "from": 1, "to": 2.5, "layout": "inset"},
-		{"source": "animations/flow", "over": "recording-1.mkv", "from": 4, "to": 5.5, "cues": {"go": 4.5}},
+		{"source": "animations/flow", "over": "recording-1.mkv", "from": 4, "to": 5.5, "layout": "corner", "cues": {"go": 4.5}},
 		{"source": "broll/event.mov", "start": 2, "over": "recording-1.mkv", "from": 6.5, "to": 7.5, "title": "Demo day · Copenhagen"}]}`
 	for _, format := range []string{"landscape", "portrait"} {
 		fixtures["edit/"+format+".json"] = edit
@@ -89,9 +89,9 @@ func TestRun(t *testing.T) {
 		want   []string
 		absent []string
 	}{
-		{"landscape", "2560,1440", []string{"0:00:00.30,0:00:04.30,Title,,0,0,0,,{\\fad(400,400)}Ada Lovelace · Engineer · Example Ltd"}, []string{"Hello"}},
+		{"landscape", "2560,1440", []string{"0:00:00.30,0:00:06.30,Title,,0,0,0,,{\\fad(400,400)}Ada Lovelace · Engineer · Example Ltd"}, []string{"Hello"}},
 		{"portrait", "1080,1920", []string{
-			"0:00:00.30,0:00:04.30,Title,,0,0,580,,{\\fad(400,400)}Ada Lovelace · Engineer · Example Ltd",
+			"0:00:00.30,0:00:06.30,Title,,0,0,580,,{\\fad(400,400)}Ada Lovelace · Engineer · Example Ltd",
 			"0:00:00.50,0:00:00.90,Caption,,0,0,460,,Hello",
 			"0:00:03.08,0:00:03.38,Caption,,0,0,460,,board.",
 		}, []string{"laughter", "dropped"}},

@@ -265,7 +265,8 @@
     nerd-fonts.anonymice
     nerd-fonts.roboto-mono
     noto-fonts-color-emoji
-    geist-font # video-edit titles, captions and animations
+    geist-font # video-edit animation labels
+    dinish     # video-edit titles, captions and animation headings
   ];
 
   # Desktop & lockscreen

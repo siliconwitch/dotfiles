@@ -91,7 +91,7 @@ func Run(folder, format string) error {
 	clipEncoding := []string{"-c:v", "libx264", "-crf", "12", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "pcm_s16le", "-ar", "48000", "-ac", "2"}
 	clips := make([]string, len(list.Cutaways))
 	for i, cutaway := range list.Cutaways {
-		panel, _ := output.Panels(cutaway.Layout == "inset")
+		panel := output.CutawayPanel(cutaway.Layout)
 		length := cutaway.OutEnd - cutaway.OutStart
 		silence := []string{"-f", "lavfi", "-t", fmt.Sprintf("%.3f", length), "-i", "anullsrc=r=48000:cl=stereo"}
 
@@ -229,7 +229,7 @@ func Run(folder, format string) error {
 		}
 	}
 
-	// Titles, each shown from 0.3 s after the shot it labels starts
+	// Titles, each shown for 6 s from 0.3 s after the shot it labels starts
 	type title struct {
 		text  string
 		start float64
@@ -258,10 +258,10 @@ func Run(folder, format string) error {
 	// chin and above the buttons and description that Shorts and Reels lay over the bottom of the
 	// picture, or at the join when the picture is stacked above the webcam, so they never cover a face.
 	// A portrait title sits just above them.
-	styles := "Style: Title,Geist,44,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,14,0,1,64,64,64,1"
+	styles := "Style: Title,DINish Expanded Medium,54,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,18,0,1,72,72,72,1"
 	if format == "portrait" {
-		styles = "Style: Title,Geist,42,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,12,0,2,90,90,0,1\n" +
-			"Style: Caption,Geist,64,&H00FFFFFF,&H00FFFFFF,&H40000000,&H00000000,1,0,0,0,100,100,0,0,3,12,0,2,90,90,0,1"
+		styles = "Style: Title,DINish Expanded Medium,46,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,14,0,2,60,60,0,1\n" +
+			"Style: Caption,DINish Expanded SemiBold,62,&H00FFFFFF,&H00FFFFFF,&H40000000,&H00000000,0,0,0,0,100,100,0,0,3,12,0,2,90,90,0,1"
 	}
 	captionMargin := func(t float64) int {
 		stacked := false
@@ -297,7 +297,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 	// The output seconds that show a title or caption, so only the segments under one burn subtitles in
 	var shown [][2]float64
 	for _, title := range titles {
-		end := math.Min(title.start+4, list.Duration-0.05)
+		end := math.Min(title.start+6, list.Duration-0.05)
 		if end-title.start < 1 {
 			continue
 		}
@@ -412,7 +412,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 			from   float64
 			to     float64
 			offset float64 // seconds into the clip
-			inset  bool
+			layout string
 			broll  bool
 		}
 		var pieces []piece
@@ -424,17 +424,19 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 				continue
 			}
 
-			current := piece{clips[j], from - segment.OutStart, to - segment.OutStart, from - cutaway.OutStart, cutaway.Layout == "inset", cutaway.Kind == project.Broll}
+			current := piece{clips[j], from - segment.OutStart, to - segment.OutStart, from - cutaway.OutStart, cutaway.Layout, cutaway.Kind == project.Broll}
 			pieces = append(pieces, current)
 			window := fmt.Sprintf("between(t,%.3f,%.3f)", current.from, current.to)
-			if current.inset {
+			switch current.layout {
+			case "inset":
 				insetShown = append(insetShown, window)
-			} else {
+			case "", "full":
 				fullShown = append(fullShown, window)
 			}
 		}
 
-		// The webcam shows for its layout, except under a full cutaway, and under every inset cutaway
+		// The webcam shows for its layout, except under a full cutaway, and under every inset cutaway. A
+		// corner cutaway leaves it as it is.
 		mainName, layoutWebcam := segment.Picture()
 		mainPanel, webcamPanel := output.Panels(layoutWebcam)
 		showWebcam := layoutWebcam || len(insetShown) > 0
@@ -465,7 +467,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		var ducked []string
 		for k, piece := range pieces {
 			clip := addInput("-ss", fmt.Sprintf("%.3f", piece.offset), "-t", fmt.Sprintf("%.3f", piece.to-piece.from), "-i", piece.clip)
-			panel, _ := output.Panels(piece.inset)
+			panel := output.CutawayPanel(piece.layout)
 			fmt.Fprintf(&graph, "[%d:v:0]setpts=PTS-STARTPTS+%.3f/TB[piece%d];", clip, piece.from, k)
 			fmt.Fprintf(&graph, "[%s][piece%d]overlay=%d:%d:enable='between(t,%.3f,%.3f)':eof_action=pass[layer%d];", layer, k, panel.X, panel.Y, piece.from, piece.to, k+1)
 			layer = fmt.Sprintf("layer%d", k+1)

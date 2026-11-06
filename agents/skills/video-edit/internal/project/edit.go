@@ -41,6 +41,24 @@ func (f Format) Panels(withWebcam bool) (main, webcam Rect) {
 	return Rect{0, 0, f.Width, f.Height / 2}, Rect{0, f.Height / 2, f.Width, f.Height / 2}
 }
 
+// CutawayPanel returns where a cutaway with the layout goes. A corner cutaway sits in the top right
+// corner over the main picture, clear of the landscape webcam inset and title, and below the icons
+// Shorts and Reels lay over the top of a portrait picture.
+func (f Format) CutawayPanel(layout string) Rect {
+	if layout != "corner" {
+		main, _ := f.Panels(layout == "inset")
+		return main
+	}
+
+	if f.Width > f.Height {
+		width, height, margin := f.Width/4, f.Height/4, f.Width/60
+		return Rect{f.Width - width - margin, margin, width, height}
+	}
+
+	size := f.Width * 2 / 5
+	return Rect{f.Width - size - f.Width/30, f.Height / 12, size, size}
+}
+
 // List is an edit list, edit/<format>.json. Segment times are seconds in their source. A cutaway's from,
 // to and cues are seconds in the source it covers, so a recut moves each cutaway with its words.
 type List struct {
@@ -184,8 +202,8 @@ func Load(folder, format string, sources map[string]Source) (List, error) {
 			return List{}, fmt.Errorf("%s: only a segment takes frame push", name)
 		}
 
-		if cutaway.Layout != "" && cutaway.Layout != "full" && cutaway.Layout != "inset" {
-			return List{}, fmt.Errorf("%s has layout %q, which is not full or inset", name, cutaway.Layout)
+		if cutaway.Layout != "" && cutaway.Layout != "full" && cutaway.Layout != "inset" && cutaway.Layout != "corner" {
+			return List{}, fmt.Errorf("%s has layout %q, which is not full, inset or corner", name, cutaway.Layout)
 		}
 
 		if cutaway.From >= cutaway.To {

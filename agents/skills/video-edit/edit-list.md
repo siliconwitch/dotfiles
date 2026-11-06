@@ -98,30 +98,47 @@ the cutaway on those words. A cutaway may span a cut. Cutaways never overlap.
   plays quietly under the narration.
 - **Photo**: show it for 2 to 4 s. It drifts slowly towards its subjects, or
   pushes in on its centre when it has none.
-- **Animation**: only when Raj asks for one. See below.
+- **Animation**: see below.
 
-`layout` is `full`, the default, or `inset`. An inset keeps the webcam in view:
-in the bottom right corner in landscape, and below the cutaway in portrait. An
-inset cutaway can only cover recording segments.
+`layout` places the cutaway:
+
+- `full`, the default, covers the whole picture.
+- `inset` keeps the webcam in view: in the bottom right corner in landscape,
+  and below the cutaway in portrait. It can only cover recording segments.
+- `corner` shows the cutaway small in the top right corner, and leaves the
+  picture under it as it is, such as Raj full screen.
 
 ## Animations
 
 An animation is a line drawing of a system Raj explains, such as a device, a
-server and a phone with data flowing between them. An animator draws it from
-your spec alone, so write the spec for someone who has not heard the
-recording.
+server and a phone with data flowing between them. Add one wherever Raj
+explains something technical that a drawing shows better than words: how data
+flows between parts, what is inside a device, or how a protocol, algorithm or
+mechanism works. Add none while Raj shows something physical, such as a board
+held up to the camera, or works on the screen. There the picture is the
+point, so keep the viewer on it. The brief overrides this.
+
+Pick the layout from what the viewer should watch:
+
+| Layout | Use it when |
+|---|---|
+| `full` | the drawing is the point and Raj's face adds nothing, such as a system with many parts |
+| `inset` | the drawing leads, and Raj's face keeps the explanation personal |
+| `corner` | Raj or the screen stays the point, and a small drawing of one thing helps, such as a part he names while talking to the camera |
+
+An animator draws it from your spec alone, so write the spec for someone who
+has not heard the recording.
 
 1. Create `animations/<id>/spec.md`, with a short kebab-case id such as
-   `data-flow`. Describe what to draw: each part, the links between them, and
-   what moves along the links. List the cues in order, each with its name, the
-   words that trigger it, and its time. Keep it to about eight parts.
+   `data-flow`. Name the layout. Describe what to draw: each part, the links
+   between them, and what moves along the links. List the cues in order, each
+   with its name, the words that trigger it, and its time. Keep it to about
+   eight parts, or one for a corner animation.
 2. Add a cutaway with `"source": "animations/<id>"`, 8 to 30 s long, whose
    `from` and `to` cover the explanation. Its `cues` give each beat's time in
    `over`: the start of the word that names it. Cue names are short kebab-case
    words, such as `device` or `upload`. The animation reads each cue as the CSS
    property `--cue-<name>`.
-3. Use `"layout": "inset"` when Raj's face adds to the explanation, and `full`
-   when the drawing needs the whole frame.
 
 The portrait edit reuses the animation with the same cue names when its passage
 is in the cut.
@@ -150,24 +167,36 @@ to the whole run:
   barely noticed. Use it only on a run of at least 10 s that builds up to
   something, such as the lead-up to a result. A cutaway never takes it.
 - `"box": [left, top, right, bottom]`, in thousandths of the picture, shows
-  exactly that region. In a `screen+webcam` segment it frames the screen.
+  that region, widened around its centre to the panel's shape. In a
+  `screen+webcam` segment it frames the screen.
 
 A subject that lasts only a few seconds, such as a small settings window, is
 framed only when it fills most of a run. Give it a run of its own with
 `"frame": "auto"`, and set `"frame": "auto"` again on the segment after it.
 
+### Cropping the screen
+
+When the screen shows more than Raj is working in, such as other windows, a
+panel or empty desktop, crop it out with a `box` around the window or region
+he uses. Open a screen frame from `analysis/<source>/frames/` to measure it.
+
+Keep one crop for the whole passage. Set the box on the first segment of each
+screen run, and change it only when Raj moves to another window. The box is
+for a clean frame, not for zooming in and out on details.
+
 ## Titles and captions
 
 A segment or cutaway takes a `title`: one short line, its parts joined with
 ` · `, such as `"Ada Lovelace · Engineer · Example Ltd"`. It fades in 0.3 s
-after the shot starts and shows for 4 s, in the bottom left corner in
+after the shot starts and shows for 6 s, in the bottom left corner in
 landscape and above the captions in portrait. Keep a portrait title under
 about 40 characters, so it fits on one line.
 
-Title the speaker's first shot with a name and role when the brief gives them,
-and b-roll of an event with the event, place and date. Take every fact from
-Raj, the brief, or a source's details in `analysis/descriptions.txt`. Never
-invent a name, role, place or date. When a fact is missing, leave the title out.
+Title Raj's first shot `Raj Nakarja · Founder · Silicon Witchery`, unless the
+brief gives another title or asks for none. Title b-roll of an event with the
+event, place and date. Take every other fact from Raj, the brief, or a
+source's details in `analysis/descriptions.txt`. Never invent a name, role,
+place or date. When a fact is missing, leave the title out.
 
 Portrait gets captions from the transcript automatically. Landscape has none,
 because YouTube captions it.
