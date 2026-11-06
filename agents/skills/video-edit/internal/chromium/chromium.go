@@ -107,7 +107,7 @@ func Open(url string, width, height int, scale float64, properties map[string]st
 		{"Page.enable", nil},
 		{"Runtime.enable", nil},
 		{"Emulation.setDeviceMetricsOverride", map[string]any{"width": width, "height": height, "deviceScaleFactor": scale, "mobile": false}},
-		{"Page.addScriptToEvaluateOnNewDocument", map[string]any{"source": fmt.Sprintf("const sheet = new CSSStyleSheet(); sheet.replaceSync(%s); document.adoptedStyleSheets = [sheet];", encodedRule)}},
+		{"Page.addScriptToEvaluateOnNewDocument", map[string]any{"source": fmt.Sprintf("{ const sheet = new CSSStyleSheet(); sheet.replaceSync(%s); document.adoptedStyleSheets = [sheet]; }", encodedRule)}},
 		{"Page.navigate", map[string]any{"url": url}},
 	}
 

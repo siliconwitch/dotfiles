@@ -58,7 +58,7 @@ needed to archive it once posted:
 | `sources/` | `ingest` | `recording-<n>.mkv`, `broll/`, `photos/` |
 | `analysis/` | `analyse` | per source, `transcript.txt`, `transcript.json`, `frames/` and `frames.json`. `descriptions.txt` lists every source's details and frames |
 | `edit/` | you | `landscape.json`, `portrait.json` |
-| `animations/<id>/` | you, animator | `spec.md`, `index.html`, `animation.css`, `notes.md` |
+| `animations/<id>/` | you, animator | `spec.md`, `index.html`, `animation.css`, `animation.js`, `notes.md` |
 | `build/` | `render`, `animate`, `sheet` | intermediate files, all regenerable. `build/cache/` holds rendered clips and segments for reuse |
 | `out/` | `render` | `landscape.mp4` at 2560x1440, `portrait.mp4` at 1080x1920 |
 

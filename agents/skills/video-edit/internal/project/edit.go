@@ -261,10 +261,15 @@ func Load(folder, format string, sources map[string]Source) (List, error) {
 	return list, nil
 }
 
-// Properties returns the CSS custom properties an animation reads: --duration, and --cue-<name> for each
-// cue, in seconds from the animation's first frame.
+// Properties returns the CSS custom properties an animation reads: --duration, --layout, and
+// --cue-<name> for each cue, in seconds from the animation's first frame.
 func (c Cutaway) Properties() map[string]string {
-	properties := map[string]string{"--duration": fmt.Sprintf("%.3fs", c.OutEnd-c.OutStart)}
+	layout := c.Layout
+	if layout == "" {
+		layout = "full"
+	}
+
+	properties := map[string]string{"--duration": fmt.Sprintf("%.3fs", c.OutEnd-c.OutStart), "--layout": layout}
 	for name, offset := range c.CueOffsets {
 		properties["--cue-"+name] = fmt.Sprintf("%.3fs", offset)
 	}
