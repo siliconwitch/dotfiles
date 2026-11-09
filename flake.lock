@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792097937,
-        "narHash": "sha256-AB2WWjIebiowelMUxqc8XaR2ccVdl4ngqdnFTuEDaxE=",
+        "lastModified": 1794235360,
+        "narHash": "sha256-F/qZ2t70CJFHAB0NX7QRBUzEa2kyYUh4tyBtQ47ghaQ=",
         "owner": "siliconwitch",
         "repo": "launtui",
-        "rev": "ce8093ae4538f39d2d0525abe20e971095ae3663",
+        "rev": "9c0ca29544282f45e7ab38c0c0df2727c58222fd",
         "type": "github"
       },
       "original": {
@@ -90,11 +90,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1794218506,
-        "narHash": "sha256-qQvpc4NJoUiNKhSsz/9fOJK+toLzsoPZHM3uzH/8EqM=",
+        "lastModified": 1794236583,
+        "narHash": "sha256-OMLc3STrYutuYZ3mQrScfctsi1JMlf/dCyB902/CDJ4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "12edb36b2f58c7986e1ced0043795318a08f4431",
+        "rev": "703c8e883c15dc7eb1d8c6a74a206631368b6ec5",
         "type": "github"
       },
       "original": {
