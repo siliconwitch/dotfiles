@@ -2,6 +2,7 @@ onboarding = false
 
 [ui]
 tab_bar_right_separator = " "
+mouse_scroll_lines = 1
 
 # Battery level, hidden while plugged in at 79% or above.
 # Nerd Font glyphs:  is a battery,  is a plug.

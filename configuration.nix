@@ -33,7 +33,7 @@
   services.udev.packages = with pkgs; [ saleae-logic-2 segger-jlink nrf-udev ];
 
   # Remap Lenovo Copilot key, Caps Lock to esc on tap / ctrl on hold, Cmd+arrows to Home/End/PgUp/PgDn,
-  # and Cmd+Backspace to delete to line start
+  # Cmd+Backspace to delete to line start, and Cmd+Space straight through without waiting on the dictation hold
   services.keyd = {
     enable = true;
     keyboards.default = {
@@ -43,7 +43,7 @@
         main."leftmeta+leftshift+f23" = "leftmeta";
         main.capslock = "overload(control, esc)";
         main.space = "overloadt(dictate, space, 200)";
-        meta = { left = "home"; right = "end"; up = "pageup"; down = "pagedown"; backspace = "macro(S-home backspace)"; };
+        meta = { left = "home"; right = "end"; up = "pageup"; down = "pagedown"; backspace = "macro(S-home backspace)"; space = "M-space"; };
         dictate = { };
       };
     };
@@ -422,7 +422,7 @@
     eza                              # ls/tree
     fd                               # find alternative
     ffmpeg
-    ghostty                          # terminal
+    foot                             # terminal
     fzf                              # fuzzy finder
     gh                               # Github CLI
     git

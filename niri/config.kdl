@@ -1,18 +1,19 @@
 spawn-sh-at-startup "mako"
 spawn-sh-at-startup "swaybg -i ~/.config/wallpaper.jpg"
-spawn-sh-at-startup "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-command=herdr"
+spawn-sh-at-startup "foot --server"
+spawn-sh-at-startup "foot herdr"
 
 binds {
     // Launcher & shortcuts
-    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.title == \"launcher\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=launcher -e launtui"; }
-    Mod+T                       hotkey-overlay-title="Terminal"                     { spawn-sh "ghostty +new-window || ghostty"; }
+    Mod+Space                   hotkey-overlay-title="Launcher"                     { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"launcher\"' >/dev/null && niri msg action close-window || footclient --app-id=launcher -o colors-dark.alpha=0.8 launtui"; }
+    Mod+T                       hotkey-overlay-title="Terminal"                     { spawn-sh "footclient"; }
     Mod+B                       hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
     Mod+Y                       hotkey-overlay-title="YouTube Music"                { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"com.github.th-ch.youtube-music\"' >/dev/null && niri msg action close-window || pear-desktop"; }
     Mod+D                       hotkey-overlay-title="Discord"                      { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"vesktop\"' >/dev/null && niri msg action close-window || vesktop"; }
-    Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"yazi\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=yazi -e yazi"; }
-    Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "niri msg --json focused-window | jq -e '.title == \"wiremix\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=wiremix -e wiremix"; }
-    Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "niri msg --json focused-window | jq -e '.title == \"impala\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=impala -e impala"; }
-    Mod+Shift+B                 hotkey-overlay-title="Bluetooth"                    { spawn-sh "niri msg --json focused-window | jq -e '.title == \"bluetui\"' >/dev/null && niri msg action close-window || ghostty --background-opacity=0.8 --title=bluetui -e bluetui"; }
+    Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"yazi\"' >/dev/null && niri msg action close-window || footclient --app-id=yazi -o colors-dark.alpha=0.8 sh -c 'd=$(cat ~/.local/state/yazi/cwd 2>/dev/null); [ -d \"$d\" ] || d=~; exec yazi \"$d\"'"; }
+    Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"wiremix\"' >/dev/null && niri msg action close-window || footclient --app-id=wiremix -o colors-dark.alpha=0.8 wiremix"; }
+    Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"impala\"' >/dev/null && niri msg action close-window || footclient --app-id=impala -o colors-dark.alpha=0.8 impala"; }
+    Mod+Shift+B                 hotkey-overlay-title="Bluetooth"                    { spawn-sh "niri msg --json focused-window | jq -e '.app_id == \"bluetui\"' >/dev/null && niri msg action close-window || footclient --app-id=bluetui -o colors-dark.alpha=0.8 bluetui"; }
 
     // Navigation
     Mod+H                       hotkey-overlay-title="Navigate left"                { focus-column-left; }
@@ -122,8 +123,14 @@ window-rule {
     draw-border-with-background false
 }
 
+// Undo the slow touchpad scroll-factor for terminals
 window-rule {
-    match app-id=r#"^com\.mitchellh\.ghostty$"# is-floating=false
+    match app-id=r#"^(foot|footclient|launcher|wiremix|impala|bluetui|yazi)$"#
+    scroll-factor 6.0
+}
+
+window-rule {
+    match app-id=r#"^foot(client)?$"# is-floating=false
     background-effect {
         blur true
     }
@@ -131,12 +138,12 @@ window-rule {
 
 // Maximise the herdr terminal opened at login
 window-rule {
-    match app-id=r#"^com\.mitchellh\.ghostty$"# at-startup=true
+    match app-id=r#"^foot(client)?$"# at-startup=true
     open-maximized-to-edges true
 }
 
 window-rule {
-    match title=r#"^(launcher|wiremix|impala|bluetui|yazi)$"#
+    match app-id=r#"^(launcher|wiremix|impala|bluetui|yazi)$"#
     focus-ring {
         off
     }
@@ -150,7 +157,7 @@ window-rule {
 
 // Small floating window for launcher
 window-rule {
-    match title="^launcher$"
+    match app-id="^launcher$"
     open-floating true
     default-column-width { fixed 700; }
     default-window-height { fixed 450; }
@@ -158,7 +165,7 @@ window-rule {
 
 // Medium floating window for bluetui, impala and wiremix
 window-rule {
-    match title=r#"^(wiremix|impala|bluetui)$"#
+    match app-id=r#"^(wiremix|impala|bluetui)$"#
     open-floating true
     default-column-width { fixed 1000; }
     default-window-height { fixed 700; }
@@ -166,7 +173,7 @@ window-rule {
 
 // Large floating window for apps such as Discord and YouTube Music
 window-rule {
-    match title="^yazi$"
+    match app-id="^yazi$"
     match app-id=r#"^(vesktop|com\.github\.th-ch\.youtube-music)$"#
     open-floating true
     default-column-width { proportion 0.8; }
@@ -176,7 +183,7 @@ window-rule {
 // Floor for floating dialogs: KiCad and friends request too-small sizes on Wayland
 window-rule {
     match is-floating=true
-    exclude title="^launcher$"
+    exclude app-id="^launcher$"
     exclude title="^Picture-in-Picture$"
     min-width 640
     min-height 480
