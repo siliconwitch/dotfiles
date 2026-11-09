@@ -222,7 +222,7 @@
     openFirewall = true;
     # PipeWire RAOP discovery keys tunnels by mDNS name only, so the HiFiBerry's
     # link-local IPv6 record shadows its IPv4 one and the AirPlay sink never appears
-    ipv6 = false;
+    settings.server.use-ipv6 = false;
   };
 
   # Printers
@@ -559,7 +559,7 @@
       };
       inherit (master) claude-code;
       inherit (apps) blender freecad kicad;
-      inherit (jlink) segger-jlink;
+      inherit (jlink) segger-jlink segger-jlink-headless;
       # Upstream AppImage: the nixpkgs build takes hours and crashes once the
       # Bambu network plugin loads, while the AppImage ships the libraries the plugin expects
       bambu-studio = prev.appimageTools.wrapType2 rec {
@@ -590,8 +590,10 @@
             substituteInPlace $out/share/applications/bambu-studio.desktop --replace-fail 'Exec=AppRun' 'Exec=bambu-studio'
           '';
       };
-      # Adds the Parakeet engine
-      voxtype = prev.voxtype.override { onnxSupport = true; };
+      # Adds the Parakeet engine. Temporary fix: nixpkgs leaves out the oniguruma and sqlite it links
+      voxtype = (prev.voxtype.override { onnxSupport = true; }).overrideAttrs (old: {
+        buildInputs = old.buildInputs ++ [ prev.oniguruma prev.sqlite ];
+      });
       # Qwen Image 2.1 needs a newer release than nixpkgs has
       stable-diffusion-cpp-vulkan = prev.stable-diffusion-cpp-vulkan.overrideAttrs (finalAttrs: _: {
         version = "master-955-b7a74e6";
