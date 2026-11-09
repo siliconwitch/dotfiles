@@ -522,6 +522,9 @@
   # Screen and webcam recording for social media videos
   programs.obs-studio.enable = true;
 
+  # Games
+  programs.steam.enable = true;
+
   # Specific to projects & apps
   programs.direnv.enable = true;
   programs.nix-ld.enable = true; # Required for prebuilt linux binaries (eg. nrfutil)
