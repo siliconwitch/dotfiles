@@ -441,6 +441,7 @@
     pandoc                           # document converter
     pass                             # password manager
     poppler-utils                    # PDF utils
+    rclone                           # Dropbox and Storage Box access
     ripgrep                          # rg
     segger-jlink                     # J-Link debugger software
     superstack-cli.packages.${pkgs.stdenv.hostPlatform.system}.superstack

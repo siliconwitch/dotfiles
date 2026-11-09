@@ -11,6 +11,9 @@ export PATH=$PATH:$HOME/go/bin
 # Draw with the terminal's 16 ANSI colours
 export FZF_DEFAULT_OPTS='--color=16'
 
+# rclone config password. Fails while pass is locked, because a pinentry prompt would draw over the terminal
+export RCLONE_PASSWORD_COMMAND="env PASSWORD_STORE_GPG_OPTS=--pinentry-mode=error pass show rclone/config"
+
 # Aliases
 alias l='eza -l'
 alias ll='eza -la'
