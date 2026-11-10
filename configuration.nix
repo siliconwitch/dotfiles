@@ -241,6 +241,21 @@
     serviceConfig.ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --no-tray";
   };
 
+  # Encrypted Storage Box vault at ~/vault
+  systemd.user.services.vault = {
+    wantedBy = [ "default.target" ];
+    path = [ pkgs.openssh pkgs.pass "/run/wrappers" ]; # fusermount3
+    # The rclone config password is in pass, so mounting fails and retries until pass is unlocked
+    environment.RCLONE_PASSWORD_COMMAND = "env PASSWORD_STORE_GPG_OPTS=--pinentry-mode=error pass show rclone/config";
+    serviceConfig = {
+      Type = "notify";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/vault";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount vault: %h/vault --vfs-cache-mode full";
+      Restart = "on-failure";
+      RestartSec = 30;
+    };
+  };
+
   # SSH
   services.openssh = {
     enable = true;
