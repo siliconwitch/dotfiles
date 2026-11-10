@@ -564,6 +564,10 @@
       inherit (master) claude-code;
       inherit (apps) blender freecad kicad;
       inherit (jlink) segger-jlink segger-jlink-headless;
+      # Drop once nixos-unstable has the zlib fix (nixpkgs#585411)
+      localsend = prev.localsend.overrideAttrs (old: {
+        runtimeDependencies = (old.runtimeDependencies or [ ]) ++ [ (lib.getLib prev.zlib) ];
+      });
       # Upstream AppImage: the nixpkgs build takes hours and crashes once the
       # Bambu network plugin loads, while the AppImage ships the libraries the plugin expects
       bambu-studio = prev.appimageTools.wrapType2 rec {
