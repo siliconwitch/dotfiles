@@ -7,3 +7,6 @@ font=RobotoMono Nerd Font Mono 12
 padding=12
 text-color=#fce8c3
 width=300
+
+[mode=do-not-disturb]
+invisible=1
