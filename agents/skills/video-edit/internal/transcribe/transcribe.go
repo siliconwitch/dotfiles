@@ -24,7 +24,7 @@ func Run(folder, key string, sources map[string]project.Source) error {
 			continue
 		}
 
-		directory := filepath.Join("analysis", source.Key())
+		directory := filepath.Join(".analysis", source.Key())
 		_, err := os.Stat(filepath.Join(folder, directory, "transcript.json"))
 		if err == nil {
 			continue
@@ -37,7 +37,7 @@ func Run(folder, key string, sources map[string]project.Source) error {
 
 		// Mono Opus keeps a long recording far below the upload limit
 		audioFile := filepath.Join(directory, "audio.ogg")
-		_, err = ffmpeg.Run(folder, "-i", filepath.Join("sources", source.Path), "-map", "0:a:0", "-ac", "1", "-c:a", "libopus", "-b:a", "48k", audioFile)
+		_, err = ffmpeg.Run(folder, "-i", filepath.Join(".sources", source.Path), "-map", "0:a:0", "-ac", "1", "-c:a", "libopus", "-b:a", "48k", audioFile)
 		if err != nil {
 			return err
 		}

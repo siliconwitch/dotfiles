@@ -28,7 +28,7 @@ func Run(folder, id string) error {
 		return fmt.Errorf("animations/%s has no index.html", id)
 	}
 
-	stills := filepath.Join(folder, "build", "animations", id)
+	stills := filepath.Join(folder, ".build", "animations", id)
 	err = os.MkdirAll(stills, 0o755)
 	if err != nil {
 		return err

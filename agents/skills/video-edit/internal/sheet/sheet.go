@@ -52,7 +52,7 @@ func Run(folder, format string) error {
 		moments[i].time = min(moments[i].time, list.Duration-0.1)
 	}
 
-	directory := filepath.Join("build", format, "sheet")
+	directory := filepath.Join(".build", format, "sheet")
 	err = os.RemoveAll(filepath.Join(folder, directory))
 	if err != nil {
 		return err
@@ -86,12 +86,12 @@ func Run(folder, format string) error {
 
 	_, err = ffmpeg.Run(folder, "-framerate", "1", "-i", filepath.Join(directory, "%03d.jpg"),
 		"-vf", fmt.Sprintf("tile=%dx%d:padding=8:margin=8:color=0x100c14", columns, rows), "-q:v", "3",
-		filepath.Join("build", format, "sheet-%d.jpg"))
+		filepath.Join(".build", format, "sheet-%d.jpg"))
 	if err != nil {
 		return err
 	}
 
-	sheets, err := filepath.Glob(filepath.Join(folder, "build", format, "sheet-*.jpg"))
+	sheets, err := filepath.Glob(filepath.Join(folder, ".build", format, "sheet-*.jpg"))
 	if err != nil {
 		return err
 	}

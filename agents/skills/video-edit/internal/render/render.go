@@ -31,8 +31,8 @@ func Run(folder, format string) error {
 	}
 
 	output := project.Formats[format]
-	build := filepath.Join("build", format)
-	for _, directory := range []string{build, filepath.Join("build", "cache"), "out"} {
+	build := filepath.Join(".build", format)
+	for _, directory := range []string{build, filepath.Join(".build", "cache"), "out"} {
 		err = os.MkdirAll(filepath.Join(folder, directory), 0o755)
 		if err != nil {
 			return err
@@ -45,7 +45,7 @@ func Run(folder, format string) error {
 	words := map[string][]files.Word{}
 	for path, source := range sources {
 		var sourceFrames []files.Frame
-		encoded, err := os.ReadFile(filepath.Join(folder, "analysis", source.Key(), "frames.json"))
+		encoded, err := os.ReadFile(filepath.Join(folder, ".analysis", source.Key(), "frames.json"))
 		if err == nil {
 			err = json.Unmarshal(encoded, &sourceFrames)
 		}
@@ -55,7 +55,7 @@ func Run(folder, format string) error {
 		frames[path] = sourceFrames
 
 		var sourceWords []files.Word
-		encoded, err = os.ReadFile(filepath.Join(folder, "analysis", source.Key(), "transcript.json"))
+		encoded, err = os.ReadFile(filepath.Join(folder, ".analysis", source.Key(), "transcript.json"))
 		if err == nil {
 			err = json.Unmarshal(encoded, &sourceWords)
 		}
@@ -65,12 +65,12 @@ func Run(folder, format string) error {
 		words[path] = sourceWords
 	}
 
-	// cached runs ffmpeg with args into a file in build/cache/ named by a hash of the args, unless an
+	// cached runs ffmpeg with args into a file in .build/cache/ named by a hash of the args, unless an
 	// earlier render already wrote it. The args name every input, and sources never change, so a render
 	// redoes only the clips and segments that an edit changed.
 	cached := func(args []string, extension string) (string, error) {
 		hash := sha256.Sum256([]byte(strings.Join(args, "\x00")))
-		file := filepath.Join("build", "cache", fmt.Sprintf("%x%s", hash[:8], extension))
+		file := filepath.Join(".build", "cache", fmt.Sprintf("%x%s", hash[:8], extension))
 		_, err := os.Stat(filepath.Join(folder, file))
 		if err == nil {
 			return file, nil
@@ -119,7 +119,7 @@ func Run(folder, format string) error {
 			properties := cutaway.Properties()
 			fmt.Fprint(hash, panel, output.Scale, properties)
 
-			clips[i] = filepath.Join("build", "cache", fmt.Sprintf("%x.mkv", hash.Sum(nil)[:8]))
+			clips[i] = filepath.Join(".build", "cache", fmt.Sprintf("%x.mkv", hash.Sum(nil)[:8]))
 			_, err = os.Stat(filepath.Join(folder, clips[i]))
 			if err == nil {
 				continue
@@ -202,7 +202,7 @@ func Run(folder, format string) error {
 				shot{stream: stream, frames: frames[cutaway.Source], spans: [][2]float64{{0, length}}, length: length, frame: cutaway.Frame, box: cutaway.Box, drift: true},
 				panel.Width, panel.Height)
 
-			args := append([]string{"-loop", "1", "-framerate", "30", "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join("sources", cutaway.Source)}, silence...)
+			args := append([]string{"-loop", "1", "-framerate", "30", "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join(".sources", cutaway.Source)}, silence...)
 			args = append(args, "-filter_complex", strings.TrimSuffix(graph, ";"), "-map", "[picture]", "-map", "1:a")
 			clips[i], err = cached(append(args, clipEncoding...), ".mkv")
 			if err != nil {
@@ -216,7 +216,7 @@ func Run(folder, format string) error {
 				shot{stream: stream, frames: frames[cutaway.Source], spans: [][2]float64{{cutaway.Start, cutaway.Start + length}}, length: length, frame: cutaway.Frame, box: cutaway.Box},
 				panel.Width, panel.Height)
 
-			args := []string{"-ss", fmt.Sprintf("%.3f", cutaway.Start), "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join("sources", cutaway.Source)}
+			args := []string{"-ss", fmt.Sprintf("%.3f", cutaway.Start), "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join(".sources", cutaway.Source)}
 			sound := "0:a:0"
 			if !source.Audio {
 				args, sound = append(args, silence...), "1:a"
@@ -351,7 +351,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 	// Named by its content, so a segment's args change when its subtitles do
 	subtitlesHash := sha256.Sum256([]byte(subtitles.String()))
-	subtitlesFile := filepath.Join("build", "cache", fmt.Sprintf("%x.ass", subtitlesHash[:8]))
+	subtitlesFile := filepath.Join(".build", "cache", fmt.Sprintf("%x.ass", subtitlesHash[:8]))
 	err = os.WriteFile(filepath.Join(folder, subtitlesFile), []byte(subtitles.String()), 0o644)
 	if err != nil {
 		return err
@@ -390,7 +390,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		}
 		var graph strings.Builder
 
-		picture := addInput("-ss", fmt.Sprintf("%.3f", segment.Start), "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join("sources", segment.Source))
+		picture := addInput("-ss", fmt.Sprintf("%.3f", segment.Start), "-t", fmt.Sprintf("%.3f", length), "-i", filepath.Join(".sources", segment.Source))
 		sound := fmt.Sprintf("[%d:a:0]", picture)
 		if !source.Audio {
 			sound = fmt.Sprintf("[%d:a]", addInput("-f", "lavfi", "-t", fmt.Sprintf("%.3f", length), "-i", "anullsrc=r=48000:cl=stereo"))

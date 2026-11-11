@@ -25,7 +25,7 @@ func Run(folder, model, key string, sources map[string]project.Source) error {
 
 	indexes := map[string][]files.Frame{}
 	for _, source := range sorted {
-		encoded, err := os.ReadFile(filepath.Join(folder, "analysis", source.Key(), "frames.json"))
+		encoded, err := os.ReadFile(filepath.Join(folder, ".analysis", source.Key(), "frames.json"))
 		if err != nil {
 			return fmt.Errorf("run frames first: %w", err)
 		}
@@ -194,7 +194,7 @@ func Run(folder, model, key string, sources map[string]project.Source) error {
 				return err
 			}
 
-			err = os.WriteFile(filepath.Join(folder, "analysis", key, "frames.json"), encoded, 0o644)
+			err = os.WriteFile(filepath.Join(folder, ".analysis", key, "frames.json"), encoded, 0o644)
 			if err != nil {
 				return err
 			}
@@ -232,11 +232,11 @@ func Run(folder, model, key string, sources map[string]project.Source) error {
 		}
 	}
 
-	err := os.WriteFile(filepath.Join(folder, "analysis", "descriptions.txt"), []byte(lines.String()), 0o644)
+	err := os.WriteFile(filepath.Join(folder, ".analysis", "descriptions.txt"), []byte(lines.String()), 0o644)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("wrote analysis/descriptions.txt")
+	fmt.Println("wrote .analysis/descriptions.txt")
 	return nil
 }

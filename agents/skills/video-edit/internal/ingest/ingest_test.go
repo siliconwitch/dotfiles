@@ -13,10 +13,11 @@ func TestRun(t *testing.T) {
 	t.Setenv("HOME", home)
 
 	files := map[string][]string{
-		"videos/recordings/capture.mkv":        {"-f", "lavfi", "-i", "testsrc2=size=4480x1440:rate=30:duration=0.2"},
-		"videos/inbox/clip.mp4":                {"-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=0.2"},
-		"videos/inbox/board.png":               {"-f", "lavfi", "-i", "testsrc2=size=640x480", "-frames:v", "1"},
-		"videos/other/sources/broll/event.mp4": {"-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=0.2"},
+		"videos/recordings/capture.mkv":         {"-f", "lavfi", "-i", "testsrc2=size=4480x1440:rate=30:duration=0.2"},
+		"downloads/clip.mp4":                    {"-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=0.2"},
+		"downloads/phone/board.png":             {"-f", "lavfi", "-i", "testsrc2=size=640x480", "-frames:v", "1"},
+		"videos/other/.sources/broll/event.mp4": {"-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=0.2"},
+		"vault/company-media/demo/demo-01.mp4":  {"-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=0.2"},
 	}
 	for file, args := range files {
 		path := filepath.Join(home, file)
@@ -37,13 +38,15 @@ func TestRun(t *testing.T) {
 		file        string
 		destination string
 		kept        bool
+		symlink     bool
 		err         string
 	}{
-		{"a capture moves in as the first recording", "videos/recordings/capture.mkv", "sources/recording-1.mkv", false, ""},
-		{"an inbox clip moves into broll", "videos/inbox/clip.mp4", "sources/broll/clip.mp4", false, ""},
-		{"an inbox photo moves into photos", "videos/inbox/board.png", "sources/photos/board.png", false, ""},
-		{"another project's b-roll is linked", "videos/other/sources/broll/event.mp4", "sources/broll/event.mp4", true, ""},
-		{"an existing name is never replaced", "videos/other/sources/broll/event.mp4", "", true, "file exists"},
+		{"a capture moves in as the first recording", "videos/recordings/capture.mkv", ".sources/recording-1.mkv", false, false, ""},
+		{"a downloaded clip moves into broll", "downloads/clip.mp4", ".sources/broll/clip.mp4", false, false, ""},
+		{"a photo in a downloads subfolder moves into photos", "downloads/phone/board.png", ".sources/photos/board.png", false, false, ""},
+		{"another project's b-roll is linked", "videos/other/.sources/broll/event.mp4", ".sources/broll/event.mp4", true, false, ""},
+		{"a vault clip is symlinked", "vault/company-media/demo/demo-01.mp4", ".sources/broll/demo-01.mp4", true, true, ""},
+		{"an existing name is never replaced", "videos/other/.sources/broll/event.mp4", "", true, false, "file exists"},
 	}
 
 	for _, test := range tests {
@@ -62,6 +65,11 @@ func TestRun(t *testing.T) {
 				_, err = os.Stat(filepath.Join(folder, test.destination))
 				if err != nil {
 					t.Errorf("no %s: %v", test.destination, err)
+				}
+
+				info, err := os.Lstat(filepath.Join(folder, test.destination))
+				if err == nil && (info.Mode()&os.ModeSymlink != 0) != test.symlink {
+					t.Errorf("%s is a symlink: %v, want %v", test.destination, !test.symlink, test.symlink)
 				}
 			}
 

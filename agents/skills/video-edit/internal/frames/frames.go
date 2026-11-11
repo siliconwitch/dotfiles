@@ -19,7 +19,7 @@ func Run(folder string, sources map[string]project.Source) error {
 	showinfoTime := regexp.MustCompile(`\[showinfo@(\w+) @ [^\]]+\] n:.*pts_time:\s*([0-9.]+)`)
 
 	for _, source := range project.Sorted(sources) {
-		directory := filepath.Join("analysis", source.Key())
+		directory := filepath.Join(".analysis", source.Key())
 		_, err := os.Stat(filepath.Join(folder, directory, "frames.json"))
 		if err == nil {
 			continue
@@ -60,7 +60,7 @@ func Run(folder string, sources map[string]project.Source) error {
 		}
 
 		fmt.Println("extracting frames from", source.Path)
-		log, err := ffmpeg.Run(folder, append([]string{"-i", filepath.Join("sources", source.Path), "-filter_complex", graph}, outputs...)...)
+		log, err := ffmpeg.Run(folder, append([]string{"-i", filepath.Join(".sources", source.Path), "-filter_complex", graph}, outputs...)...)
 		if err != nil {
 			return err
 		}

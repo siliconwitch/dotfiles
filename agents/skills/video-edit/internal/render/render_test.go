@@ -14,7 +14,7 @@ import (
 
 func TestRun(t *testing.T) {
 	folder := t.TempDir()
-	for _, directory := range []string{"sources/broll", "sources/photos", "analysis/recording-1", "animations/flow", "edit"} {
+	for _, directory := range []string{".sources/broll", ".sources/photos", ".analysis/recording-1", "animations/flow", "edit"} {
 		err := os.MkdirAll(filepath.Join(folder, directory), 0o755)
 		if err != nil {
 			t.Fatal(err)
@@ -24,12 +24,12 @@ func TestRun(t *testing.T) {
 	// An 8 s recording on the OBS canvas with a tone, a 4 s portrait HLG phone clip stored sideways, and a photo
 	generate := [][]string{
 		{"-f", "lavfi", "-i", "testsrc2=size=4480x1440:rate=30:duration=8", "-f", "lavfi", "-i", "sine=frequency=440:duration=8",
-			"-c:v", "libx264", "-preset", "ultrafast", "-c:a", "libopus", "sources/recording-1.mkv"},
+			"-c:v", "libx264", "-preset", "ultrafast", "-c:a", "libopus", ".sources/recording-1.mkv"},
 		{"-f", "lavfi", "-i", "testsrc2=size=1920x1080:rate=60:duration=4", "-f", "lavfi", "-i", "sine=frequency=660:duration=4",
 			"-c:v", "libx265", "-x265-params", "log-level=error:colorprim=bt2020:transfer=arib-std-b67:colormatrix=bt2020nc",
 			"-pix_fmt", "yuv420p10le", "-color_primaries", "bt2020", "-color_trc", "arib-std-b67", "-colorspace", "bt2020nc", "-c:a", "aac", "upright.mov"},
-		{"-display_rotation", "90", "-i", "upright.mov", "-c", "copy", "sources/broll/event.mov"},
-		{"-f", "lavfi", "-i", "testsrc2=size=1600x1200", "-frames:v", "1", "sources/photos/board.png"},
+		{"-display_rotation", "90", "-i", "upright.mov", "-c", "copy", ".sources/broll/event.mov"},
+		{"-f", "lavfi", "-i", "testsrc2=size=1600x1200", "-frames:v", "1", ".sources/photos/board.png"},
 	}
 	for _, args := range generate {
 		command := exec.Command("ffmpeg", append([]string{"-hide_banner", "-nostdin", "-y", "-loglevel", "error"}, args...)...)
@@ -42,13 +42,13 @@ func TestRun(t *testing.T) {
 
 	// The presenter's box moves right after 4 s, which framing follows, and a word straddles no cut
 	fixtures := map[string]string{
-		"analysis/recording-1/transcript.json": `[
+		".analysis/recording-1/transcript.json": `[
 			{"text": "Hello", "start": 0.5, "end": 0.9, "type": "word"},
 			{"text": "(laughter)", "start": 1.0, "end": 1.5, "type": "audio_event"},
 			{"text": "dropped", "start": 3.1, "end": 3.4, "type": "word"},
 			{"text": "board.", "start": 3.6, "end": 3.9, "type": "word"}
 		]`,
-		"analysis/recording-1/frames.json": `[
+		".analysis/recording-1/frames.json": `[
 			{"stream": "webcam", "time": 0, "file": "", "subjects": [{"label": "presenter", "box": [300, 100, 600, 1000]}]},
 			{"stream": "webcam", "time": 2, "file": "", "subjects": [{"label": "presenter", "box": [300, 100, 600, 1000]}]},
 			{"stream": "webcam", "time": 4, "file": "", "subjects": [{"label": "presenter", "box": [600, 100, 900, 1000]}]},
@@ -126,7 +126,7 @@ func TestRun(t *testing.T) {
 
 			// The subtitles are named by their content, so find this format's by its size
 			var subtitles []byte
-			cached, err := filepath.Glob(filepath.Join(folder, "build", "cache", "*.ass"))
+			cached, err := filepath.Glob(filepath.Join(folder, ".build", "cache", "*.ass"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -152,7 +152,7 @@ func TestRun(t *testing.T) {
 				}
 			}
 
-			_, err = os.Stat(filepath.Join(folder, "build", test.format, "segments.txt"))
+			_, err = os.Stat(filepath.Join(folder, ".build", test.format, "segments.txt"))
 			if err != nil {
 				t.Error(err)
 			}

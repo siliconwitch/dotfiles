@@ -145,7 +145,7 @@ func Load(folder, format string, sources map[string]Source) (List, error) {
 
 		source, ok := sources[segment.Source]
 		if !ok {
-			return List{}, fmt.Errorf("%s: sources/ holds no %q", name, segment.Source)
+			return List{}, fmt.Errorf("%s: .sources/ holds no %q", name, segment.Source)
 		}
 
 		segment.Kind = source.Kind
@@ -187,7 +187,7 @@ func Load(folder, format string, sources map[string]Source) (List, error) {
 				return List{}, fmt.Errorf("%s: an animation takes no start, frame or box", name)
 			}
 		case !isSource:
-			return List{}, fmt.Errorf("%s: sources/ holds no %q", name, cutaway.Source)
+			return List{}, fmt.Errorf("%s: .sources/ holds no %q", name, cutaway.Source)
 		case source.Kind == Recording:
 			return List{}, fmt.Errorf("%s: a recording cannot be a cutaway. Make it a segment", name)
 		default:

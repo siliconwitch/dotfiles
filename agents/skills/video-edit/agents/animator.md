@@ -15,7 +15,7 @@ beat and checks the layout.
 2. Copy the shared files beside the page:
 
    ```sh
-   cp ~/.config/agents/skills/video-edit/agents/animation.css ~/.config/agents/skills/video-edit/agents/animation.js ~/videos/<folder>/animations/<id>/
+   cp ~/.config/agents/skills/video-edit/agents/animation.css ~/.config/agents/skills/video-edit/agents/animation.js ~/videos/<project>/animations/<id>/
    ```
 
 3. Write `animations/<id>/index.html` from the skeleton below.
@@ -23,7 +23,7 @@ beat and checks the layout.
    animation:
 
    ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . animate ~/videos/<folder> <id>
+   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . animate ~/videos/<project> <id>
    ```
 
 5. When the command fails with `scene: ...`, fix every problem the message

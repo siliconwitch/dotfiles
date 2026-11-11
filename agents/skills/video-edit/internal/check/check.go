@@ -36,7 +36,7 @@ func Run(folder, format string) error {
 		// A cut inside a word clips it
 		_, loaded := words[segment.Source]
 		if !loaded {
-			encoded, err := os.ReadFile(filepath.Join(folder, "analysis", sources[segment.Source].Key(), "transcript.json"))
+			encoded, err := os.ReadFile(filepath.Join(folder, ".analysis", sources[segment.Source].Key(), "transcript.json"))
 			if err == nil {
 				var sourceWords []files.Word
 				json.Unmarshal(encoded, &sourceWords)

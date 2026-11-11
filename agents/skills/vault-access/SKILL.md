@@ -26,7 +26,7 @@ Check that the vault is mounted before using it:
 mountpoint -q ~/vault
 ```
 
-If the check fails, or an rclone command fails with a `password-command` error, ask Raj to unlock `pass`, then check again. Never run `pass` or touch `vault.service`.
+If the check fails, or an rclone command fails with a `password-command` error, ask Raj to run `pass show rclone/config >/dev/null` in a terminal. The mount retries every 30 s, so check again once Raj confirms. Never run `pass` or touch `vault.service`.
 
 - Read only your vault folders, through `~/vault`. Never create, change, rename or delete anything in `~/vault`.
 - Write with `rclone copy` to your vault folders under `vault:` only. Never run `sync`, `move`, `delete`, `purge` or `rmdirs`.
@@ -34,7 +34,7 @@ If the check fails, or an rclone command fails with a `password-command` error, 
 
 ## Project folders
 
-Every folder directly under a vault folder is one project, such as one event, one trip or one video. Name each new project folder by the File naming rules in the owning repository's `CLAUDE.md`, using the categories already beside it. Date it with the day it was created, or with its earliest capture date when it holds photos or videos. Every agent must follow this folder naming.
+Every folder directly under a vault folder is one project, such as one event, one trip or one video. Name each new project folder by the File naming rules in the owning repository's `CLAUDE.md`, using the categories already beside it. Date it with the day it was created, or with its earliest capture date when it is a set of photos or videos, such as one trip or one shoot. An edited video is dated with the day its project was created, even when it uses older footage. Every agent must follow this folder naming.
 
 ## Default file layout
 
@@ -46,6 +46,8 @@ These rules are defaults for an agent started in `~/personal` or `~/company` whe
 - Put scans and reference images that are really documents in the repository's `archive/` instead.
 
 ## Archive
+
+A skill with its own archive steps, such as `video-edit`, follows those instead of these.
 
 1. Put the files in the repository's `working/vault/<folder>/`, named as they should appear in the vault, where `<folder>` is the project folder's name, such as `20240421-rn-music-dark-dnb`.
 2. Copy the folder, where `<area>` is one of your vault folders, such as `personal-media`:

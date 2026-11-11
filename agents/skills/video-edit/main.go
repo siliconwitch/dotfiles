@@ -20,13 +20,14 @@ import (
 
 const usage = `usage: video-edit <command> <folder> [argument...]
 
-  ingest <folder> <file>...  moves a recording or inbox file into sources/, or hard links any other file
+  ingest <folder> <file>...  moves a recording or downloaded file into .sources/, symlinks a vault file, or
+                             hard links any other file
   analyse <folder> [model]   extracts frames, transcribes, and describes the frames with Claude, skipping work
                              already done. The default model is claude-sonnet-5-5
   check <folder> <format>    checks edit/<format>.json and prints its timeline
-  animate <folder> <id>      renders stills of animations/<id> after each cue into build/animations/<id>/
+  animate <folder> <id>      renders stills of animations/<id> after each cue into .build/animations/<id>/
   render <folder> <format>   renders edit/<format>.json into out/<format>.mp4
-  sheet <folder> <format>    makes contact sheets of out/<format>.mp4 in build/<format>/
+  sheet <folder> <format>    makes contact sheets of out/<format>.mp4 in .build/<format>/
 
   <format> is landscape or portrait.`
 

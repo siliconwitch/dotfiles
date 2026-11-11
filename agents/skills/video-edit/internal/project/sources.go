@@ -19,9 +19,9 @@ const (
 	Photo     = "photo"
 )
 
-// Source is one file in sources/. Width and height are as displayed, after the file's rotation.
+// Source is one file in .sources/. Width and height are as displayed, after the file's rotation.
 type Source struct {
-	Path     string  `json:"path"` // relative to sources/
+	Path     string  `json:"path"` // relative to .sources/
 	Kind     string  `json:"kind"`
 	Width    int     `json:"width"`
 	Height   int     `json:"height"`
@@ -124,10 +124,10 @@ func Probe(path string) (Source, error) {
 	return source, nil
 }
 
-// ProbeAll describes every file in the folder's sources/, keyed by its path relative to sources/.
+// ProbeAll describes every file in the folder's .sources/, keyed by its path relative to .sources/.
 func ProbeAll(folder string) (map[string]Source, error) {
 	sources := map[string]Source{}
-	root := filepath.Join(folder, "sources")
+	root := filepath.Join(folder, ".sources")
 	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil || entry.IsDir() || strings.HasPrefix(entry.Name(), ".") {
 			return err
@@ -167,7 +167,7 @@ func Sorted(sources map[string]Source) []Source {
 	return sorted
 }
 
-// Key names the source's folder in analysis/, such as broll-IMG_1234 for broll/IMG_1234.MOV.
+// Key names the source's folder in .analysis/, such as broll-IMG_1234 for broll/IMG_1234.MOV.
 func (s Source) Key() string {
 	return strings.ReplaceAll(strings.TrimSuffix(s.Path, filepath.Ext(s.Path)), "/", "-")
 }

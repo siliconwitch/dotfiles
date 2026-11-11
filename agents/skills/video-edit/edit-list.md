@@ -26,9 +26,9 @@ project. `check` reads one and prints its timeline, and `render` turns it into
 ## Read first
 
 1. `brief.md`. It overrides every default here.
-2. Every `analysis/*/transcript.txt`, one phrase per line with its start and
+2. Every `.analysis/*/transcript.txt`, one phrase per line with its start and
    end. Take exact cut times from the matching `transcript.json`.
-3. `analysis/descriptions.txt`. Each `==` line gives a source's kind, size,
+3. `.analysis/descriptions.txt`. Each `==` line gives a source's kind, size,
    length, and when and where it was made. Each line under it describes one
    frame and lists its subjects in brackets.
 
@@ -38,7 +38,7 @@ such as whether code is readable or what a photo shows.
 ## Segments
 
 Segments play in order. `start` and `end` are seconds in `source`, a path in
-`sources/`.
+`.sources/`.
 
 A recording segment takes a `layout`:
 
@@ -178,7 +178,7 @@ framed only when it fills most of a run. Give it a run of its own with
 
 When the screen shows more than Raj is working in, such as other windows, a
 panel or empty desktop, crop it out with a `box` around the window or region
-he uses. Open a screen frame from `analysis/<source>/frames/` to measure it.
+he uses. Open a screen frame from `.analysis/<source>/frames/` to measure it.
 
 Keep one crop for the whole passage. Set the box on the first segment of each
 screen run, and change it only when Raj moves to another window. The box is
@@ -195,7 +195,7 @@ about 40 characters, so it fits on one line.
 Title Raj's first shot `Raj Nakarja · Founder · Silicon Witchery`, unless the
 brief gives another title or asks for none. Title b-roll of an event with the
 event, place and date. Take every other fact from Raj, the brief, or a
-source's details in `analysis/descriptions.txt`. Never invent a name, role,
+source's details in `.analysis/descriptions.txt`. Never invent a name, role,
 place or date. When a fact is missing, leave the title out.
 
 Portrait gets captions from the transcript automatically. Landscape has none,
