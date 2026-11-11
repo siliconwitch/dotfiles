@@ -1,12 +1,3 @@
--- Save the directory, so the Mod+Shift+F window reopens where it left off.
-ps.sub("cd", function()
-	local file = io.open(os.getenv("HOME") .. "/.local/state/yazi/cwd", "w")
-	if file then
-		file:write(tostring(cx.active.current.cwd))
-		file:close()
-	end
-end)
-
 -- Mark the hovered row with an arrow (nf-fa-arrow_right) in the padding
 -- slot before the icon, instead of a background highlight.
 function Entity:padding()

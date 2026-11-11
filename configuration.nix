@@ -434,6 +434,7 @@
     claude-code
     cloc                             # counts lines of code
     csvlens                          # CSV viewer
+    dtach                            # keeps Yazi running while its window is closed
     eza                              # ls/tree
     fd                               # find alternative
     ffmpeg
