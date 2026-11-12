@@ -538,6 +538,9 @@
   # Screen and webcam recording for social media videos
   programs.obs-studio.enable = true;
 
+  # Mail
+  programs.thunderbird.enable = true;
+
   # Games
   programs.steam.enable = true;
 
