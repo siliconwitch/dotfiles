@@ -1,8 +1,10 @@
 # Edit list
 
 `edit/landscape.json` and `edit/portrait.json` each hold one edit of the
-project. `check` reads one and prints its timeline, and `render` turns it into
-`out/<format>.mp4`.
+project. A variant, such as `edit/portrait-five-minute-fix.json`, holds another
+cut in the format before the dash. `check` reads one and prints its timeline,
+and `render` turns it into `out/<format>.mp4`, where `<format>` is the edit
+list's name without `.json`.
 
 ```json
 {
@@ -48,9 +50,22 @@ A recording segment takes a `layout`:
 | `screen` | the screen | the screen | the screen is the whole point, such as code too small to read with the webcam beside it |
 | `screen+webcam` | the screen, with the webcam in the bottom right corner | the screen above the webcam | Raj talks over what the screen shows |
 
-A b-roll segment takes no layout and plays with its own sound. Use one for a
-clip whose sound matters, such as a speaker at an event. A photo is never a
-segment.
+A b-roll segment plays with its own sound. Use one for a clip whose sound
+matters, such as a speaker at an event. It takes no layout, unless its picture
+holds a screen and a webcam side by side, such as a webinar export with Raj's
+camera beside his slides. Then it takes a layout like a recording, plus a
+region for each picture the layout shows: `screen` and `webcam`, each
+`[left, top, right, bottom]` in thousandths of the picture. Measure them on a
+frame in `.analysis/`. Set them on every segment, and change them where the
+picture's layout changes, such as when a talk moves to its Q&A:
+
+```json
+{"source": "broll/talk.mp4", "start": 742.20, "end": 745.90, "layout": "screen+webcam",
+ "screen": [235, 243, 973, 981], "webcam": [32, 411, 222, 711]}
+```
+
+Framing uses the subjects `analyse` found inside each region, so regions need
+no new analysis. A photo is never a segment.
 
 ## Cutting
 
@@ -86,6 +101,10 @@ landscape edit:
   has subjects to frame, because code at phone width is unreadable. For the
   same reason, give b-roll of a screen a `box` around the part worth reading,
   or leave it out.
+
+When Raj asks for clips or Shorts, make only portrait variants, one per clip,
+all in one project, such as `edit/portrait-five-minute-fix.json`. Make no
+`landscape.json` or `portrait.json` unless Raj also asks for a full video.
 
 ## Cutaways
 
@@ -148,9 +167,9 @@ is in the cut.
 `render` frames every shot from the subjects that `analyse` found in its
 frames:
 
-- Consecutive segments of one source and layout form a run, which keeps one
-  fixed framing, so jump cuts never move the camera. The crop holds every
-  subject seen during the run, such as Raj and a board held up partway
+- Consecutive segments of one source, layout and regions form a run, which
+  keeps one fixed framing, so jump cuts never move the camera. The crop holds
+  every subject seen during the run, such as Raj and a board held up partway
   through, and never zooms past 1.2 times. When the subjects range wider than
   the panel, as in a portrait crop, it centres on where they usually are.
 - When fewer than half of a run's frames have subjects, it shows the whole

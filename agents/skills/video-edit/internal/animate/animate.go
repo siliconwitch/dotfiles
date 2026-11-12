@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"video-edit/internal/chromium"
 	"video-edit/internal/project"
@@ -34,21 +35,23 @@ func Run(folder, id string) error {
 		return err
 	}
 
-	used := false
-	for _, format := range []string{"landscape", "portrait"} {
-		_, err := os.Stat(filepath.Join(folder, "edit", format+".json"))
-		if os.IsNotExist(err) {
-			continue
-		}
+	editLists, err := filepath.Glob(filepath.Join(folder, "edit", "*.json"))
+	if err != nil {
+		return err
+	}
 
-		// Another agent may be writing the other edit list, so a broken one costs only its own stills
+	used := false
+	for _, editList := range editLists {
+		format := strings.TrimSuffix(filepath.Base(editList), ".json")
+
+		// Another agent may be writing another edit list, so a broken one costs only its own stills
 		list, err := project.Load(folder, format, sources)
 		if err != nil {
 			fmt.Printf("no %s stills: %v\n", format, err)
 			continue
 		}
 
-		output := project.Formats[format]
+		output, _ := project.FormatOf(format)
 		for i, cutaway := range list.Cutaways {
 			if cutaway.Source != "animations/"+id {
 				continue

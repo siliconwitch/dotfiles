@@ -16,10 +16,43 @@ func TestLoad(t *testing.T) {
 	}
 
 	tests := []struct {
-		name string
-		edit string
-		err  string
+		name   string
+		format string
+		edit   string
+		err    string
 	}{
+		{
+			name:   "a portrait variant",
+			format: "portrait-short",
+			edit:   `{"segments": [{"source": "recording-1.mkv", "start": 0, "end": 10, "layout": "webcam"}]}`,
+		},
+		{
+			name:   "unknown format",
+			format: "square",
+			edit:   `{"segments": [{"source": "recording-1.mkv", "start": 0, "end": 10, "layout": "webcam"}]}`,
+			err:    `format "square" is not landscape or portrait`,
+		},
+		{
+			name: "b-roll with regions",
+			edit: `{"segments": [
+				{"source": "broll/demo.mov", "start": 0, "end": 4, "layout": "screen+webcam", "screen": [235, 243, 973, 981], "webcam": [32, 411, 222, 711]},
+				{"source": "broll/demo.mov", "start": 4, "end": 8, "layout": "webcam", "webcam": [32, 411, 222, 711]}]}`,
+		},
+		{
+			name: "b-roll layout without its webcam region",
+			edit: `{"segments": [{"source": "broll/demo.mov", "start": 0, "end": 4, "layout": "screen+webcam", "screen": [235, 243, 973, 981]}]}`,
+			err:  "segment 1: a b-roll segment with layout screen+webcam needs a region",
+		},
+		{
+			name: "region without a layout",
+			edit: `{"segments": [{"source": "broll/demo.mov", "start": 0, "end": 4, "screen": [235, 243, 973, 981]}]}`,
+			err:  "segment 1: a b-roll segment takes a screen or webcam region only with a layout",
+		},
+		{
+			name: "region on a recording",
+			edit: `{"segments": [{"source": "recording-1.mkv", "start": 0, "end": 10, "layout": "webcam", "webcam": [0, 0, 500, 500]}]}`,
+			err:  "segment 1: a recording takes no screen or webcam region",
+		},
 		{
 			name: "every kind of cutaway",
 			edit: `{"segments": [
@@ -121,12 +154,17 @@ func TestLoad(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			err = os.WriteFile(filepath.Join(folder, "edit", "landscape.json"), []byte(test.edit), 0o644)
+			format := test.format
+			if format == "" {
+				format = "landscape"
+			}
+
+			err = os.WriteFile(filepath.Join(folder, "edit", format+".json"), []byte(test.edit), 0o644)
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			_, err = Load(folder, "landscape", sources)
+			_, err = Load(folder, format, sources)
 			if test.err == "" && err != nil {
 				t.Fatal(err)
 			}

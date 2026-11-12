@@ -30,7 +30,8 @@ func Run(folder, format string) error {
 		return err
 	}
 
-	output := project.Formats[format]
+	output, _ := project.FormatOf(format)
+	portrait := output.Height > output.Width
 	build := filepath.Join(".build", format)
 	for _, directory := range []string{build, filepath.Join(".build", "cache"), "out"} {
 		err = os.MkdirAll(filepath.Join(folder, directory), 0o755)
@@ -259,7 +260,7 @@ func Run(folder, format string) error {
 	// picture, or at the join when the picture is stacked above the webcam, so they never cover a face.
 	// A portrait title sits just above them.
 	styles := "Style: Title,DINish Expanded Medium,54,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,18,0,1,72,72,72,1"
-	if format == "portrait" {
+	if portrait {
 		styles = "Style: Title,DINish Expanded Medium,46,&H00FFFFFF,&H00FFFFFF,&H60000000,&H00000000,0,0,0,0,100,100,0,0,3,14,0,2,60,60,0,1\n" +
 			"Style: Caption,DINish Expanded SemiBold,62,&H00FFFFFF,&H00FFFFFF,&H40000000,&H00000000,0,0,0,0,100,100,0,0,3,12,0,2,90,90,0,1"
 	}
@@ -303,7 +304,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		}
 
 		margin := 0
-		if format == "portrait" {
+		if portrait {
 			margin = captionMargin(title.start) + 120
 		}
 		fmt.Fprintf(&subtitles, "Dialogue: 0,%s,%s,Title,,0,0,%d,,{\\fad(400,400)}%s\n", assTime(title.start), assTime(end), margin, assText.Replace(title.text))
@@ -319,7 +320,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 	var kept []captionWord
 	for i, segment := range list.Segments {
 		for _, word := range words[segment.Source] {
-			if format != "portrait" || word.Type != "word" || word.Start < segment.Start || word.Start >= segment.End {
+			if !portrait || word.Type != "word" || word.Start < segment.Start || word.Start >= segment.End {
 				continue
 			}
 
@@ -357,12 +358,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		return err
 	}
 
-	// Consecutive segments of one source and layout form a run, which keeps one framing so that jump cuts
-	// never move the camera. A segment that sets frame or box starts a new run.
+	// Consecutive segments of one source, layout and regions form a run, which keeps one framing so that
+	// jump cuts never move the camera. A segment that sets frame or box starts a new run.
 	runFirst := make([]int, len(list.Segments))
 	for i, segment := range list.Segments {
 		previous := list.Segments[max(0, i-1)]
-		if i > 0 && segment.Source == previous.Source && segment.Layout == previous.Layout && segment.Frame == "" && segment.Box == nil {
+		if i > 0 && segment.Source == previous.Source && segment.Layout == previous.Layout && slices.Equal(segment.Screen, previous.Screen) && slices.Equal(segment.Webcam, previous.Webcam) && segment.Frame == "" && segment.Box == nil {
 			runFirst[i] = runFirst[i-1]
 		} else {
 			runFirst[i] = i
@@ -370,7 +371,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 	}
 
 	quality := "18"
-	if format == "portrait" {
+	if portrait {
 		quality = "20"
 	}
 
@@ -449,7 +450,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 			_, webcamPanel = output.Panels(true)
 		}
 
-		mainStream, _ := source.Stream(mainName)
+		mainStream, _ := segment.Stream(source, mainName)
 		if !showWebcam {
 			fmt.Fprintf(&graph, "[%d:v:0]setpts=PTS-STARTPTS,fps=30[main];", picture)
 		} else {
@@ -457,7 +458,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		}
 
 		graph.WriteString(frameShot(fmt.Sprintf("[main]%s,", source.Filters(mainStream)), "mainpanel",
-			shot{stream: mainStream, frames: frames[segment.Source], spans: spans, length: length, frame: run.Frame, box: run.Box, push: push},
+			shot{stream: mainStream, region: segment.Region(mainName), frames: frames[segment.Source], spans: spans, length: length, frame: run.Frame, box: run.Box, push: push},
 			mainPanel.Width, mainPanel.Height))
 
 		fmt.Fprintf(&graph, "color=c=black:s=%dx%d:r=30:d=%.3f[canvas];", output.Width, output.Height, length)
@@ -480,9 +481,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 		}
 
 		if showWebcam {
-			webcamStream, _ := source.Stream("webcam")
+			webcamStream, _ := segment.Stream(source, "webcam")
 			graph.WriteString(frameShot(fmt.Sprintf("[webcam]%s,", source.Filters(webcamStream)), "webcampanel",
-				shot{stream: webcamStream, frames: frames[segment.Source], spans: spans, length: length},
+				shot{stream: webcamStream, region: segment.Webcam, frames: frames[segment.Source], spans: spans, length: length},
 				webcamPanel.Width, webcamPanel.Height))
 			fmt.Fprintf(&graph, "[%s][webcampanel]overlay=%d:%d%s[layerwebcam];", layer, webcamPanel.X, webcamPanel.Y, webcamEnable)
 			layer = "layerwebcam"

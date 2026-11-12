@@ -1,6 +1,6 @@
 ---
 name: video-edit
-description: Edits OBS webcam and screen recordings, with b-roll and photos, into a 1440p landscape video and a separate portrait cut for Shorts and Reels, with framing, titles, portrait captions and technical animations. Transcribes with ElevenLabs Scribe, describes frames with Claude, and renders with ffmpeg. Use when Raj asks to edit, cut or caption a recording, to add b-roll, photos, titles or an animation, to change an edit, or to archive a finished video.
+description: Edits OBS webcam and screen recordings, talk or webinar exports, b-roll and photos into a 1440p landscape video, portrait cuts for Shorts and Reels, or both, with framing, titles, portrait captions and technical animations. Transcribes with ElevenLabs Scribe, describes frames with Claude, and renders with ffmpeg. Use when Raj asks to edit, cut or caption a recording, to make clips or Shorts, to add b-roll, photos, titles or an animation, to change an edit, or to archive a finished video.
 ---
 
 # Video edit
@@ -33,6 +33,10 @@ position on it is in `~/.config/obs-studio/basic/scenes/Untitled.json`. When
 `ingest` files a capture under `broll/`, or a frame shows a crop cutting into
 the wrong picture, compare those files with `sources.go` and tell Raj.
 
+A file of another size is b-roll. When one holds a screen and a webcam side by
+side, such as a webinar export, its segments name the regions to crop, as
+`edit-list.md` describes.
+
 ## Folders
 
 OBS writes captures to `~/videos/recordings/`. Raj copies clips and photos off
@@ -55,7 +59,8 @@ The folder holds everything needed to rebuild the video from its archive:
 ├── brief.md                      what Raj wants, plus facts for titles (you)
 ├── edit/                         (you)
 │   ├── landscape.json
-│   └── portrait.json
+│   ├── portrait.json
+│   └── portrait-<name>.json      a variant, such as one of several Shorts
 ├── animations/<id>/              (you, animator)
 │   ├── spec.md
 │   ├── index.html
@@ -64,7 +69,8 @@ The folder holds everything needed to rebuild the video from its archive:
 │   └── notes.md                  timing requests, when any
 ├── out/                          (render)
 │   ├── landscape.mp4             2560x1440
-│   └── portrait.mp4              1080x1920
+│   ├── portrait.mp4              1080x1920
+│   └── portrait-<name>.mp4       1080x1920
 ├── .sources/                     (ingest)
 │   ├── recording-<n>.mkv
 │   ├── broll/<original name>
@@ -165,8 +171,8 @@ no sources, frames or render clips.
    instructions, use the defaults in `edit-list.md` instead of asking.
 
 7. Write `edit/landscape.json`, then `edit/portrait.json`, unless the brief
-   asks for one format only. Run `check` on each until it passes with no
-   warnings:
+   asks for one format only or for variants. Run `check` on each until it
+   passes with no warnings:
 
    ```sh
    CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . check ~/videos/<project> <format>
@@ -186,7 +192,8 @@ no sources, frames or render clips.
    in each edit list that uses the animation and send the animator back to
    check its stills.
 
-9. Render one format at a time, because each render uses every core. A render
+9. Render one edit list at a time, because each render uses every core. Name
+   a variant by its edit list, such as `portrait-five-minute-fix`. A render
    reuses every clip and segment that has not changed since the last one, so
    a fix renders again in seconds:
 

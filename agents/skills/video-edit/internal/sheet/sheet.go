@@ -64,7 +64,8 @@ func Run(folder, format string) error {
 	}
 
 	tileWidth, columns, rows := 800, 3, 4
-	if format == "portrait" {
+	output, _ := project.FormatOf(format)
+	if output.Height > output.Width {
 		tileWidth, columns, rows = 360, 6, 2
 	}
 

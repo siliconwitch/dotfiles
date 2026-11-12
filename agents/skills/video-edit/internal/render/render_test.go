@@ -75,6 +75,10 @@ func TestRun(t *testing.T) {
 	for _, format := range []string{"landscape", "portrait"} {
 		fixtures["edit/"+format+".json"] = edit
 	}
+
+	// A variant stacks the phone clip's top half above its bottom half
+	fixtures["edit/portrait-stacked.json"] = strings.Replace(edit, `{"source": "broll/event.mov", "start": 0, "end": 2}`,
+		`{"source": "broll/event.mov", "start": 0, "end": 2, "layout": "screen+webcam", "screen": [0, 0, 1000, 500], "webcam": [0, 500, 1000, 1000]}`, 1)
 	for file, content := range fixtures {
 		err := os.WriteFile(filepath.Join(folder, file), []byte(content), 0o644)
 		if err != nil {
@@ -95,6 +99,7 @@ func TestRun(t *testing.T) {
 			"0:00:00.50,0:00:00.90,Caption,,0,0,460,,Hello",
 			"0:00:03.08,0:00:03.38,Caption,,0,0,460,,board.",
 		}, []string{"laughter", "dropped"}},
+		{"portrait-stacked", "1080,1920", []string{"0:00:00.50,0:00:00.90,Caption,,0,0,460,,Hello"}, []string{"laughter"}},
 	}
 
 	for _, test := range tests {
@@ -175,6 +180,9 @@ func TestFrameShot(t *testing.T) {
 		want   string
 	}{
 		{"no frames fits the stream", shot{stream: webcam, spans: [][2]float64{{0, 5}}, length: 5}, 2560, 1440, "scale=2560:1440["},
+		{"a b-roll region frames only the subjects inside it", shot{stream: project.Stream{Name: "webcam", Width: 486, Height: 432}, region: []float64{0, 0, 500, 500}, spans: [][2]float64{{0, 5}}, length: 5,
+			frames: []files.Frame{{Stream: "video", Time: 1, Subjects: []files.Subject{{Label: "presenter", Box: [4]float64{100, 100, 300, 400}}, {Label: "slide", Box: [4]float64{600, 600, 900, 900}}}}}},
+			1080, 960, "crop=405:360:0:36"},
 		{"no subjects on the screen fits it", shot{stream: screen, spans: [][2]float64{{0, 5}}, length: 5, frames: []files.Frame{{Stream: "screen", Time: 1}}}, 2560, 1440, "scale=2560:1440["},
 		{"a narrower panel fits over a blur", shot{stream: screen, spans: [][2]float64{{0, 5}}, length: 5}, 1080, 1920, "gblur"},
 		{"a still presenter holds one crop", shot{stream: webcam, spans: [][2]float64{{0, 6}}, length: 6, frames: []files.Frame{presenter(0, 350), presenter(2, 360), presenter(4, 355)}}, 1080, 1920, "crop=608:1080:"},

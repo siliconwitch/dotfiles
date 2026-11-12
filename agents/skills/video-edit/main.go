@@ -29,7 +29,7 @@ const usage = `usage: video-edit <command> <folder> [argument...]
   render <folder> <format>   renders edit/<format>.json into out/<format>.mp4
   sheet <folder> <format>    makes contact sheets of out/<format>.mp4 in .build/<format>/
 
-  <format> is landscape or portrait.`
+  <format> is landscape or portrait, or a variant of one such as portrait-<name>.`
 
 func main() {
 	if len(os.Args) < 3 {

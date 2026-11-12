@@ -13,6 +13,7 @@ import (
 // shot is one stream shown in one panel.
 type shot struct {
 	stream project.Stream
+	region []float64     // the region of a b-roll picture the stream crops, in thousandths
 	frames []files.Frame // the source's frames.json, with each frame's subjects
 	spans  [][2]float64  // the source seconds whose frames decide the framing, every segment of a run
 	length float64       // seconds the shot lasts
@@ -60,6 +61,35 @@ func frameShot(in, out string, s shot, width, height int) string {
 		return clamp(crop{(left + right) / 2, (top + bottom) / 2, math.Max(cover/maxZoom, width)})
 	}
 
+	// A region of a b-roll picture sees the subjects centred inside it, in its own thousandths
+	frames := s.frames
+	if s.region != nil {
+		frames = nil
+		left, top, right, bottom := s.region[0], s.region[1], s.region[2], s.region[3]
+		for _, frame := range s.frames {
+			if frame.Stream != "video" {
+				continue
+			}
+
+			seen := files.Frame{Stream: s.stream.Name, Time: frame.Time}
+			for _, subject := range frame.Subjects {
+				box := subject.Box
+				centreX, centreY := (box[0]+box[2])/2, (box[1]+box[3])/2
+				if centreX < left || centreX > right || centreY < top || centreY > bottom {
+					continue
+				}
+
+				seen.Subjects = append(seen.Subjects, files.Subject{Label: subject.Label, Box: [4]float64{
+					(math.Max(box[0], left) - left) / (right - left) * 1000,
+					(math.Max(box[1], top) - top) / (bottom - top) * 1000,
+					(math.Min(box[2], right) - left) / (right - left) * 1000,
+					(math.Min(box[3], bottom) - top) / (bottom - top) * 1000,
+				}})
+			}
+			frames = append(frames, seen)
+		}
+	}
+
 	// The frames in the spans. Take the last one before them when none falls inside, as when a shot is
 	// shorter than the gap between frames.
 	first := s.spans[0][0]
@@ -67,7 +97,7 @@ func frameShot(in, out string, s shot, width, height int) string {
 		first = math.Min(first, span[0])
 	}
 	var relevant, before []files.Frame
-	for _, frame := range s.frames {
+	for _, frame := range frames {
 		inside := false
 		for _, span := range s.spans {
 			inside = inside || frame.Time >= span[0]-1 && frame.Time < span[1]

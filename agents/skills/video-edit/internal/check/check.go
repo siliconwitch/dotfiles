@@ -55,7 +55,7 @@ func Run(folder, format string) error {
 	// Switching between the screen and the webcam back and forth is jarring to watch
 	switchTime, switchLayout, switchSegment := 0.0, "", 0
 	for i, segment := range list.Segments {
-		if segment.Kind != project.Recording || segment.Layout == switchLayout {
+		if segment.Layout == "" || segment.Layout == switchLayout {
 			continue
 		}
 

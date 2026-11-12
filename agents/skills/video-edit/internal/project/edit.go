@@ -25,6 +25,14 @@ var Formats = map[string]Format{
 	"portrait":  {Width: 1080, Height: 1920, Scale: 1},
 }
 
+// FormatOf returns the format an edit list renders in. A name such as portrait-cant-brick-it is a
+// variant: another cut of the project in the format before the dash.
+func FormatOf(name string) (Format, bool) {
+	base, _, _ := strings.Cut(name, "-")
+	format, ok := Formats[base]
+	return format, ok
+}
+
 // Panels returns where the main picture and the webcam go. Landscape insets the webcam in the bottom
 // right corner over the main picture, and portrait stacks the main picture above the webcam.
 func (f Format) Panels(withWebcam bool) (main, webcam Rect) {
@@ -76,6 +84,8 @@ type Segment struct {
 	Frame  string    `json:"frame,omitempty"`
 	Box    []float64 `json:"box,omitempty"`
 	Title  string    `json:"title,omitempty"`
+	Screen []float64 `json:"screen,omitempty"` // b-roll only: the region of the picture the layout shows as the screen
+	Webcam []float64 `json:"webcam,omitempty"` // b-roll only: the region of the picture the layout shows as the webcam
 
 	Kind     string  `json:"-"`
 	OutStart float64 `json:"-"`
@@ -114,12 +124,38 @@ func (s Segment) Picture() (stream string, webcam bool) {
 	return "video", false
 }
 
+// Region returns the segment's region for the named stream, or nil for a stream it does not crop.
+func (s Segment) Region(name string) []float64 {
+	switch name {
+	case "screen":
+		return s.Screen
+	case "webcam":
+		return s.Webcam
+	}
+	return nil
+}
+
+// Stream returns the named picture of the segment's source. A b-roll segment with a layout crops each
+// picture from the region of the source it names.
+func (s Segment) Stream(source Source, name string) (Stream, bool) {
+	region := s.Region(name)
+	if region == nil {
+		return source.Stream(name)
+	}
+
+	sourceWidth, sourceHeight := float64(source.Width), float64(source.Height)
+	left, top := int(region[0]/1000*sourceWidth), int(region[1]/1000*sourceHeight)
+	width := int((region[2]-region[0])/1000*sourceWidth/2) * 2
+	height := int((region[3]-region[1])/1000*sourceHeight/2) * 2
+	return Stream{Name: name, Crop: fmt.Sprintf("%d:%d:%d:%d", width, height, left, top), Width: width, Height: height}, true
+}
+
 // Load reads edit/<format>.json and checks it against the sources, so a mistake fails here with its
 // segment or cutaway number instead of deep inside ffmpeg.
 func Load(folder, format string, sources map[string]Source) (List, error) {
-	_, ok := Formats[format]
+	_, ok := FormatOf(format)
 	if !ok {
-		return List{}, fmt.Errorf("format %q is not landscape or portrait", format)
+		return List{}, fmt.Errorf("format %q is not landscape or portrait, or a variant of one such as portrait-<name>", format)
 	}
 
 	encoded, err := os.ReadFile(filepath.Join(folder, "edit", format+".json"))
@@ -149,13 +185,18 @@ func Load(folder, format string, sources map[string]Source) (List, error) {
 		}
 
 		segment.Kind = source.Kind
+		regions := segment.Screen != nil || segment.Webcam != nil
 		switch {
-		case source.Kind == Recording && segment.Layout != "webcam" && segment.Layout != "screen" && segment.Layout != "screen+webcam":
-			return List{}, fmt.Errorf("%s has layout %q, which is not screen, webcam or screen+webcam", name, segment.Layout)
-		case source.Kind == Broll && segment.Layout != "":
-			return List{}, fmt.Errorf("%s: a b-roll segment takes no layout", name)
 		case source.Kind == Photo:
 			return List{}, fmt.Errorf("%s: a photo can only be a cutaway", name)
+		case (source.Kind == Recording || segment.Layout != "") && segment.Layout != "webcam" && segment.Layout != "screen" && segment.Layout != "screen+webcam":
+			return List{}, fmt.Errorf("%s has layout %q, which is not screen, webcam or screen+webcam", name, segment.Layout)
+		case source.Kind == Recording && regions:
+			return List{}, fmt.Errorf("%s: a recording takes no screen or webcam region, because its OBS canvas places them", name)
+		case source.Kind == Broll && segment.Layout == "" && regions:
+			return List{}, fmt.Errorf("%s: a b-roll segment takes a screen or webcam region only with a layout", name)
+		case source.Kind == Broll && segment.Layout != "" && (strings.Contains(segment.Layout, "screen") && !validBox(segment.Screen) || strings.Contains(segment.Layout, "webcam") && !validBox(segment.Webcam)):
+			return List{}, fmt.Errorf("%s: a b-roll segment with layout %s needs a region for each picture it shows, as left, top, right and bottom in thousandths", name, segment.Layout)
 		}
 
 		if segment.Start < 0 || segment.End > source.Duration || segment.Start >= segment.End {
@@ -281,11 +322,15 @@ func checkFraming(name, frame string, box []float64) error {
 		return fmt.Errorf("%s has frame %q, which is not auto, full or push", name, frame)
 	}
 
-	if box != nil && (frame == "full" || len(box) != 4 || box[0] < 0 || box[1] < 0 || box[2] > 1000 || box[3] > 1000 || box[0] >= box[2] || box[1] >= box[3]) {
+	if box != nil && (frame == "full" || !validBox(box)) {
 		return fmt.Errorf("%s: box must be left, top, right and bottom in thousandths, without frame full", name)
 	}
 
 	return nil
+}
+
+func validBox(box []float64) bool {
+	return len(box) == 4 && box[0] >= 0 && box[1] >= 0 && box[2] <= 1000 && box[3] <= 1000 && box[0] < box[2] && box[1] < box[3]
 }
 
 // Map returns the output time at which the edit plays second t of source, or -1 when no segment plays
