@@ -4,9 +4,11 @@ package check
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"video-edit/internal/files"
 	"video-edit/internal/project"
@@ -33,7 +35,7 @@ func Run(folder, format string) error {
 		}
 		fmt.Printf("segment %d  %.2f-%.2f  %s %.2f-%.2f %s%s\n", i+1, segment.OutStart, segment.OutStart+segment.End-segment.Start, segment.Source, segment.Start, segment.End, segment.Layout, title)
 
-		// A cut inside a word clips it
+		// A cut inside or near a word clips it, or lets part of its neighbour in
 		_, loaded := words[segment.Source]
 		if !loaded {
 			encoded, err := os.ReadFile(filepath.Join(folder, ".analysis", sources[segment.Source].Key(), "transcript.json"))
@@ -43,13 +45,31 @@ func Run(folder, format string) error {
 				words[segment.Source] = sourceWords
 			}
 		}
+		var said []string
 		for _, word := range words[segment.Source] {
+			if word.Type != "word" {
+				continue
+			}
+
+			if word.Start >= segment.Start && word.End <= segment.End {
+				said = append(said, word.Text)
+			}
+
 			for _, cut := range []float64{segment.Start, segment.End} {
-				if word.Type == "word" && cut > word.Start && cut < word.End {
+				switch {
+				case cut > word.Start && cut < word.End:
 					fmt.Printf("  warning: the cut at %.2f clips %q, %.2f-%.2f\n", cut, word.Text, word.Start, word.End)
+				case math.Abs(cut-word.Start) < 0.15 || math.Abs(cut-word.End) < 0.15:
+					fmt.Printf("  warning: the cut at %.2f is within 0.15 s of %q, %.2f-%.2f\n", cut, word.Text, word.Start, word.End)
 				}
 			}
 		}
+
+		// The words either side of each cut, where the story's joins show
+		if len(said) > 10 {
+			said = append(append(said[:5:5], "…"), said[len(said)-5:]...)
+		}
+		fmt.Printf("  %s\n", strings.Join(said, " "))
 	}
 
 	// Switching between the screen and the webcam back and forth is jarring to watch

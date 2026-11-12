@@ -69,12 +69,17 @@ no new analysis. A photo is never a segment.
 
 ## Cutting
 
-Cut on word boundaries from the source's `transcript.json`. Start a segment
-about 0.1 s before its first word and end it about 0.2 s after its last, so no
-word is clipped. `check` warns about a cut inside a word. Cut filler words,
-false starts, long silences, and every take but the last of a repeated line.
+Cut on word boundaries from the source's `transcript.json`. Keep every cut at
+least 0.15 s from any word, so no word is clipped and none of the neighbouring
+word leaks in. Where two words sit closer than 0.3 s, cut elsewhere. `check`
+warns about a cut inside or within 0.15 s of a word. Cut filler words, false
+starts, long silences, and every take but the last of a repeated line.
 
 - Tell one story, in the order the brief asks for or the order Raj told it.
+- Before rendering, read the words of every segment in order as one script.
+  `check` prints the first and last words of each. It must read as Raj telling
+  one story: each segment follows from the one before, and no sentence ends
+  mid-thought, such as on "connected to their,".
 - Change layout only when what matters changes, such as from talking to a demo
   on the screen. Switching back and forth is jarring, so hold each layout for
   at least 15 s. `check` warns about a shorter one. A long talking shot is
@@ -92,11 +97,16 @@ The landscape edit is the full video. It keeps everything the brief needs.
 The portrait edit is a fresh cut for Shorts and Reels, not a crop of the
 landscape edit:
 
-- Keep it to the length the brief gives, or 30 to 60 s.
+- Keep it to the length the brief gives. Otherwise aim for 30 to 60 s, but
+  let a story that needs it run to 2 minutes rather than stop short.
 - Open on the most striking line or picture within the first 2 s. It does not
   have to come first in the recording.
 - Keep one idea. Drop asides, setup and anything the hook does not need.
-- Cut tighter than landscape: shorter pauses and no asides.
+- End on the payoff: the point the hook promises, such as the result, the
+  number or the lesson. Never end on setup, a problem without its answer, or a
+  list that trails off. When the payoff comes after the passage you picked,
+  extend the cut to it and drop setup earlier instead.
+- Cut tighter than landscape: no asides, and shorter pauses between sentences.
 - Prefer `webcam` and `screen+webcam`. Use `screen` alone only when the screen
   has subjects to frame, because code at phone width is unreadable. For the
   same reason, give b-roll of a screen a `box` around the part worth reading,
