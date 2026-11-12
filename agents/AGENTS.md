@@ -49,6 +49,7 @@ If the test resolves the uncertainty, use its result and do not fan out merely t
 - Treat each top-level directory under `~/projects` as a separate confidentiality boundary. Client material belongs only in that client's own private repository. Never copy customer information, secrets, or project-specific material between projects. Never batch edits, commits, or pushes across projects unless the user explicitly names every project and requests the combined operation. Reuse only generic implementation ideas across project boundaries.
 - Secrets live in `pass` and `gpg` on this machine. Never read, print, copy, or commit an entry.
 - `~/.gnupg`, `~/.password-store`, `~/.ssh`, and every `.env` file are off limits. Never read or modify them, and exclude them from searches.
+- Before a Claude in Chrome task, start Chromium if it is not running: `pgrep -x chromium >/dev/null || setsid -f chromium >/dev/null 2>&1`. The browser tools connect only while Chromium is open.
 
 # Destructive tasks
 
