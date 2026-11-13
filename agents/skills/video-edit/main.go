@@ -1,84 +1,67 @@
-// video-edit turns a project folder into edited videos. SKILL.md describes the folder and each step.
+// video-edit splits, analyses and renders footage for the video-edit skill. SKILL.md describes each step.
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
-	"video-edit/internal/animate"
-	"video-edit/internal/check"
-	"video-edit/internal/describe"
-	"video-edit/internal/frames"
-	"video-edit/internal/ingest"
-	"video-edit/internal/project"
+	"video-edit/internal/analyse"
+	"video-edit/internal/preanalyse"
+	"video-edit/internal/prepare"
 	"video-edit/internal/render"
 	"video-edit/internal/secret"
-	"video-edit/internal/sheet"
-	"video-edit/internal/transcribe"
 )
 
-const usage = `usage: video-edit <command> <folder> [argument...]
+const usage = `usage: video-edit <command> [argument...]
 
-  ingest <folder> <file>...  moves a recording or downloaded file into .sources/, symlinks a vault file, or
-                             hard links any other file
-  analyse <folder> [model]   extracts frames, transcribes, and describes the frames with Claude, skipping work
-                             already done. The default model is claude-sonnet-5-5
-  check <folder> <format>    checks edit/<format>.json and prints its timeline
-  animate <folder> <id>      renders stills of animations/<id> after each cue into .build/animations/<id>/
-  render <folder> <format>   renders edit/<format>.json into out/<format>.mp4
-  sheet <folder> <format>    makes contact sheets of out/<format>.mp4 in .build/<format>/
+  prepare <folder>                       splits each OBS recording in the folder into
+                                         <date>-<time>-screen-capture.mkv and -webcam-capture.mkv
+  pre-analyse -o <summaries.txt> <file>...  summarises each file from a few frames
+  analyse -o <project>/analysis <file>...   transcribes each file, describes its frames and syncs them all
+  quick-render <project> <timeline>      renders timelines/<timeline>.txt as a preview with review material
+                                         in .build/<timeline>-<n>/
+  render <project> <timeline>            renders timelines/<timeline>.txt into out/<timeline>.mp4
 
-  <format> is landscape or portrait, or a variant of one such as portrait-<name>.`
+Give every path in full, because go -C runs the app from its own directory.`
 
 func main() {
-	if len(os.Args) < 3 {
+	arguments := os.Args[1:]
+	if len(arguments) == 0 {
 		fmt.Fprintln(os.Stderr, usage)
 		os.Exit(2)
 	}
 
-	command, folder, arguments := os.Args[1], os.Args[2], os.Args[3:]
+	command, arguments := arguments[0], arguments[1:]
+	withOutput := len(arguments) >= 3 && arguments[0] == "-o"
 
 	var err error
 	switch {
-	case command == "ingest" && len(arguments) > 0:
-		err = ingest.Run(folder, arguments)
-	case command == "analyse" && len(arguments) < 2:
-		model := "claude-sonnet-5-5"
-		if len(arguments) == 1 {
-			model = arguments[0]
+	case command == "prepare" && len(arguments) == 1:
+		err = prepare.Run(arguments[0])
+	case command == "pre-analyse" && withOutput:
+		var key string
+		key, err = secret.Pass("api/anthropic")
+		if err == nil {
+			err = preanalyse.Run(arguments[1], arguments[2:], key)
 		}
-
+	case command == "analyse" && withOutput:
 		// The keys come first, so a locked pass store stops the step at once
 		var transcribeKey, describeKey string
 		transcribeKey, err = secret.Pass("api/elevenlabs")
 		if err == nil {
 			describeKey, err = secret.Pass("api/anthropic")
 		}
-
-		var sources map[string]project.Source
 		if err == nil {
-			sources, err = project.ProbeAll(folder)
+			err = analyse.Run(arguments[1], arguments[2:], transcribeKey, describeKey)
 		}
-
-		// Transcription waits on ElevenLabs while the frames decode, so the two run side by side
+	case command == "quick-render" && len(arguments) == 2:
+		var key string
+		key, err = secret.Pass("api/elevenlabs")
 		if err == nil {
-			transcribed := make(chan error)
-			go func() { transcribed <- transcribe.Run(folder, transcribeKey, sources) }()
-			err = frames.Run(folder, sources)
-			if err == nil {
-				err = describe.Run(folder, model, describeKey, sources)
-			}
-			err = errors.Join(err, <-transcribed)
+			err = render.Run(arguments[0], arguments[1], true, key)
 		}
-	case command == "check" && len(arguments) == 1:
-		err = check.Run(folder, arguments[0])
-	case command == "animate" && len(arguments) == 1:
-		err = animate.Run(folder, arguments[0])
-	case command == "render" && len(arguments) == 1:
-		err = render.Run(folder, arguments[0])
-	case command == "sheet" && len(arguments) == 1:
-		err = sheet.Run(folder, arguments[0])
+	case command == "render" && len(arguments) == 2:
+		err = render.Run(arguments[0], arguments[1], false, "")
 	default:
 		fmt.Fprintln(os.Stderr, usage)
 		os.Exit(2)

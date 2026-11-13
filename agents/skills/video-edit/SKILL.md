@@ -1,257 +1,179 @@
 ---
 name: video-edit
-description: Edits OBS webcam and screen recordings, talk or webinar exports, b-roll and photos into a 1440p landscape video, portrait cuts for Shorts and Reels, or both, with framing, titles, portrait captions and technical animations. Transcribes with ElevenLabs Scribe, describes frames with Claude, and renders with ffmpeg. Use when Raj asks to edit, cut or caption a recording, to make clips or Shorts, to add b-roll, photos, titles or an animation, to change an edit, or to archive a finished video.
+description: Edits videos for YouTube (landscape) and social media posts (portrait) from footage already on this machine. Use when Raj asks for an edit, or for social media posts that need video.
 ---
 
 # Video edit
 
-The program in this directory does the mechanical work: ingesting,
-transcribing, describing frames, framing shots, and rendering. You write the
-edit lists, render, check the result and deliver the videos. Aim to deliver
-within minutes, because Raj uses this for spontaneous clips.
+The workflow is strict. You make creative choices only in step 4, the timeline, and step 6, the check. Every
+other step is a command or a sub-agent, run exactly as written.
 
-`edit-list.md` defines the edit list and how to cut. Read it before writing
-one.
+- **Footage** is a video or image file.
+- **A command** runs the Go app in this skill's directory. Give every path in full, because `go -C` runs the
+  app from its own directory.
+- **A sub-agent** step runs in a sub-agent. Tell it that it is a sub-agent, give it the step's instructions
+  and what they need, and take back only its result. Its working has no later use and would fill your
+  context.
 
-Run every step with the project folder's absolute path. The program needs no C
-compiler, so `CGO_ENABLED=0` keeps `go run` working where none is installed:
+A project lives in `~/videos/<project>/`:
+
+| Path | Holds |
+|---|---|
+| `pre-analysis.txt` | a summary of each candidate file, from step 2 |
+| `.footage/` | the footage, moved or linked in step 2 |
+| `analysis/transcripts/<file>.txt` | each file's speech, one phrase per line |
+| `analysis/frames/<file>.txt` | each file's frames, described |
+| `analysis/.data/` | the app's own data. Never read or edit it |
+| `timelines/<name>.txt` | one timeline per video, from step 4 |
+| `.build/<name>-<n>/` | each quick render, from step 5 |
+| `out/<name>.mp4` | each finished video, from step 7 |
+
+## 1. Prepare
+
+Split every new OBS recording into its screen and webcam footage:
 
 ```sh
-CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . <command> ~/videos/<project> [argument...]
+CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . prepare ~/videos/recordings
 ```
 
-The same command with no command or project lists the commands.
+Then name the project with the time now and a short topic, such as `20261112-1656-sw-video-air-quality-monitor`,
+and create its footage folder:
 
-## Recordings
-
-OBS records the screen and the webcam side by side on one canvas, so both share
-one clock and one microphone track. `internal/project/sources.go` treats a file
-the size of the canvas as a recording, and crops the screen and the webcam out
-of it. The canvas size is in
-`~/.config/obs-studio/basic/profiles/Untitled/basic.ini`, and each picture's
-position on it is in `~/.config/obs-studio/basic/scenes/Untitled.json`. When
-`ingest` files a capture under `broll/`, or a frame shows a crop cutting into
-the wrong picture, compare those files with `sources.go` and tell Raj.
-
-A file of another size is b-roll. When one holds a screen and a webcam side by
-side, such as a webinar export, its segments name the regions to crop, as
-`edit-list.md` describes.
-
-## Folders
-
-OBS writes captures to `~/videos/recordings/`. Raj copies clips and photos off
-a phone or camera into `~/downloads/`, which also holds unrelated files.
-`ingest` moves each file it is given out of either folder, and touches nothing
-else. It symlinks a file from `~/vault`, because the vault already holds it,
-and the archive keeps the symlink. It hard links a file from anywhere else,
-such as b-roll from another project in `~/videos`, so this project keeps the
-file when the other is archived and deleted. Each project's archive then holds
-its own full copy.
-
-Each video has one project folder, `~/videos/<project>/`. `<project>` is the
-name its archive will have, with the time the edit starts added after the
-date, such as `20261111-1430-sw-video-s2-air-quality-monitor`. Name it by the
-project folder rules in the `vault-access` skill, with the category `video`.
-The folder holds everything needed to rebuild the video from its archive:
-
-```text
-~/videos/<project>/
-├── brief.md                      what Raj wants, plus facts for titles (you)
-├── edit/                         (you)
-│   ├── landscape.json
-│   ├── portrait.json
-│   └── portrait-<name>.json      a variant, such as one of several Shorts
-├── animations/<id>/              (you, animator)
-│   ├── spec.md
-│   ├── index.html
-│   ├── animation.css             copied from agents/
-│   ├── animation.js              copied from agents/
-│   └── notes.md                  timing requests, when any
-├── out/                          (render)
-│   ├── landscape.mp4             2560x1440
-│   ├── portrait.mp4              1080x1920
-│   └── portrait-<name>.mp4       1080x1920
-├── .sources/                     (ingest)
-│   ├── recording-<n>.mkv
-│   ├── broll/<original name>
-│   └── photos/<original name>    vault files are symlinks into ~/vault
-├── .analysis/                    (analyse)
-│   ├── descriptions.txt          every source's details and frame descriptions
-│   └── <key>/                    such as recording-1 or broll-IMG_0412
-│       ├── transcript.txt
-│       ├── transcript.json
-│       ├── frames.json
-│       └── frames/<stream>-<nnnnnn>.jpg
-└── .build/                       regenerable (render, animate, sheet)
-    ├── cache/<hash>.<ext>        rendered clips, segments and captions
-    ├── <format>/
-    │   ├── segments.txt
-    │   ├── sheet/<nnn>.jpg, <nnn>.txt
-    │   └── sheet-<n>.jpg
-    └── animations/<id>/<format>-cutaway<n>-<k>-<cue>.png
+```sh
+mkdir -p ~/videos/<project>/.footage
 ```
 
-`analyse` skips work it has already done, because transcription and frame
-description cost money. It processes only new sources after a later ingest.
-Only the outputs and the files you write are visible, so a photo viewer shows
-no sources, frames or render clips.
+Tell Raj the project's full path, and use it in every later step.
 
-## Steps
+## 2. Find the footage (sub-agent)
 
-1. Find the files for this video. Raj may add footage made weeks or months
-   earlier, such as a clip from last week's event or photos of a board
-   soldered months ago, so when a file arrived says nothing. List every
-   capture, and every file under `~/downloads` with when and where it was
-   made:
+Give the sub-agent Raj's request, the project's full path, and these steps. It returns the full path of every
+file in `.footage/`, one per line, and nothing else.
 
-   ```sh
-   ls -l ~/videos/recordings
-   exiftool -q -r -T -Directory -FileName -CreateDate -GPSPosition ~/downloads
-   ```
-
-   Raj's request says what to look for. Files made on one day in one place
-   are usually one shoot. Look at one frame of each capture and of each shoot,
-   and take what fits the request. Ask Raj about anything that might belong
-   but you cannot place.
+1. List every file that could be footage, broadly, because nothing shows what a file holds yet. Search each
+   place below recursively, because footage often sits in subfolders, at any depth:
+   - Every file in `~/videos/recordings` whose name does not start with a dot.
+   - Every file under `~/downloads`, except ones clearly unrelated, such as documents, installers and
+     archives.
+   - In the vault, read the `vault-access` skill first. Find the project folders in `~/vault/company-media/`
+     whose names might relate to the request, or in `~/vault/personal-media/` for Raj's personal videos, then
+     list their files.
+2. Summarise them all:
 
    ```sh
-   frame=$(mktemp --suffix=.jpg)
-   ffmpeg -v error -y -i <file> -frames:v 1 "$frame"
+   CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . pre-analyse -o ~/videos/<project>/pre-analysis.txt <file>...
    ```
 
-2. Create the project folder. Its owner sets the prefix: `sw` when the video
-   is about Silicon Witchery, its products or its events, and `rn` otherwise.
-   Ask Raj when the owner is unclear:
+3. Shortlist the files the request needs from `pre-analysis.txt`. Keep a recording's screen and webcam files
+   together.
+4. Move each shortlisted file from `~/videos/recordings` or `~/downloads` into `~/videos/<project>/.footage/`
+   with `mv -n`, and link each vault file there with `ln -s`. Never overwrite a file. When two files share a
+   name, prefix the second with its folder's name, such as `trip-IMG_0412.MOV`.
 
-   ```sh
-   mkdir ~/videos/<project>
-   ```
+## 3. Analyse
 
-3. Ingest the files you picked, which moves them out of `~/downloads` and
-   `~/videos/recordings`:
+Analyse every file in `.footage/`:
 
-   ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . ingest ~/videos/<project> <file>...
-   ```
+```sh
+CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . analyse -o ~/videos/<project>/analysis ~/videos/<project>/.footage/*
+```
 
-4. Look for archived footage to work in. Read the `vault-access` skill first.
-   Look only in `~/vault/company-media/` for an `sw` video, or only in
-   `~/vault/personal-media/` for an `rn` one. Each folder there is one archived
-   project, such as `20251007-sw-video-s2-air-quality-monitor`. In a project
-   this skill archived, a `.rclonelink` file holds the path of a clip in
-   another vault folder. Use that path instead.
+It resumes work already done, so when it fails partway, run it again with the same files. When `pass` is
+locked, ask Raj to unlock it as the error says, then run it again.
 
-   Take a clip when Raj mentions an older video, or when it shows what Raj
-   talks about better than the new footage. Ingest only clips you will use,
-   because `analyse` downloads each one through the mount and pays to
-   transcribe and describe it:
+## 4. Build the timeline
 
-   ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . ingest ~/videos/<project> ~/vault/<company-media|personal-media>/<archived project>/<file>...
-   ```
+Read every file in `analysis/transcripts/` and `analysis/frames/` before writing anything, and choose every
+shot from what the frames show. Then write `timelines/<name>.txt` as `timeline.md` describes, following the
+editing rules below.
 
-5. Analyse every source:
+A full video, a landscape video and a YouTube video are the same thing. Name its timeline `landscape`. Name each
+Short `portrait-<topic>`, such as `portrait-five-minute-fix`. When Raj asks for clips or Shorts, write only
+portrait timelines, unless he also asks for a full video.
 
-   ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . analyse ~/videos/<project>
-   ```
+## 5. Quick render
 
-   `analyse` reads its keys from `pass` before anything else. When the store
-   is locked, it stops within a second. Ask Raj straight away to run
-   `pass show api/anthropic >/dev/null` in a terminal, then run `analyse`
-   again once Raj confirms. Otherwise it takes about a minute for a few
-   minutes of recording.
+```sh
+CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . quick-render ~/videos/<project> <name>
+```
 
-   Then read every `transcript.txt`. When Raj mentions a picture, a clip or an
-   older video you have not ingested, find it in `~/downloads` as in step 1 or
-   in the vault as in step 4. Ingest it and run `analyse` again.
+It writes a build to `.build/<name>-<n>/`:
 
-6. Write what Raj asked for to `brief.md`, including any facts for titles,
-   such as names, roles, events, places and dates. When Raj gave no
-   instructions, use the defaults in `edit-list.md` instead of asking.
+| File | Holds |
+|---|---|
+| `preview.mp4` | the cut at low resolution |
+| `script.txt` | each layer a clip's time, timeline line and words |
+| `heard.txt` | a fresh transcription of the preview |
+| `cuts.txt` | every cut: its time, the lines either side, and the words either side |
+| `sheet-NN.jpg` | the last frame before and the first frame after every cut, labelled as in `cuts.txt` |
 
-7. Write `edit/landscape.json`, then `edit/portrait.json`, unless the brief
-   asks for one format only or for variants. Run `check` on each until it
-   passes with no warnings:
+## 6. Check
 
-   ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . check ~/videos/<project> <format>
-   ```
+Run the review in a sub-agent. Give it the build's full path, the timeline, Raj's request and the editing
+rules below. It reads every file in the build, and returns each problem with its cut number, its timeline line
+and what it saw. Ask it to look for:
 
-8. Write a spec and cutaway for each animation `edit-list.md` calls for, then
-   spawn one animator per animation, all at once. `<id>` is the animation's
-   folder name in `animations/`, such as `data-flow`. Render a format that
-   uses no animation while they work.
+- words in `heard.txt` that differ from `script.txt`, such as a clipped word, a leaked word or a repeat
+- a cut that breaks a sentence or lands mid-thought
+- a head cut off, a face out of frame, or a shot of a hand, a wall or an empty desk
+- a flash: a clip of a frame or two between two others
+- the wrong picture for the words, such as b-roll that shows something else
 
-   ```text
-   You are a sub-agent. Read ~/.config/agents/skills/video-edit/agents/animator.md and follow it.
-   Project: ~/videos/<project>. Animation: <id>.
-   ```
+Fix what it reports by going back to step 4. When the build is right, give Raj the full path of
+`preview.mp4` and wait for him. Each change he asks for goes back to step 4.
 
-   When its `notes.md` asks for more time or another cue, change the cutaway
-   in each edit list that uses the animation and send the animator back to
-   check its stills.
+## 7. Render
 
-9. Render one edit list at a time, because each render uses every core. Name
-   a variant by its edit list, such as `portrait-five-minute-fix`. A render
-   reuses every clip and segment that has not changed since the last one, so
-   a fix renders again in seconds:
+Once Raj approves the preview:
 
-   ```sh
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . render ~/videos/<project> landscape
-   CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . render ~/videos/<project> portrait
-   ```
+```sh
+CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . render ~/videos/<project> <name>
+```
 
-10. Make contact sheets of each video and read every sheet listed:
+It renders only a timeline that has had a quick render since it last changed. Give Raj the full path of
+`out/<name>.mp4`. A video for social media follows the `marketing` skill.
 
-    ```sh
-    CGO_ENABLED=0 go -C ~/.config/agents/skills/video-edit run . sheet ~/videos/<project> <format>
-    ```
+## Editing rules
 
-    Fix and render again only for a clear fault: a subject cut off by the
-    framing, a title, caption or corner cutaway over a face, a title with a
-    wrong fact, a cutaway that does not match the words under it, a screen
-    crop that cuts off what Raj points at, or a black or frozen frame. In
-    portrait, also anything that matters in the bottom fifth or at the right
-    edge, where Shorts and Reels lay their buttons.
+### Story
 
-11. Give Raj the paths of the videos.
+- Tell one story, in the order Raj asks for or the order he told it.
+- Keep the last take of a repeated line. Raj restarts a line when the take before was wrong.
+- Cut filler words, false starts such as "add it to--", and long silences.
+- Follow a note Raj speaks to the editor, such as "to the editor, cut the last minute", and cut the note
+  itself. Ask Raj when a note is unclear.
+- End every passage on a complete thought, never mid-sentence, such as on "connected to their,".
+- Read `script.txt` as one script. It must read as Raj telling one story, each clip following from the last.
+- Never invent a fact.
 
-## Changes from Raj
+### Transcripts
 
-- **A cut, layout, framing, cutaway or title:** edit the edit list, run
-  `check`, then `render`.
-- **How an animation looks:** spawn an animator with the animation's id and
-  Raj's words. It changes only the drawing, so the cues, and the cut around
-  them, stay put. Then render.
-- **When an animation's beats happen:** move its cues in the edit lists to the
-  start of the words Raj wants them on. Spawn an animator only when a beat is
-  added or removed.
-- **More footage:** Raj records a new clip or adds files to `~/downloads`.
-  Repeat steps 1, 3, 4 and 5 for `~/videos/<project>`, then work the new
-  sources into the edit lists.
+- A `-- 84.2 s without speech --` line is a gap. Read the frames to see what happens in it, such as Raj
+  leaving the camera to reset a demo.
+- A note such as `("Blah." lasts 5.3 s)` marks noise heard as a word. Leave it out of the cut.
 
-## Archive
+### Pictures
 
-When Raj says the video is finished, copy the project folder to the vault,
-following the `vault-access` skill, but use these steps in place of its
-Archive steps. Leave out `.build/`, which `render` makes again.
-`<archived project>` is the project folder's name without the time, such as
-`20261111-sw-video-s2-air-quality-monitor`. `--links` stores each vault
-symlink as a small `.rclonelink` file, so a project copied back with
-`--links` finds its vault clips again without a second copy.
+- Show the camera Raj faces. Each frame's framing says where he looks.
+- Change between the camera and the screen only when what matters changes, such as from talking to a demo.
+  Switching back and forth is jarring.
+- Show the screen with the webcam in the corner when Raj talks over what the screen shows. Crop the screen to
+  the window he works in with a `frame` box, and keep one box for the whole passage.
+- Put b-roll and photos on the words about them. Show a photo for 2 to 4 s.
+- Short clips are fine. Raj minds a cut that lands inside a word, not a short one.
+- Fix a framing fault in the sheets, such as a chin cut off or a head out of frame, with `frame=full` or a
+  `frame` box.
 
-1. Copy the project:
+### Portrait
 
-   ```sh
-   rclone copy --links --exclude '/.build/**' ~/videos/<project> vault:<company-media|personal-media>/<archived project>
-   ```
+- Keep to the length Raj gives. Otherwise aim for 30 to 60 s, and let a story that needs it run to 2 minutes.
+- Open on the most striking line or picture within the first 2 s. It need not come first in the recording.
+- Keep one idea. Drop asides and setup the hook does not need.
+- End on the payoff: the result, the number or the lesson the hook promises. Never end on setup, or on a
+  problem without its answer.
+- Prefer the webcam, or the screen above the webcam. Show the screen alone only with a `frame` box around the
+  part worth reading, because code at phone width is unreadable.
 
-2. Check every file arrived intact, and report the result:
+## Changes later
 
-   ```sh
-   rclone cryptcheck --links --exclude '/.build/**' ~/videos/<project> vault:<company-media|personal-media>/<archived project>
-   ```
-
-3. When `cryptcheck` reports no differences, delete `~/videos/<project>`. Raj
-   does not need to confirm.
+When Raj asks to change a finished edit, start at step 4 with the existing project.
