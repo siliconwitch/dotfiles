@@ -1,6 +1,6 @@
 ---
 name: video-edit
-description: Edits videos for YouTube (landscape) and social media posts (portrait) from footage already on this machine. Use when Raj asks for an edit, or for social media posts that need video.
+description: Edits videos for YouTube (landscape) and social media posts (portrait) from footage already on this machine, and archives finished projects to the vault. Use when Raj asks for an edit, for social media posts that need video, or to archive a video project.
 ---
 
 # Video edit
@@ -38,8 +38,16 @@ Split every new OBS recording into its screen and webcam footage:
 CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . prepare ~/videos/recordings
 ```
 
-Then name the project with the time now and a short topic, such as `20261112-1656-sw-video-air-quality-monitor`,
-and create its footage folder:
+Then name the project as its vault folder will be named, so it keeps one name from start to archive:
+
+- `yyyymmdd-sw-<category>-<topic>` for Silicon Witchery, or `yyyymmdd-rn-<category>-<topic>` for Raj's personal
+  videos, such as `20261112-sw-video-air-quality-monitor`. Ask Raj when the owner is unclear.
+- `yyyymmdd` is today.
+- Reuse a category already in `~/vault/company-media/` or `~/vault/personal-media/`, such as `video` or
+  `event`. Read the `vault-access` skill before listing either. Ask Raj before adding a category.
+- Pick a name that neither `~/videos/` nor the vault folder holds yet.
+
+Create its footage folder:
 
 ```sh
 mkdir -p ~/videos/<project>/.footage
@@ -220,6 +228,37 @@ It renders only a timeline that has had a quick render since it last changed. Gi
   problem without its answer.
 - Prefer the webcam, or the screen above the webcam. Show the screen alone only with a `frame` box around the
   part worth reading, because code at phone width is unreadable.
+
+## Archive
+
+When Raj asks to archive a project, copy it to the vault folder its name starts with: `company-media` for `sw`,
+or `personal-media` for `rn`. Read the `vault-access` skill first, and follow these steps instead of its
+archive steps.
+
+1. Check the vault is mounted:
+
+   ```sh
+   mountpoint -q ~/vault
+   ```
+
+2. Copy the project, without `.build`. `--links` keeps each link in `.footage/` as a small `.rclonelink` file
+   instead of copying the vault footage again. A copy without it skips the links.
+
+   ```sh
+   rclone copy --links --exclude '/.build/**' ~/videos/<project> vault:<area>/<project>
+   ```
+
+3. Check every file arrived intact, and tell Raj the result:
+
+   ```sh
+   rclone cryptcheck --links --exclude '/.build/**' ~/videos/<project> vault:<area>/<project>
+   ```
+
+4. Once the check passes, ask Raj whether to delete `~/videos/<project>`. Delete it only when he says yes.
+5. Find the original of each OBS recording the project used. A file `.footage/20261112-160547-screen-capture.mkv`
+   comes from `~/videos/recordings/.2026-11-12 16-05-47.mkv`. List each original with its size, and ask Raj
+   whether to delete them. Its split files in the vault hold its picture and sound. Delete only the ones he
+   names.
 
 ## Changes later
 
