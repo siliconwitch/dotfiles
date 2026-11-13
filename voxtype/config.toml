@@ -53,6 +53,8 @@ enabled = false
 "opelvino" = "OpenVINO"
 "openveno" = "OpenVINO"
 "claude code" = "Claude Code"
+"clawed" = "Claude"
+"crawled code" = "Claude Code"
 "docks" = "docs"
 "dox" = "docs"
 # Languages and tools
