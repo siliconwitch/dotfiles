@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"errors"
 	"fmt"
+	"maps"
 	"math"
 	"os"
 	"path/filepath"
@@ -16,7 +17,9 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"unicode/utf8"
 
+	"video-edit/internal/animation"
 	"video-edit/internal/footage"
 	"video-edit/internal/media"
 	"video-edit/internal/scribe"
@@ -24,10 +27,12 @@ import (
 
 const fps = 30.0
 
-// Run renders timelines/<name>.txt. A quick render writes a small preview, frames either side of every cut, the
-// words the timeline should hold and the words a fresh transcription hears, into .build/<name>-<n>/. A full
-// render writes out/<name>.mp4, and runs only on a timeline that has had a quick render since it last changed.
-func Run(project, name string, quick bool, transcribeKey string) error {
+// Run renders timelines/<name>.txt. A quick render writes a small preview, frames either side of every cut,
+// title and cue, the words the timeline should hold and the words a fresh transcription hears, into
+// .build/<name>-<n>/. A full render writes out/<name>.mp4, and runs only on a timeline that has had a quick
+// render since it last changed. With stillsOf set to an animation's id, Run renders only stills of that
+// animation, at full size, just after each of its cues, into .build/animations/<id>/.
+func Run(project, name string, quick bool, stillsOf string, transcribeKey string) error {
 	analysis := filepath.Join(project, "analysis")
 	timeline, err := os.ReadFile(filepath.Join(project, "timelines", name+".txt"))
 	if err != nil {
@@ -46,7 +51,7 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		}
 	}
 
-	if !quick {
+	if !quick && stillsOf == "" {
 		reviewed, err := os.ReadFile(filepath.Join(latestBuild, "timeline.txt"))
 		if latestBuild == "" || err != nil || !bytes.Equal(reviewed, timeline) {
 			return fmt.Errorf("timelines/%s.txt has changed since its last quick render. Run quick-render, review it, then render", name)
@@ -60,13 +65,14 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		source  string
 		span    string
 		options map[string]string
+		text    string // a title's text
 	}
 	var formatName string
 	var entries []entry
 	var problems []error
 	allowed := map[string]map[string]bool{
 		"a": {"frame": true, "place": true, "speed": true, "volume": true, "pauses": true},
-		"b": {"frame": true, "place": true, "speed": true, "volume": true, "over": true},
+		"b": {"frame": true, "place": true, "speed": true, "volume": true, "over": true, "cues": true},
 	}
 	for i, raw := range strings.Split(string(timeline), "\n") {
 		fields := strings.Fields(raw)
@@ -84,8 +90,23 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 			continue
 		}
 
+		// A title labels the line above it. The rest of the line is its text.
+		if fields[0] == "title" {
+			text := strings.TrimSpace(strings.TrimSpace(raw)[len("title"):])
+			if text == "" {
+				problems = append(problems, fmt.Errorf("line %d: a title line gives the title's text, such as title Raj Nakarja · Founder", line))
+				continue
+			}
+			entries = append(entries, entry{line: line, layer: "title", text: text})
+			continue
+		}
+
 		if (fields[0] != "a" && fields[0] != "b") || len(fields) < 3 {
-			problems = append(problems, fmt.Errorf("line %d: a line starts with a or b, then the source and its span", line))
+			problems = append(problems, fmt.Errorf("line %d: a line starts with a or b, then the source and its span, or with title", line))
+			continue
+		}
+		if fields[0] == "a" && strings.HasPrefix(fields[1], "animations/") {
+			problems = append(problems, fmt.Errorf("line %d: an animation goes on layer b", line))
 			continue
 		}
 
@@ -112,9 +133,9 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		number("speed", 0.25, 100, 1)
 		number("volume", 0, 4, 1)
 
-		places := map[string]bool{"full": true, "top": true, "bottom": true, "corner": fields[0] == "b"}
+		places := map[string]bool{"full": true, "top": true, "bottom": true, "corner": true}
 		if options["place"] != "" && !places[options["place"]] {
-			problems = append(problems, fmt.Errorf("line %d: place on layer %s is full, top or bottom%s", line, fields[0], map[bool]string{true: ", or corner", false: ""}[fields[0] == "b"]))
+			problems = append(problems, fmt.Errorf("line %d: place is full, top, bottom or corner", line))
 		}
 		if options["pauses"] != "" && options["pauses"] != "keep" {
 			problems = append(problems, fmt.Errorf("line %d: pauses takes only keep", line))
@@ -136,13 +157,13 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 	}
 
 	sizes := map[string][2]int{"landscape": {2560, 1440}, "portrait": {1080, 1920}}
-	if quick {
+	if quick && stillsOf == "" {
 		sizes = map[string][2]int{"landscape": {960, 540}, "portrait": {540, 960}}
 	}
 	width, height := sizes[formatName][0], sizes[formatName][1]
 
 	// Each place is a panel of the picture. The corner shows a 16:9 picture: bottom right in landscape, and top
-	// right in portrait, where captions will sit at the bottom.
+	// right in portrait, where the captions sit at the bottom.
 	even := func(value float64) int { return int(value/2) * 2 }
 	panel := func(place string) [4]int {
 		switch place {
@@ -167,7 +188,7 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 
 	sources := map[string]*footage.Source{}
 	for _, entry := range entries {
-		if sources[entry.source] != nil {
+		if entry.layer == "title" || strings.HasPrefix(entry.source, "animations/") || sources[entry.source] != nil {
 			continue
 		}
 
@@ -259,7 +280,9 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		volume  float64
 		place   string
 		frame   string
-		scripts []footage.Word // layer a's words, in seconds of the video
+		scripts []footage.Word     // layer a's words, in seconds of the video
+		scene   []byte             // an animation's scene.json
+		cues    map[string]float64 // an animation's cues, in seconds from its first frame
 	}
 	option := func(entry entry, key, fallback string) string {
 		if entry.options[key] == "" {
@@ -348,6 +371,9 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 			attached = index
 			continue
 		}
+		if entry.layer == "title" {
+			continue
+		}
 
 		firstClip, lastClip := -1, -1
 		for k, a := range aClips {
@@ -404,6 +430,99 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 				problems = append(problems, fmt.Errorf("line %d: over=%s is not in the cut from line %d on", entry.line, entry.options["over"], entries[attached].line))
 				continue
 			}
+		}
+
+		// An animation is drawn for its span of the cut. Each cue is a word of the a line's source, and the beat
+		// it names starts with that word, so a recut keeps every beat on its word. Stills of one animation skip
+		// the others, whose animators may still be writing them.
+		if strings.HasPrefix(entry.source, "animations/") {
+			for key := range entry.options {
+				if key != "place" && key != "cues" && key != "over" {
+					problems = append(problems, fmt.Errorf("line %d: an animation takes only place, cues and over", entry.line))
+				}
+			}
+			if entry.span != "0" {
+				problems = append(problems, fmt.Errorf("line %d: an animation's span is 0, its start", entry.line))
+			}
+			place := option(entry, "place", "full")
+			if !map[string]map[string]bool{"landscape": {"full": true, "corner": true}, "portrait": {"full": true, "top": true}}[formatName][place] {
+				problems = append(problems, fmt.Errorf("line %d: an animation fills the picture or the corner in landscape, and the picture or the top in portrait", entry.line))
+			}
+
+			var scene []byte
+			cues := map[string]float64{}
+			if stillsOf == "" || entry.source == "animations/"+stillsOf {
+				var err error
+				scene, err = os.ReadFile(filepath.Join(project, entry.source, "scene.json"))
+				if err != nil {
+					problems = append(problems, fmt.Errorf("line %d: %s has no scene.json yet. Its animator writes it", entry.line, entry.source))
+					continue
+				}
+
+				names, err := animation.Cues(scene)
+				if err != nil {
+					problems = append(problems, fmt.Errorf("line %d: %s/scene.json: %w", entry.line, entry.source, err))
+					continue
+				}
+
+				owner := aClips[firstClip].source
+				for _, pair := range strings.Split(entry.options["cues"], ",") {
+					cue, span, ok := strings.Cut(pair, ":")
+					if !ok {
+						problems = append(problems, fmt.Errorf("line %d: cues names each cue and its word, such as cues=sensor:p30.1,phone:p32", entry.line))
+						continue
+					}
+
+					word, _, err := words(owner, span)
+					if err != nil {
+						problems = append(problems, fmt.Errorf("line %d: cue %s: %w", entry.line, cue, err))
+						continue
+					}
+
+					seconds := -1.0
+					for k := firstClip; k < len(aClips); k++ {
+						a := aClips[k]
+						if a.source == owner && owner.Words[word].Start >= a.in && owner.Words[word].Start < a.out {
+							seconds = float64(a.first-first)/fps + (owner.Words[word].Start-a.in)/a.speed
+							break
+						}
+					}
+					if seconds < 0 || seconds >= float64(last-first)/fps {
+						problems = append(problems, fmt.Errorf("line %d: cue %s on %s is not in the part of the cut the animation covers", entry.line, cue, span))
+						continue
+					}
+					cues[cue] = seconds
+				}
+
+				var missing, extra []string
+				for cue := range names {
+					if _, ok := cues[cue]; !ok {
+						missing = append(missing, cue)
+					}
+				}
+				for cue := range cues {
+					if !names[cue] {
+						extra = append(extra, cue)
+					}
+				}
+				sort.Strings(missing)
+				sort.Strings(extra)
+				if len(missing) > 0 {
+					problems = append(problems, fmt.Errorf("line %d: the scene's cues %s need a word in cues", entry.line, strings.Join(missing, ", ")))
+				}
+				if len(extra) > 0 {
+					problems = append(problems, fmt.Errorf("line %d: the scene has no cues %s", entry.line, strings.Join(extra, ", ")))
+				}
+			}
+
+			area := panel(place)
+			source := &footage.Source{Name: entry.source, Width: area[2], Height: area[3], Duration: float64(last-first) / fps, Rate: 1}
+			bClips = append(bClips, clip{entry: index, source: source, first: first, last: last, speed: 1, place: place, frame: "full", scene: scene, cues: cues})
+			continue
+		}
+		if entry.options["cues"] != "" {
+			problems = append(problems, fmt.Errorf("line %d: only an animation takes cues", entry.line))
+			continue
 		}
 
 		source := sources[entry.source]
@@ -491,8 +610,177 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		}
 		pieces = append(pieces, p)
 	}
+
+	// Layer a fills the corner only over a b line that fills the picture, such as Raj over an animation
+	corners := map[int]bool{}
+	for _, p := range pieces {
+		a := aClips[p.a]
+		if a.place == "corner" && (p.b < 0 || bClips[p.b].place != "full") && !corners[a.entry] {
+			corners[a.entry] = true
+			problems = append(problems, fmt.Errorf("line %d: layer a fills the corner only while a b line fills the picture behind it", entries[a.entry].line))
+		}
+	}
+
+	// Titles and captions, in seconds of the video. A title fades in 0.3 s after its line starts and shows
+	// for 6 s, or until its line ends. Only portrait has captions, because YouTube captions the landscape video itself. A caption line
+	// ends at a cut, a pause, a sentence end or its third word.
+	type overlay struct {
+		text       string
+		start, end float64
+		title      bool
+		line       int
+		file       string
+	}
+	var overlays []overlay
+	labelled := -1
+	for index, entry := range entries {
+		if entry.layer != "title" {
+			labelled = index
+			continue
+		}
+		if entries[index-1].layer == "title" {
+			problems = append(problems, fmt.Errorf("line %d: a line takes one title", entry.line))
+			continue
+		}
+
+		start, end := -1.0, 0.0
+		for _, c := range append(slices.Clone(aClips), bClips...) {
+			if c.entry == labelled {
+				if start < 0 {
+					start = float64(c.first)/fps + 0.3
+				}
+				end = float64(c.last) / fps
+			}
+		}
+		end = math.Min(start+6, end)
+		if start < 0 || end-start < 1 {
+			problems = append(problems, fmt.Errorf("line %d: a title needs at least 1.3 s of its line to show on", entry.line))
+			continue
+		}
+		if formatName == "portrait" && utf8.RuneCountInString(entry.text) > 40 {
+			problems = append(problems, fmt.Errorf("line %d: a portrait title fits on one line at up to 40 characters", entry.line))
+			continue
+		}
+		overlays = append(overlays, overlay{text: entry.text, start: start, end: end, title: true, line: entry.line})
+	}
+	if formatName == "portrait" {
+		for _, a := range aClips {
+			var spoken []footage.Word
+			for _, word := range a.scripts {
+				if !word.Event {
+					spoken = append(spoken, word)
+				}
+			}
+
+			var line []string
+			lineStart := 0.0
+			for i, word := range spoken {
+				if len(line) == 0 {
+					lineStart = word.Start
+				}
+				line = append(line, word.Text)
+
+				last := i == len(spoken)-1
+				pause := !last && spoken[i+1].Start-word.End > 0.5
+				sentenceEnd := word.Text != "" && strings.ContainsAny(word.Text[len(word.Text)-1:], ".?!")
+				if !last && !pause && !sentenceEnd && len(line) < 3 {
+					continue
+				}
+
+				overlays = append(overlays, overlay{text: strings.Join(line, " "), start: lineStart, end: word.End})
+				line = nil
+			}
+		}
+	}
 	if len(problems) > 0 {
 		return errors.Join(problems...)
+	}
+
+	// An animation renders at the panel's size from a viewport of the same shape, 1280 CSS pixels across the
+	// landscape picture and 1080 across the portrait one, so its layout is the same at every size. Over an a line
+	// in the corner, it keeps its parts clear of the webcam.
+	base := map[string]float64{"landscape": 1280, "portrait": 1080}[formatName]
+	viewport := func(b clip) (int, int, float64, []float64) {
+		area := panel(b.place)
+		var webcam []float64
+		for _, a := range aClips {
+			if a.place == "corner" && a.first < b.last && b.first < a.last {
+				corner := panel("corner")
+				webcam = []float64{float64(corner[0]) / float64(width), float64(corner[1]) / float64(height), float64(corner[2]) / float64(width), float64(corner[3]) / float64(height)}
+			}
+		}
+		return int(math.Round(float64(area[2]) * base / float64(width))), int(math.Round(float64(area[3]) * base / float64(width))), float64(width) / base, webcam
+	}
+
+	// Stills of one animation, at the start, just after each cue and at the end, for its animator to check
+	if stillsOf != "" {
+		directory := filepath.Join(project, ".build", "animations", stillsOf)
+		err = os.MkdirAll(directory, 0o755)
+		if err != nil {
+			return err
+		}
+
+		old, err := filepath.Glob(filepath.Join(directory, name+"-*.png"))
+		if err != nil {
+			return err
+		}
+		for _, file := range old {
+			err = os.Remove(file)
+			if err != nil {
+				return err
+			}
+		}
+
+		used := 0
+		for _, b := range bClips {
+			if b.source.Name != "animations/"+stillsOf {
+				continue
+			}
+			used++
+
+			cssWidth, cssHeight, scale, webcam := viewport(b)
+			page, err := animation.Page(b.scene, b.cues, webcam)
+			if err != nil {
+				return err
+			}
+
+			browser, err := animation.Open(page, cssWidth, cssHeight, scale)
+			if err != nil {
+				return fmt.Errorf("line %d: %s: %w", entries[b.entry].line, b.source.Name, err)
+			}
+
+			type moment struct {
+				name    string
+				seconds float64
+			}
+			moments := []moment{{"start", 0.5}}
+			for cue, seconds := range b.cues {
+				moments = append(moments, moment{"cue-" + cue, math.Min(seconds+1, b.source.Duration-0.1)})
+			}
+			moments = append(moments, moment{"end", b.source.Duration - 0.1})
+			sort.Slice(moments, func(i, j int) bool { return moments[i].seconds < moments[j].seconds })
+
+			for k, moment := range moments {
+				picture, err := browser.Frame(moment.seconds)
+				if err != nil {
+					browser.Close()
+					return err
+				}
+
+				file := filepath.Join(directory, fmt.Sprintf("%s-%d-%02d-%s.png", name, used, k+1, moment.name))
+				err = os.WriteFile(file, picture, 0o644)
+				if err != nil {
+					browser.Close()
+					return err
+				}
+				fmt.Printf("%.2f s: %s\n", moment.seconds, file)
+			}
+			browser.Close()
+		}
+		if used == 0 {
+			return fmt.Errorf("timelines/%s.txt has no b line for animations/%s", name, stillsOf)
+		}
+		return nil
 	}
 
 	// Frame each run of clips with one crop, so jump cuts within a run never move the camera. A run is the
@@ -646,6 +934,108 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		return file, os.Rename(partial, file)
 	}
 
+	// Each animation renders to a clip that layer b plays like any other. Four pages each take every fourth frame,
+	// because a page renders one frame at a time. A clip renders again only when its page, size or length change.
+	for _, b := range bClips {
+		if b.scene == nil {
+			continue
+		}
+
+		cssWidth, cssHeight, scale, webcam := viewport(b)
+		page, err := animation.Page(b.scene, b.cues, webcam)
+		if err != nil {
+			return err
+		}
+
+		area := panel(b.place)
+		frames := b.last - b.first
+		hash := sha256.Sum256(fmt.Appendf(nil, "%s\x00%d %d %g %d %d %d", page, cssWidth, cssHeight, scale, area[2], area[3], frames))
+		file := filepath.Join(cache, fmt.Sprintf("%x.mkv", hash[:12]))
+		b.source.Path, err = filepath.Rel(analysis, file)
+		if err != nil {
+			return err
+		}
+
+		_, err = os.Stat(file)
+		if err == nil {
+			continue
+		}
+
+		pictures := strings.TrimSuffix(file, ".mkv") + ".frames"
+		err = os.MkdirAll(pictures, 0o755)
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("drawing %d frames of %s\n", frames, b.source.Name)
+		pageFailures := make(chan error, 4)
+		var pages sync.WaitGroup
+		for worker := range 4 {
+			pages.Go(func() {
+				browser, err := animation.Open(page, cssWidth, cssHeight, scale)
+				if err != nil {
+					pageFailures <- err
+					return
+				}
+				defer browser.Close()
+
+				for n := worker; n < frames; n += 4 {
+					picture, err := browser.Frame(float64(n) / fps)
+					if err != nil {
+						pageFailures <- err
+						return
+					}
+
+					err = os.WriteFile(filepath.Join(pictures, fmt.Sprintf("%05d.png", n)), picture, 0o644)
+					if err != nil {
+						pageFailures <- err
+						return
+					}
+				}
+			})
+		}
+		pages.Wait()
+		close(pageFailures)
+		err = <-pageFailures
+		if err != nil {
+			return fmt.Errorf("line %d: %s: %w", entries[b.entry].line, b.source.Name, err)
+		}
+
+		partial := strings.TrimSuffix(file, ".mkv") + ".partial.mkv"
+		_, err = media.Run("-framerate", fmt.Sprint(fps), "-i", filepath.Join(pictures, "%05d.png"), "-vf", fmt.Sprintf("scale=%d:%d,format=yuv420p", area[2], area[3]),
+			"-c:v", "libx264", "-preset", "veryfast", "-crf", "12", partial)
+		if err != nil {
+			return fmt.Errorf("line %d: %s: %w", entries[b.entry].line, b.source.Name, err)
+		}
+
+		err = os.RemoveAll(pictures)
+		if err != nil {
+			return err
+		}
+		err = os.Rename(partial, file)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Each title and caption is drawn from a file of its text, named by the text, so no character needs escaping
+	for i, o := range overlays {
+		hash := sha256.Sum256([]byte(o.text))
+		overlays[i].file = filepath.Join(cache, fmt.Sprintf("%x.txt", hash[:12]))
+		err = os.WriteFile(overlays[i].file, []byte(o.text), 0o644)
+		if err != nil {
+			return err
+		}
+	}
+	titleFont, err := media.Font("DINish Expanded:style=Medium")
+	if err != nil {
+		return err
+	}
+	captionFont, err := media.Font("DINish Expanded:style=SemiBold")
+	if err != nil {
+		return err
+	}
+
 	encoder := []string{"-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p"}
 	if quick {
 		encoder = []string{"-c:v", "libx264", "-preset", "ultrafast", "-crf", "26", "-pix_fmt", "yuv420p"}
@@ -671,6 +1061,7 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		if p.b >= 0 {
 			layers = append(layers, layer{bClips[p.b], crops[[2]int{1, p.b}], p.bTime, p.bSpeed})
 		}
+		sort.SliceStable(layers, func(i, j int) bool { return layers[i].clip.place != "corner" && layers[j].clip.place == "corner" })
 
 		below := "[base]"
 		for i, layer := range layers {
@@ -710,7 +1101,41 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 			fmt.Fprintf(&graph, ";%s[%s]overlay=%d:%d:eof_action=repeat[v%d]", below, label, area[0], area[1], i)
 			below = fmt.Sprintf("[v%d]", i)
 		}
-		fmt.Fprintf(&graph, ";%sformat=yuv420p[video]", below)
+		// Each title and caption the piece shows, timed from the piece's start. A landscape title sits bottom left,
+		// clear of the corner. Portrait captions sit below the chin and above the buttons Shorts and Reels lay over
+		// the picture, or on the join of two halves, so they never cover a face, with a title just above them.
+		var texts strings.Builder
+		scale := float64(height) / 1440
+		if formatName == "portrait" {
+			scale = float64(height) / 1920
+		}
+		halves := aClips[p.a].place == "top" || aClips[p.a].place == "bottom" || (p.b >= 0 && (bClips[p.b].place == "top" || bClips[p.b].place == "bottom"))
+		pieceStart, pieceEnd := float64(p.first)/fps, float64(p.last)/fps
+		for _, o := range overlays {
+			if o.end <= pieceStart || o.start >= pieceEnd {
+				continue
+			}
+
+			start, end := o.start-pieceStart, o.end-pieceStart
+			font, size, border, opacity, x, y, alpha := captionFont, 62.0, 12.0, 0.75, "(w-text_w)/2", fmt.Sprintf("h-%.0f-text_h", 460*scale), "1"
+			if halves {
+				y = "(h-text_h)/2"
+			}
+			if o.title {
+				font, size, border, opacity, x = titleFont, 46, 14, 0.62, "(w-text_w)/2"
+				y = fmt.Sprintf("h-%.0f-text_h", 580*scale)
+				if halves {
+					y = fmt.Sprintf("h/2-%.0f-text_h", 80*scale)
+				}
+				if formatName == "landscape" {
+					size, border, x, y = 54, 18, fmt.Sprintf("%.0f", 72*scale), fmt.Sprintf("h-%.0f-text_h", 72*scale)
+				}
+				alpha = fmt.Sprintf("min(1,max(0,(t-%.4f)/0.4))*min(1,max(0,(%.4f-t)/0.4))", start, end)
+			}
+			fmt.Fprintf(&texts, ",drawtext=fontfile='%s':textfile='%s':expansion=none:fontsize=%.0f:fontcolor=white:box=1:boxcolor=black@%.2f:boxborderw=%.0f:x=%s:y=%s:alpha='%s':enable='between(t,%.4f,%.4f)'",
+				font, o.file, size*scale, opacity, border*scale, x, y, alpha, start, end)
+		}
+		fmt.Fprintf(&graph, ";%sformat=yuv420p%s[video]", below, texts.String())
 
 		args = append(args, "-filter_complex", graph.String(), "-map", "[video]", "-frames:v", strconv.Itoa(p.last-p.first), "-an")
 		videoJobs = append(videoJobs, job{append(args, encoder...), inputs})
@@ -934,12 +1359,41 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		fmt.Fprintf(&cuts, "cut %d at %s: %s, then %s\n  before: %s\n  after: %s\n", i, clock(float64(frame)/fps), describe(pieces[i-1]), describe(pieces[i]), near(frame, true), near(frame, false))
 		stills = append(stills, still{frame - 1, fmt.Sprintf("cut %d before", i)}, still{frame, fmt.Sprintf("cut %d after", i)})
 	}
+
+	// Each title and each animation's cues, with a still before it and 1 s after it starts
+	titles := 0
+	for _, o := range overlays {
+		if !o.title {
+			continue
+		}
+		titles++
+
+		frame := int(math.Round(o.start * fps))
+		fmt.Fprintf(&cuts, "title %d at %s on line %d: %s\n", titles, clock(o.start), o.line, o.text)
+		stills = append(stills, still{frame - 1, fmt.Sprintf("title %d before", titles)}, still{min(frame+int(fps), total-1), fmt.Sprintf("title %d after", titles)})
+	}
+	for _, b := range bClips {
+		names := slices.Collect(maps.Keys(b.cues))
+		sort.Slice(names, func(i, j int) bool { return b.cues[names[i]] < b.cues[names[j]] })
+		for _, cue := range names {
+			frame := b.first + int(math.Round(b.cues[cue]*fps))
+			var text []string
+			for _, word := range spoken {
+				if word.End*fps > float64(frame) && len(text) < 6 {
+					text = append(text, word.Text)
+				}
+			}
+			fmt.Fprintf(&cuts, "cue %s at %s on line %d: %s\n", cue, clock(float64(frame)/fps), entries[b.entry].line, strings.Join(text, " "))
+			stills = append(stills, still{max(frame-1, b.first), fmt.Sprintf("cue %s before", cue)}, still{min(frame+int(fps), b.last-1), fmt.Sprintf("cue %s after", cue)})
+		}
+	}
 	err = os.WriteFile(filepath.Join(build, "cuts.txt"), []byte(cuts.String()), 0o644)
 	if err != nil {
 		return err
 	}
 
-	// Each row of a sheet shows the last frame before a cut and the first frame after it
+	// Each row of a sheet shows the last frame before a cut and the first frame after it, or a title or cue
+	// before and after it starts
 	stillsDirectory, err := os.MkdirTemp("", "stills-")
 	if err != nil {
 		return err
@@ -1009,7 +1463,7 @@ func Run(project, name string, quick bool, transcribeKey string) error {
 		return err
 	}
 
-	fmt.Printf("wrote %s: preview.mp4 (%s), %d cuts in cuts.txt and %d sheets, script.txt and heard.txt\n", build, clock(float64(total)/fps), len(pieces)-1, sheets)
+	fmt.Printf("wrote %s: preview.mp4 (%s), %d cuts with every title and cue in cuts.txt and %d sheets, script.txt and heard.txt\n", build, clock(float64(total)/fps), len(pieces)-1, sheets)
 	return nil
 }
 

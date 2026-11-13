@@ -159,3 +159,14 @@ func Probe(path string) (Info, error) {
 
 	return info, nil
 }
+
+// Font returns the file of the installed font that best matches a fontconfig pattern, such as
+// "DINish Expanded:style=Medium".
+func Font(pattern string) (string, error) {
+	output, err := exec.Command("fc-match", "-f", "%{file}", pattern).Output()
+	if err != nil {
+		return "", fmt.Errorf("fc-match cannot find %s: %w", pattern, err)
+	}
+
+	return string(output), nil
+}

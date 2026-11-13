@@ -18,6 +18,8 @@ const usage = `usage: video-edit <command> [argument...]
                                          <date>-<time>-screen-capture.mkv and -webcam-capture.mkv
   pre-analyse -o <summaries.txt> <file>...  summarises each file from a few frames
   analyse -o <project>/analysis <file>...   transcribes each file, describes its frames and syncs them all
+  animate <project> <timeline> <id>      renders stills of animations/<id> as the timeline uses it, just after
+                                         each cue, into .build/animations/<id>/
   quick-render <project> <timeline>      renders timelines/<timeline>.txt as a preview with review material
                                          in .build/<timeline>-<n>/
   render <project> <timeline>            renders timelines/<timeline>.txt into out/<timeline>.mp4
@@ -54,14 +56,16 @@ func main() {
 		if err == nil {
 			err = analyse.Run(arguments[1], arguments[2:], transcribeKey, describeKey)
 		}
+	case command == "animate" && len(arguments) == 3:
+		err = render.Run(arguments[0], arguments[1], false, arguments[2], "")
 	case command == "quick-render" && len(arguments) == 2:
 		var key string
 		key, err = secret.Pass("api/elevenlabs")
 		if err == nil {
-			err = render.Run(arguments[0], arguments[1], true, key)
+			err = render.Run(arguments[0], arguments[1], true, "", key)
 		}
 	case command == "render" && len(arguments) == 2:
-		err = render.Run(arguments[0], arguments[1], false, "")
+		err = render.Run(arguments[0], arguments[1], false, "", "")
 	default:
 		fmt.Fprintln(os.Stderr, usage)
 		os.Exit(2)
