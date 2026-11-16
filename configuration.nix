@@ -146,6 +146,8 @@
       }];
     }];
   };
+  # The RAOP sink unloads itself on a rejected AirPlay handshake and logs the status only at info level
+  systemd.user.services.pipewire.environment.PIPEWIRE_DEBUG = "W,mod.raop*:I";
   systemd.services.airplay-rescan = {
     description = "Re-scan AirPlay/RAOP sinks after resume";
     after    = [ "suspend.target" ];
@@ -431,10 +433,13 @@
     # Terminal apps & tools
     bluetui                          # Bluetooth TUI
     btop                             # system monitor
+    chromaprint                      # audio fingerprints (fpcalc)
     claude-code
     cloc                             # counts lines of code
     csvlens                          # CSV viewer
+    czkawka                          # duplicate and similar photo finder
     dtach                            # keeps Yazi running while its window is closed
+    exiftool                         # photo and video metadata
     eza                              # ls/tree
     fd                               # find alternative
     ffmpeg
@@ -445,8 +450,10 @@
     gnupg                            # gpg
     herdr                            # terminal multiplexer
     hledger                          # plain text accounting
+    icloudpd                         # iCloud Photos downloader
     impala                           # Wi-Fi TUI
     jq                               # JSON processor
+    libheif                          # HEIC conversion (heif-dec)
     libqalculate                     # qalc
     llama-cpp-vulkan                 # local LLMs on the iGPU
     stable-diffusion-cpp-vulkan      # image generation on the iGPU
@@ -497,7 +504,9 @@
         p.beancount                  # plain text accounting (bean-check, bean-report)
         p.beangulp                   # beancount importer framework
         p.beanquery                  # beancount SQL queries (bean-query)
+        p.imagehash                  # perceptual image hashes
         p.logic2-automation          # Saleae Logic 2 automation client
+        p.pillow-heif                # HEIC support for Pillow
         p.ppk2-api                   # Nordic PPK2 power profiler client
     ]))
     python3Packages.weasyprint       # HTML → PDF CLI
