@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, superstack-cli, ... }:
+{ config, pkgs, lib, username, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, scry, superstack-cli, ... }:
 
 {
   # Nix base settings
@@ -466,6 +466,7 @@
     poppler-utils                    # PDF utils
     rclone                           # Dropbox and Storage Box access
     ripgrep                          # rg
+    scry.packages.${pkgs.stdenv.hostPlatform.system}.scry # email client
     segger-jlink                     # J-Link debugger software
     superstack-cli.packages.${pkgs.stdenv.hostPlatform.system}.superstack
     trash-cli                        # rm alias

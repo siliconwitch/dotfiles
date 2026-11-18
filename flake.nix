@@ -17,15 +17,18 @@
       url = "github:siliconwitch/launtui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Temporary fix: scry needs Go 1.27.4 and nixos-unstable has 1.27.3, so it keeps its own nixpkgs.
+    # Follow nixpkgs again once nixos-unstable has 1.27.4
+    scry.url = "github:siliconwitch/scry";
     superstack-cli = {
       url = "github:siliconwitchery/superstack-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, battui, launtui, superstack-cli, ... }: {
+  outputs = { nixpkgs, nixpkgs-apps, nixpkgs-master, nixpkgs-jlink, battui, launtui, scry, superstack-cli, ... }: {
     nixosConfigurations.mist = nixpkgs.lib.nixosSystem {
-      specialArgs = { username = "raj"; inherit nixpkgs-apps nixpkgs-master nixpkgs-jlink superstack-cli; };
+      specialArgs = { username = "raj"; inherit nixpkgs-apps nixpkgs-master nixpkgs-jlink scry superstack-cli; };
       modules = [
         ./configuration.nix
         ./hardware-configuration.nix

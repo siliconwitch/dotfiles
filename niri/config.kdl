@@ -10,6 +10,7 @@ binds {
     Mod+B                       hotkey-overlay-title="Browser"                      { spawn-sh "firefox"; }
     Mod+Y                       hotkey-overlay-title="YouTube Music"                { spawn-sh "w=$(niri msg --json windows | jq -r 'map(select(.app_id == \"com.github.th-ch.youtube-music\")) | first | .id // empty'); if [ -n \"$w\" ]; then niri msg action close-window --id \"$w\"; else pear-desktop; fi"; }
     Mod+D                       hotkey-overlay-title="Discord"                      { spawn-sh "w=$(niri msg --json windows | jq -r 'map(select(.app_id == \"vesktop\")) | first | .id // empty'); if [ -n \"$w\" ]; then niri msg action close-window --id \"$w\"; else vesktop; fi"; }
+    Mod+E                       hotkey-overlay-title="Email"                        { spawn-sh "w=$(niri msg --json windows | jq -r '.[] | select(.app_id == \"scry\" or (.app_id // \"\" | startswith(\"chrome-127.0.0.1__scry_\"))) | .id'); if [ -n \"$w\" ]; then for id in $w; do niri msg action close-window --id \"$id\"; done; else [ -S \"$XDG_RUNTIME_DIR/scry.dtach\" ] && [ -f \"$XDG_RUNTIME_DIR/scry/viewer\" ] && env -u XDG_ACTIVATION_TOKEN -u DESKTOP_STARTUP_ID chromium --app=\"$(cat \"$XDG_RUNTIME_DIR/scry/viewer\")\" & footclient --app-id=scry -o colors-dark.alpha=0.9 -o colors-dark.blur=no dtach -A \"$XDG_RUNTIME_DIR/scry.dtach\" -E -z -r winch scry; fi"; }
     Mod+Shift+F                 hotkey-overlay-title="Files"                        { spawn-sh "w=$(niri msg --json windows | jq -r 'map(select(.app_id == \"yazi\")) | first | .id // empty'); if [ -n \"$w\" ]; then niri msg action close-window --id \"$w\"; else footclient --app-id=yazi -o colors-dark.alpha=0.9 -o colors-dark.blur=no dtach -A \"$XDG_RUNTIME_DIR/yazi.dtach\" -E -z -r winch yazi ~; fi"; }
     Mod+Shift+M                 hotkey-overlay-title="Mixer"                        { spawn-sh "w=$(niri msg --json windows | jq -r 'map(select(.app_id == \"wiremix\")) | first | .id // empty'); if [ -n \"$w\" ]; then niri msg action close-window --id \"$w\"; else footclient --app-id=wiremix -o colors-dark.alpha=0.9 -o colors-dark.blur=no wiremix; fi"; }
     Mod+Shift+N                 hotkey-overlay-title="Network"                      { spawn-sh "w=$(niri msg --json windows | jq -r 'map(select(.app_id == \"impala\")) | first | .id // empty'); if [ -n \"$w\" ]; then niri msg action close-window --id \"$w\"; else footclient --app-id=impala -o colors-dark.alpha=0.9 -o colors-dark.blur=no impala; fi"; }
@@ -126,7 +127,7 @@ window-rule {
 
 // Undo the slow touchpad scroll-factor for terminals
 window-rule {
-    match app-id=r#"^(foot|footclient|launcher|wiremix|impala|bluetui|yazi)$"#
+    match app-id=r#"^(foot|footclient|launcher|wiremix|impala|bluetui|yazi|scry)$"#
     scroll-factor 6.0
 }
 
@@ -144,7 +145,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^(launcher|wiremix|impala|bluetui|yazi)$"#
+    match app-id=r#"^(launcher|wiremix|impala|bluetui|yazi|scry)$"#
     focus-ring {
         off
     }
@@ -179,6 +180,25 @@ window-rule {
     open-floating true
     default-column-width { proportion 0.8; }
     default-window-height { proportion 0.8; }
+}
+
+// Scry's terminal and viewer side by side, filling the large floating window's area.
+// Positions are pixels only: 256 is 10% of the LG UltraFine's 2560 logical pixels
+window-rule {
+    match app-id="^scry$"
+    open-floating true
+    default-column-width { proportion 0.4; }
+    default-window-height { proportion 0.8; }
+    default-floating-position x=256 y=0 relative-to="left"
+}
+
+window-rule {
+    match app-id=r#"^chrome-127\.0\.0\.1__scry_"#
+    open-floating true
+    open-focused false
+    default-column-width { proportion 0.4; }
+    default-window-height { proportion 0.8; }
+    default-floating-position x=256 y=0 relative-to="right"
 }
 
 // Floor for floating dialogs: KiCad and friends request too-small sizes on Wayland
