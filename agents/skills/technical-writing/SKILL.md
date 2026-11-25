@@ -15,7 +15,7 @@ Write for a tired engineer reading once.
 - Name real files, symbols, flags, and commands. Use one name for each thing.
 - Keep one thought or instruction per sentence. Put conditions before the action they govern.
 - Give an example for any rule that isn't obvious.
-- Say why when the reason isn't obvious.
+- Say why when the reason isn't obvious, except in step-by-step instructions.
 - Write a calculation as a formula, such as `remaining = target - progress`.
 - Avoid new terms. When you need one, explain it in plain words where it
   first appears.
@@ -31,6 +31,8 @@ Write for a tired engineer reading once.
 For plans, designs, and specifications, write only what the user asked for. Add no feature, option or edge case the user did not ask for.
 
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
+
+For READMEs, setup guides and other step-by-step instructions, give only the steps and what the reader needs to carry out each one. Leave out why a step is done that way, what failed before, and how the steps were worked out.
 
 For comments, write one only in these cases:
 
