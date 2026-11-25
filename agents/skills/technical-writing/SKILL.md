@@ -15,11 +15,11 @@ Write for a tired engineer reading once.
 - Name real files, symbols, flags, and commands. Use one name for each thing.
 - Keep one thought or instruction per sentence. Put conditions before the action they govern.
 - Give an example for any rule that isn't obvious.
-- Say why when the reason isn't obvious, except in step-by-step instructions.
+- Say why when the reason isn't obvious.
 - Write a calculation as a formula, such as `remaining = target - progress`.
 - Avoid new terms. When you need one, explain it in plain words where it
   first appears.
-- Use commands for procedures. Give every required action its own list item and self-contained command block.
+- Use commands for procedures. In final replies, lay out steps as `response-format` says. Elsewhere, give every required action its own numbered list item and self-contained command block.
 - Use numbered lists for sequences and bullets for unordered sets.
 - Make headings carry the point. Use sentence case.
 - Prefer periods to semicolons. Never use an em dash.
@@ -32,7 +32,7 @@ For plans, designs, and specifications, write only what the user asked for. Add 
 
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
 
-For READMEs, setup guides and other step-by-step instructions, give only the steps and what the reader needs to carry out each one. Leave out why a step is done that way, what failed before, and how the steps were worked out.
+For READMEs, setup guides and other step-by-step instructions for a human reader, give only the steps, what the reader needs to carry out each one, and what they should see after it. Leave out why a step is done that way, what failed before, and how the steps were worked out.
 
 For comments, write one only in these cases:
 

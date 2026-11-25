@@ -64,16 +64,17 @@ Traps proven the hard way, so do not relearn them:
   header edit yields a stale binary that `make flash` happily programs.
 - Keep the check list in `.clang-tidy` alone. `.clangd` does CompileFlags
   only, and its `ClangTidy: Add:` re-enables globs that `.clang-tidy` negates.
-- `bugprone-reserved-identifier` fires on linker symbols such as `__bss_end`
-  and `__STACK_BASE`. Negate it, because the linker script and the vendor MDK
-  dictate those names.
+- `bugprone-reserved-identifier` fires on linker symbols such as `__bss_end`.
+  Negate it, because the linker script and the vendor's startup code dictate
+  those names.
 
 # Testing on hardware
 
 For hardware-touching code, write tests that drive the real device or the real
-output rather than asserting on intermediate bytes. A printed label proves more
-than the PDF bytes behind it.
+output rather than asserting on intermediate bytes. A message read back from
+the device proves more than the bytes sent to it.
 
 The build, flash and debug recipe is a project fact, and so is the SoC. Read
 the project's own AGENTS.md or CLAUDE.md and its Makefile. Never carry a trap across from
-another project: RRAM, SoftDevice programming and RTT capture all differ.
+another project: memory types, radio stack programming and debug log capture
+all differ.

@@ -165,7 +165,8 @@ CGO_ENABLED=0 go -C ~/.claude/skills/video-edit run . render ~/videos/<project> 
 ```
 
 It renders only a timeline that has had a quick render since it last changed. Give Raj the full path of
-`out/<name>.mp4`. A video for social media follows the `marketing` skill.
+`out/<name>.mp4`. When the project that called this skill has a `marketing` skill, follow it for a video for
+social media.
 
 ## Editing rules
 
