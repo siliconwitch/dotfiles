@@ -32,5 +32,5 @@ description: Brief user-facing commentary, final replies, and decision prompts. 
 - Put a heading above each group of steps that run in a different place, such as `### On the server` or `### In the Hetzner Console`.
 - Start each step as its own paragraph with a bold label, such as `**Step 3.** Delete the key:`. Never use a bare number or a numbered list for a step, because bare numbers mark the points the user replies to. Number steps from 1 in each reply.
 - Put each command in its own fenced code block at the start of the line, not indented under a list item.
-- Put what the user should see in a separate sentence after the block, starting with "Expect:".
+- Add a separate sentence after a block, starting with "Expect:", only when the user must notice something the command does not make obvious, such as a value to compare, a prompt to answer, a harmless warning, a long wait or a dropped connection. Otherwise give no "Expect:" line.
 - Leave a blank line between every step, block and sentence.

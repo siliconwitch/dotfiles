@@ -32,7 +32,7 @@ For plans, designs, and specifications, write only what the user asked for. Add 
 
 For commits and pull requests, omit AI attribution and generated-by markers. Use a succinct title and a short body that says what changed and why. Add no section headers unless the project requires them.
 
-For READMEs, setup guides and other step-by-step instructions for a human reader, give only the steps, what the reader needs to carry out each one, and what they should see after it. Leave out why a step is done that way, what failed before, and how the steps were worked out.
+For READMEs, setup guides and other step-by-step instructions for a human reader, give only the steps and what the reader needs to carry out each one. After a step, say what the reader should see only when they must notice something the command does not make obvious, such as a value to compare, a prompt to answer, a harmless warning or a long wait. Leave out why a step is done that way, what failed before, and how the steps were worked out.
 
 For comments, write one only in these cases:
 
